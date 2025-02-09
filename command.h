@@ -1,0 +1,74 @@
+/**
+ * @brief It defines the command interpreter interface
+ *
+ * @file command.h
+ * @author Profesores PPROG
+ * @version 0
+ * @date 27-01-2025
+ * @copyright GNU Public License
+ */
+
+#ifndef COMMAND_H
+#define COMMAND_H
+
+#include "types.h"
+
+#define N_CMDT 2 /* It defines a constant for the the abreviature of the command and the command*/
+#define N_CMD 5 /* It defines a constant for the number of commands */
+
+/* It establishes a data type for the two posible command types */
+typedef enum { CMDS, CMDL } CommandType;
+
+/*It establishses a data type for the posible 5 commands*/
+typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK } CommandCode;
+
+/*It estiblishes a structure that will contain the name of the command*/
+typedef struct _Command Command;
+
+/**
+ * @brief It creates a command allocating the space 
+    needed and initializates it and returns it
+ * @author Profesores PPROG
+ *
+ * @param 
+ * @return a new command created
+ */
+Command* command_create();
+
+/**
+ * @brief  It deletes a command and free the memory, it also controls the errors
+ * @author Daniel Martínez
+ * 
+ * @param command a pointer to a command structure
+ * @return OK if everything was correct, ERROR if not
+ */
+Status command_destroy(Command* command);
+
+/**
+ * @brief It asignates the code passed as an argument to the command and control errors
+ * @author Daniel Martínez
+ * 
+ * @param command a pointer to a command structure
+ * @return OK if everything was correct, ERROR if not
+*/
+Status command_set_code(Command* command, CommandCode code);
+
+/**
+ * @brief It returns the code of the command passed by argument and control errors
+ * @author Daniel Martínez
+ * 
+ * @param command a pointer to a command structure
+ * @return CommandCode It coould be NO_CMD, NEXT; EXIT...
+*/
+CommandCode command_get_code(Command* command);
+
+/**
+ * @brief The users introduces a command and it is asigned to a variable command, controlling erors 
+ * @author Daniel Martínez
+ * 
+ * @param command a pointer to a command structure
+ * @return OK if everything was correct, ERROR if not
+*/
+Status command_get_user_input(Command* command);
+
+#endif
