@@ -22,7 +22,7 @@ typedef struct _Graphic_engine Graphic_engine;
  * @param 
  * @return It returns a pointer to the graphic engine or NULL if there is a problem during the allocation
 */
-Graphic_engine *graphic_engine_create();
+Graphic_engine *graphic_engine_create(void);
 
 /**
  * @brief It destroys the every graphic object of the graphic engine passed by argument and free the memories

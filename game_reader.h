@@ -2,6 +2,7 @@
 #define GAME_READER_H
 
 #include "game.h"
+#include "types.h"
 
 /**
  * @brief Carga los espacios de juego

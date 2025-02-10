@@ -35,7 +35,7 @@ struct _Graphic_engine {
   Area *map, *descript, *banner, *help, *feedback;
 };
 
-Graphic_engine *graphic_engine_create() {
+Graphic_engine *graphic_engine_create(void) {
   static Graphic_engine *ge = NULL; /* Assign NULL to *ge only the first time*/
 
   if (ge) {/* Avoid errors if the function is called multiple times and the graphic engine has already been created. */
@@ -89,10 +89,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 
-  (id_act = game_get_player_location(game));
   /* Paint the in the map area */
   screen_area_clear(ge->map);
-  if (id_act != NO_ID) {
+  if ((id_act = (game_get_player_location(game))) != NO_ID) {
     space_act = game_get_space(game, id_act);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);

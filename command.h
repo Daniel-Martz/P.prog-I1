@@ -33,7 +33,7 @@ typedef struct _Command Command;
  * @param 
  * @return a new command created
  */
-Command* command_create();
+Command* command_create(void);
 
 /**
  * @brief  It deletes a command and free the memory, it also controls the errors

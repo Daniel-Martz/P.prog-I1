@@ -77,7 +77,7 @@ Space *game_get_space(Game *game, Id id);
  * @param game 
  * @return Id (player location)
  */
-Space* game_get_player_location(Game *game);
+Id game_get_player_location(Game *game);
 
 /**
  * @brief It sets to the player location the id passed as an argument
@@ -86,7 +86,7 @@ Space* game_get_player_location(Game *game);
  * @param  "game and id" a pointer to game where the player location will be changed
  * @return OK if everything was good, or ERROR if there was any issue
  */
-Status game_set_player_location(Game *game, Space* location);
+Status game_set_player_location(Game *game, Id location);
 
 /**
  * @brief It returns the the location of the object in the game

@@ -1,5 +1,16 @@
-#ifndef SPACE_H
-#define SPACE_H
+/**
+ * @file player.h
+ * @author Daniel Martinez 
+ * @brief 
+ * @version 0.1
+ * @date 2025-02-7
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
+
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include "types.h"
 

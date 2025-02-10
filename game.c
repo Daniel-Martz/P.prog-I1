@@ -81,7 +81,7 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   /* The player and the object are located in the first space */
-  game_set_player_location(game, game_get_space_id_at(game, 0));
+  game_set_player_location(game, game_get_space_id_at(game,0));
   game_set_object_location(game, game_get_space_id_at(game, 0));
 
   return OK;
@@ -97,7 +97,7 @@ Status game_destroy(Game *game) {
   }
 
   command_destroy(game->last_cmd);
-  player_destroys(game->player);
+  player_destroy(game->player);
   object_destroy(game->object);
 
   return OK;
@@ -119,9 +119,9 @@ Space *game_get_space(Game *game, Id id) {
   return NULL;
 }
 
-Space* game_get_player_location(Game *game) { return player_get_location (game->player); }
+Id game_get_player_location(Game *game) { return player_get_location (game->player); }
 
-Status game_set_player_location(Game *game, Space* location) {
+Status game_set_player_location(Game *game, Id location) {
   if (!location) {
     return ERROR;
   }
@@ -180,8 +180,8 @@ void game_print(Game *game) {
     space_print(game->spaces[i]);
   }
 
-  printf("=> Object location: %d\n", (int)game_get_object_location(game->object));
-  printf("=> Player location: %d\n", (int)game_get_player_location(game->player));
+  printf("=> Object location: %d\n", (int)game_get_object_location(game));
+  printf("=> Player location: %d\n", (int)game_get_player_location(game));
 }
 
 /**

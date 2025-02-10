@@ -101,3 +101,4 @@ const char* object_get_name (Object* obj);
 Status object_print (Object* obj);
 
 #endif
+

@@ -15,19 +15,17 @@ struct _Object {
     char name[NAME_SIZE];
 };
 
-Object* object_create (Id id, const char* name){
+Object* object_create (Id id){
 
     Object *obj=NULL;
 
-    if (id == NO_ID || !name) return NULL;
+    if (id == NO_ID) return NULL;
 
     obj = (Object*)malloc(sizeof(Object));
     if (!obj) return NULL; 
 
     obj->id = id;
-    
-    strncpy(obj->name, name, NAME_SIZE - 1);
-    obj->name[NAME_SIZE - 1] = '\0';
+    obj->name[0] = '\0';
 
     return obj;
 }

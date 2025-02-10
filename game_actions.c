@@ -105,8 +105,7 @@ void game_actions_back(Game *game) {
   Id space_id = NO_ID;
 
   space_id = game_get_player_location(game);
-
-  if (NO_ID == space_id) {
+  if (space_id == NO_ID) {
     return;
   }
 
