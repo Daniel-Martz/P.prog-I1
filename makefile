@@ -26,7 +26,7 @@ game_actions.o: game_actions.h game_actions.c
 game.o: game.h command.h space.h types.h player.h object.h game_reader.h game.c
 	$(CC) $(FLAG) -o game.o game.c
 
-game_reader.o: game_reader.h gmae.h game_reader.c 
+game_reader.o: game_reader.h game.h game_reader.c 
 	$(CC) $(FLAG) -o game_reader.o game_reader.c
 
 object.o: object.h types.h object.c 
