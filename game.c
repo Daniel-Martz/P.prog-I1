@@ -9,6 +9,7 @@
  */
 
 #include "game.h"
+#include "game_reader.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,6 +18,7 @@
 /**
    Private functions
 */
+
 /**
  * @brief It reads all game parameters from a file and create the space configurated
  * @author Daniel Martínez
@@ -24,7 +26,7 @@
  * @param "game and filename" a pointer to the Game structure and a string with the filename that will be readed
  * @return OK if there was no problem, ERROR if there was any issue during the process
 */
-Status game_load_spaces(Game *game, char *filename);
+Status game_reader_load_spaces(Game *game, char *filename);
 
 /**
  * @brief It adds a new space to the game
@@ -48,7 +50,7 @@ Id game_get_space_id_at(Game *game, int position);
 /**
    Game interface implementation
 */
-
+  
 Status game_create(Game *game) {
   int i;
 
@@ -57,10 +59,14 @@ Status game_create(Game *game) {
   }
 
   game->n_spaces = 0;
-  game->player_location = player_create(1);
-  game->object_location = object_create(1);
+  game->player = player_create(1); //Asignar un identificador
+  game->object = object_create(1); //Asignar un identificador
   game->last_cmd = command_create();
   game->finished = FALSE;
+
+  if (!game->player || !game->object || !game->last_cmd) {
+    return ERROR;
+  }
 
   return OK;
 }
@@ -70,7 +76,7 @@ Status game_create_from_file(Game *game, char *filename) {
     return ERROR;
   }
 
-  if (game_load_spaces(game, filename) == ERROR) {
+  if (game_reader_load_spaces(game, filename) == ERROR) {
     return ERROR;
   }
 
@@ -84,11 +90,15 @@ Status game_create_from_file(Game *game, char *filename) {
 Status game_destroy(Game *game) {
   int i = 0;
 
+  if (!game) return ERROR;
+
   for (i = 0; i < game->n_spaces; i++) {
     space_destroy(game->spaces[i]);
   }
 
   command_destroy(game->last_cmd);
+  player_destroys(game->player);
+  object_destroy(game->object);
 
   return OK;
 }
@@ -109,28 +119,38 @@ Space *game_get_space(Game *game, Id id) {
   return NULL;
 }
 
-Id game_get_player_location(Game *game) { return game->player_location; }
+Space* game_get_player_location(Game *game) { return player_get_location (game->player); }
 
-Status game_set_player_location(Game *game, Id id) {
-  if (id == NO_ID) {
+Status game_set_player_location(Game *game, Space* location) {
+  if (!location) {
     return ERROR;
   }
 
-  game->player_location = id;
+  player_set_location(game->player, location); //No estoy muy seguro de que me tenga quye llevar id
 
   return OK;
 }
 
-Id game_get_object_location(Game *game) { return game->object_location; }
+Id game_get_object_location(Game *game){
+  int i;
+
+  for(i=0;i<MAX_SPACES;i++)
+  {
+    if(space_get_object(game->spaces[i])) return space_get_id(game->spaces[i]);
+  }
+
+  return NO_ID;
+}
 
 Status game_set_object_location(Game *game, Id id) {
+  
 
   if (id == NO_ID) {
     return ERROR;
   }
 
-  game->object_location = id;
-  space_set_object(game_get_space(game, id), TRUE);
+  space_set_object(game_get_space(game, id), game->object);
+  
   return OK;
 }
 
@@ -160,15 +180,15 @@ void game_print(Game *game) {
     space_print(game->spaces[i]);
   }
 
-  printf("=> Object location: %d\n", (int)game->object_location);
-  printf("=> Player location: %d\n", (int)game->player_location);
+  printf("=> Object location: %d\n", (int)game_get_object_location(game->object));
+  printf("=> Player location: %d\n", (int)game_get_player_location(game->player));
 }
 
 /**
    Implementation of private functions
 */
 
-Status game_load_spaces(Game *game, char *filename) {
+Status game_reader_load_spaces(Game *game, char *filename) {
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";

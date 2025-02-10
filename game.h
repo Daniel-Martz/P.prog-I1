@@ -14,6 +14,7 @@
 #include "command.h"
 #include "space.h"
 #include "types.h"
+
 #include "player.h"
 #include "object.h"
 
@@ -25,8 +26,8 @@
  * @author Daniel Martinez
  */
 typedef struct _Game {
-  Player* player_location; /*!< Current locaton of the player*/
-  Object* object_location; /*!< Current location of any object*/
+  Player *player; /*!< Current locaton of the player*/
+  Object *object; /*!< Current location of any object*/
   Space *spaces[MAX_SPACES]; /*!< *an array of all the sapces of the game*/
   int n_spaces; /*!< Number of spaces that the game has */
   Command *last_cmd; /*!< It stores the last command called */
@@ -76,7 +77,7 @@ Space *game_get_space(Game *game, Id id);
  * @param game 
  * @return Id (player location)
  */
-Id game_get_player_location(Game *game);
+Space* game_get_player_location(Game *game);
 
 /**
  * @brief It sets to the player location the id passed as an argument
@@ -85,7 +86,7 @@ Id game_get_player_location(Game *game);
  * @param  "game and id" a pointer to game where the player location will be changed
  * @return OK if everything was good, or ERROR if there was any issue
  */
-Status game_set_player_location(Game *game, Id id);
+Status game_set_player_location(Game *game, Space* location);
 
 /**
  * @brief It returns the the location of the object in the game

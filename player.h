@@ -1,122 +1,109 @@
-/**
- * @file player.h
- * @author Daniel Martinez
- * @brief It defines the Player module interface
- * @version 0.1
- * @date 2025-02-08
- * @copyright Copyright (c) 2025
- */
-
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef SPACE_H
+#define SPACE_H
 
 #include "types.h"
-#include "space.h"
-#include "object.h"
 
-typedef struct Player_ Player;
+typedef struct _Player Player;
+
 /**
- * @brief It creates a new player, allocating the necessary memory and initializating its memebers
- * @author Daniel Martínez
+ * @brief Creates a new player from a certain Id given
+ * @author Jaime
  *
- * @param  id the identification number for the new player
- * @return a new player, initialized
+ * @param id Player identifier
+ * 
+ * @return TA new player, initiaized
  */
-Player* player_create(Id id, const char* name);
+Player* player_create (Id id);
 
 /**
- * @brief It destroys a player, freeing the allocated memory
- * @author Daniel Martínez
+ * @brief it destroys a player, freeing the allocated memory for it
+ * @author Jaime
  *
  * @param player a pointer to the player that must be destroyed
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status player_destroys(Player* player);
+Status player_destroy (Player* player);
 
 /**
- * @brief It gets the id of a player
- * @author Daniel Martínez
+ * @brief It gets the id of the player
+ * @author Jaime
  *
  * @param player a pointer to the player
- * @return the id of player
+ * @return the id of the player
  */
-Id player_get_id(Player* player);
+Id player_get_id (Player* player);
 
 /**
- * @brief It sets the id of a player
- * @author Daniel Martínez
+ * @brief It gets the object the player is carrying
+ * @author Jaime
  *
  * @param player a pointer to the player
- * @param id the id that we want to set
- * @return OK, if everything goes well or ERROR if there was some mistake
+ * @return the object that the player is carrying
  */
-Status player_set_id(Player* player, Id id);
+Id player_get_object (Player* player);
 
 /**
- * @brief It gets the name of a player
- * @author Daniel Martínez
+ * @brief Gets the player's name
+ * @author Jaime
  *
  * @param player a pointer to the player
- * @return the name of player
+ * @return a string with the name of the player
  */
-const char* player_get_name(Player* player);
+const char* player_get_name (Player* player);
 
 /**
- * @brief It sets the name of a player
- * @author Daniel Martínez
- *
- * @param player a pointer to the player
- * @param name a string with the name to store
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status player_set_name(Player* player, char* name);
-
-/**
- * @brief It gets the location of a player
- * @author Daniel Martínez
+ * @brief It gets the player's location
+ * @author Jaime
  *
  * @param player a pointer to the player
  * @return the location of the player
  */
-Space* player_get_location(Player* player);
+Id player_get_location (Player* player);
 
 /**
- * @brief It sets the location of a player
- * @author Daniel Martínez
+ * @brief Assigns an id to a player
+ * @author Jaime
  *
- * @param player a pointer to the player
- * @param name a pointer to the space that we want to set
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status player_set_location(Player* player, Space* space);
-
-/**
- * @brief It gets the object of a player
- * @author Daniel Martínez
- *
- * @param player a pointer to the player
- * @return the object of the player
- */
-Object* player_get_object(Player* player);
-
-/**
- * @brief It sets the object of a player
- * @author Daniel Martínez
- *
- * @param player a pointer to the player
- * @param name a pointer to the object to store
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status player_set_object(Player* player, Object* object);
-
-/**
- * @brief It prints the player information
- * @author Daniel Martínez
- *
- * This fucntion shows the id and name of the player, the space where the player is and wheter he has an object or not.
  * @param player a pointer to the player
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status player_print(Player* player);
+Status player_set_id (Player* player, Id id);
 
-#endif 
+/**
+ * @brief Assigns a name to a player
+ * @author Jaime
+ *
+ * @param player a pointer to the player
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status player_set_name (Player* player, const char* name);
+
+/**
+ * @brief Changes the object a player is carrying
+ * @author Jaime
+ *
+ * @param player a pointer to the player
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status player_set_object (Player* player, Id object);
+
+/**
+ * @brief Changes the player's location
+ * @author Jaime
+ *
+ * @param player a pointer to the player
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status player_set_location (Player* player, Id location);
+
+/**
+ * @brief Prints the player's information
+ * The function displays the player's Id, location, object and name
+ * @author Jaime
+ * 
+ * @param player A pointer to the player
+ * @return OK if everything goes well, ERROR if there is any failure
+ */
+Status player_print (Player* player);
+
+#endif
