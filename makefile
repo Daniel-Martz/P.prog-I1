@@ -1,9 +1,11 @@
 # Variables
 CC = gcc
-FLAG = -Wall -pedantic -g -c
+FLAG = -Wall -ansi -pedantic -g -c
 OBJ = command.o space.o graphic_engine.o game_loop.o game_actions.o game.o game_reader.o object.o player.o
 
 # Regla principal
+all: proyecto
+
 proyecto: $(OBJ)
 	$(CC) -o proyecto $(OBJ) -L. -lscreen
 

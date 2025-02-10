@@ -15,13 +15,13 @@ Player* player_create (Id id){
 
     Player *newPlayer=NULL;
 
-    //Error control
+    /*Error control*/
     if (id == NO_ID) return NULL;
 
     newPlayer= (Player*)malloc(sizeof(Player));
     if (!newPlayer) return NULL; 
 
-    //Initialization of a new Player
+    /*Initialization of a new Player*/
     newPlayer->id = id;
     newPlayer->name[0] = '\0';
     newPlayer->location = NO_ID;
