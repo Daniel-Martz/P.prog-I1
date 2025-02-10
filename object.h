@@ -30,7 +30,7 @@ typedef struct _Object Object;
  * 
  * @return El objeto creado
 */
-Object* object_create (Id id, const char* name);
+Object* object_create (Id id);
 
 /**
  * @brief Destruye un nuevo objeto y libera la memoria
