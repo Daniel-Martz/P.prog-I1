@@ -57,8 +57,8 @@ Status game_create(Game *game) {
   }
 
   game->n_spaces = 0;
-  game->player_location = NO_ID;
-  game->object_location = NO_ID;
+  game->player_location = player_create(1);
+  game->object_location = object_create(1);
   game->last_cmd = command_create();
   game->finished = FALSE;
 

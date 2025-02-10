@@ -14,6 +14,8 @@
 #include "command.h"
 #include "space.h"
 #include "types.h"
+#include "player.h"
+#include "object.h"
 
 #define MAX_SPACES 100 /* Constant that estabilshes the maximum number of spaces as 100*/
 
@@ -23,8 +25,8 @@
  * @author Daniel Martinez
  */
 typedef struct _Game {
-  Id player_location; /*!< Current locaton of the player*/
-  Id object_location; /*!< Current location of any object*/
+  Player* player_location; /*!< Current locaton of the player*/
+  Object* object_location; /*!< Current location of any object*/
   Space *spaces[MAX_SPACES]; /*!< *an array of all the sapces of the game*/
   int n_spaces; /*!< Number of spaces that the game has */
   Command *last_cmd; /*!< It stores the last command called */
