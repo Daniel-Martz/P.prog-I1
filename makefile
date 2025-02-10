@@ -8,13 +8,13 @@ proyecto: $(OBJ)
 	$(CC) -o proyecto $(OBJ) -L. -lscreen
 
 # Compilacion de archivos individuales
-space.o: space.h space.c
+space.o: space.h types.h object.h space.c
 	$(CC) $(FLAG) -o space.o space.c
 
-command.o: command.h command.c
+command.o: command.h types.h command.c
 	$(CC) $(FLAG) -o command.o command.c
 
-graphic_engine.o: graphic_engine.h types.h space.h libscreen.h graphic_engine.c
+graphic_engine.o: graphic_engine.h game.h types.h space.h libscreen.h graphic_engine.c
 	$(CC) $(FLAG) -o graphic_engine.o graphic_engine.c
 
 game_loop.o: game_actions.h game.h graphic_engine.h command.h game_loop.c
@@ -23,16 +23,16 @@ game_loop.o: game_actions.h game.h graphic_engine.h command.h game_loop.c
 game_actions.o: game_actions.h game_actions.c
 	$(CC) $(FLAG) -o game_actions.o game_actions.c
 
-game.o: game.h game.c
+game.o: game.h command.h space.h types.h player.h object.h game_reader.h game.c
 	$(CC) $(FLAG) -o game.o game.c
 
-game_reader.o: game_reader.h game_reader.c 
+game_reader.o: game_reader.h gmae.h game_reader.c 
 	$(CC) $(FLAG) -o game_reader.o game_reader.c
 
-object.o: object.h object.c 
+object.o: object.h types.h object.c 
 	$(CC) $(FLAG) -o object.o object.c
 
-player.o: player.h player.c 
+player.o: player.h types.h player.c 
 	$(CC) $(FLAG) -o player.o player.c
 
 # Limpiar archivos generados
