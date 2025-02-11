@@ -5,9 +5,45 @@
 #include <string.h>
 
 /*private function*/
+
+Status game_load_spaces(Game *game, char *filename);
+
+/**
+ * @brief It adds a new space to the game
+ * @author Daniel Martínez
+ * 
+ * @param "game and space" A pointer to the Game information and a pointer to Space struct
+ * @return OK if everything went good, ERROR if not
+*/
 Status game_add_space(Game *game, Space *space);
 
-Status game_reader_load_spaces(Game *game, char *filename) {
+/**
+ * @brief Determines the space where the player is
+ * @author Daniel Martínez
+ * 
+ * @param "game and position" A pointer to the Game information and a number with the position
+ * @return Return NO_ID if the position is negative or higher than the number of spaces that there are
+ * if its correct it return the space for that position
+*/
+Id game_get_space_id_at(Game *game, int position);
+
+Status game_reader_create_from_file(Game *game, char *filename) {
+  if (game_create(game) == ERROR) {
+    return ERROR;
+  }
+
+  if (game_load_spaces(game, filename) == ERROR) {
+    return ERROR;
+  }
+
+  /* The player and the object are located in the first space */
+  game_set_player_location(game, game_get_space_id_at(game, 0));
+  game_set_object_location(game, game_get_space_id_at(game, 0));
+
+  return OK;
+}
+
+Status game_load_spaces(Game *game, char *filename) {
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
@@ -72,4 +108,12 @@ Status game_add_space(Game *game, Space *space) {
   game->n_spaces++;
 
   return OK;
+}
+
+Id game_get_space_id_at(Game *game, int position) {
+  if (position < 0 || position >= game->n_spaces) {
+    return NO_ID;
+  }
+
+  return space_get_id(game->spaces[position]);
 }

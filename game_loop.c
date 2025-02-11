@@ -15,6 +15,7 @@
 #include "game.h"
 #include "game_actions.h"
 #include "graphic_engine.h"
+#include "game_reader.h"
 
 /**
  * @brief It initialices the game and the graphic engine controlling the errors (printing the reason of the failure)
@@ -69,7 +70,7 @@ int main(int argc, char *argv[]) {
 }
 
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
-  if (game_create_from_file(game, file_name) == ERROR) {
+  if (game_reader_create_from_file(game, file_name) == ERROR) {
     fprintf(stderr, "Error while initializing game.\n");
     return 1;
   }

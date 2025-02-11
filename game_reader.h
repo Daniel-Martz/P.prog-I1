@@ -5,12 +5,12 @@
 #include "types.h"
 
 /**
- * @brief It reads all game parameters from a file and create the space configurated
- * @author Daniel Martínez
+ * @brief It assigns a value from a file to every Game parameter, controling the errors
  * 
- * @param "game and filename" a pointer to the Game structure and a string with the filename that will be readed
- * @return OK if there was no problem, ERROR if there was any issue during the process
-*/
-Status game_reader_load_spaces(Game *game, char *filename);
+ * @author Daniel Martinez
+ * @param "game and filename" the game structure and the name of the file
+ * @return OK if everything was good, or ERROR if there was any issue
+ */
+Status game_reader_create_from_file(Game *game, char *filename);
 
 #endif

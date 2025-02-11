@@ -44,15 +44,6 @@ typedef struct _Game {
 Status game_create(Game *game);
 
 /**
- * @brief It assigns a value from a file to every Game parameter, controling the errors
- * 
- * @author Daniel Martinez
- * @param "game and filename" the game structure and the name of the file
- * @return OK if everything was good, or ERROR if there was any issue
- */
-Status game_create_from_file(Game *game, char *filename);
-
-/**
  * @brief It destroies all the spaces and the commands
  * 
  * @author Daniel Martinez

@@ -84,7 +84,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   /* Declare de needed local variables of the function */
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID; 
   Space *space_act = NULL;
-  char obj = '\0';
+  char obj = '*';
   char str[255];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
@@ -95,43 +95,41 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     space_act = game_get_space(game, id_act);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
-
-    if (game_get_object_location(game) == id_back)
-      obj = '*';
-    else
-      obj = ' ';
+    obj_loc = game_get_object_location(game);
 
     if (id_back != NO_ID) {
       sprintf(str, "  |         %2d|", (int)id_back);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
-      screen_area_puts(ge->map, str);
+      if(obj_loc == id_back){
+        sprintf(str, "  |     %c     |", obj);
+        screen_area_puts(ge->map, str);
+      }
+      else{ 
+        sprintf(str, "  |           |");
+        screen_area_puts(ge->map, str);
+      }
       sprintf(str, "  +-----------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "        ^");
       screen_area_puts(ge->map, str);
     }
 
-    if (game_get_object_location(game) == id_act)
-      obj = '*';
-    else
-      obj = ' ';
-
     if (id_act != NO_ID) {
       sprintf(str, "  +-----------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "  | m0^     %2d|", (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
-      screen_area_puts(ge->map, str);
+      if(obj_loc == id_act){
+        sprintf(str, "  |     %c     |", obj);
+        screen_area_puts(ge->map, str);
+      }
+      else{ 
+        sprintf(str, "  |           |");
+        screen_area_puts(ge->map, str);
+      }
       sprintf(str, "  +-----------+");
       screen_area_puts(ge->map, str);
     }
-
-    if (game_get_object_location(game) == id_next)
-      obj = '*';
-    else
-      obj = ' ';
 
     if (id_next != NO_ID) {
       sprintf(str, "        v");
@@ -140,14 +138,22 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->map, str);
       sprintf(str, "  |         %2d|", (int)id_next);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
+      if(obj_loc == id_next){
+        sprintf(str, "  |     %c     |", obj);
+        screen_area_puts(ge->map, str);
+      }
+      else{ 
+        sprintf(str, "  |           |");
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "  +-----------+");
       screen_area_puts(ge->map, str);
     }
   }
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  if ((obj_loc = game_get_object_location(game)) != NO_ID) {
+  if (obj_loc != NO_ID) {
     sprintf(str, "  Object location:%d", (int)obj_loc);
     screen_area_puts(ge->descript, str);
   }
@@ -159,7 +165,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, "     next or n, back or b, exit or e");
+  sprintf(str, "     next or n, back or b, exit or e, take or t, drop or d");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
