@@ -26,8 +26,8 @@
  * @author Daniel Martinez
  */
 typedef struct _Game {
-  Player *player; /*!< Current locaton of the player*/
-  Object *object; /*!< Current location of any object*/
+  Player *player; /*!< Current location of the player and it information */
+  Object *object; /*!< Information of the object*/
   Space *spaces[MAX_SPACES]; /*!< *an array of all the sapces of the game*/
   int n_spaces; /*!< Number of spaces that the game has */
   Command *last_cmd; /*!< It stores the last command called */

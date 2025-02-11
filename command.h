@@ -14,13 +14,13 @@
 #include "types.h"
 
 #define N_CMDT 2 /* It defines a constant for the the abreviature of the command and the command*/
-#define N_CMD 5 /* It defines a constant for the number of commands */
+#define N_CMD 7 /* It defines a constant for the number of commands */
 
-/* It establishes a data type for the two posible command types */
+/* It establishes a data type for the two posible ways to refer to a command */
 typedef enum { CMDS, CMDL } CommandType;
 
-/*It establishses a data type for the posible 5 commands*/
-typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK } CommandCode;
+/*It establishses a data type for the posible 7 commands*/
+typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, TAKE, DROP } CommandCode;
 
 /*It estiblishes a structure that will contain the name of the command*/
 typedef struct _Command Command;

@@ -156,12 +156,12 @@ Status space_set_object(Space* space, Object* object);
  * @param space a pointer to the space
  * @return a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
  */
-Object* space_get_object(Space* space);
+Id space_get_object(Space* space);
 
 /**
  * @brief It prints the space information
  * @author Profesores PPROG
- *
+ *ss
  * This fucntion shows the id and name of the space, the spaces that surrounds it and wheter it has an object or not.
  * @param space a pointer to the space
  * @return OK, if everything goes well or ERROR if there was some mistake

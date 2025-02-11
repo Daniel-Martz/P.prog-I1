@@ -8,7 +8,7 @@ struct _Player {
     Id id;
     char name[WORD_SIZE];
     Id location; 
-    Id object;
+    Id object_id;
 };
 
 Player* player_create (Id id){
@@ -25,7 +25,7 @@ Player* player_create (Id id){
     newPlayer->id = id;
     newPlayer->name[0] = '\0';
     newPlayer->location = NO_ID;
-    newPlayer->object = NO_ID;
+    newPlayer->object_id = NO_ID;
 
     return newPlayer;
 }
@@ -47,7 +47,7 @@ Id player_get_id (Player* player){
 
 Id player_get_object (Player* player){
     if (!player) return NO_ID;
-    return player->object;
+    return player->object_id;
 }
 
 const char* player_get_name (Player* player){
@@ -79,7 +79,7 @@ Status player_set_name (Player* player, const char* name){
 
 Status player_set_object (Player* player, Id object){
     if (!player) return ERROR;
-    player->object = object;
+    player->object_id = object;
     return OK;
 }
 
@@ -92,6 +92,6 @@ Status player_set_location (Player* player, Id location){
 Status player_print (Player* player){
     if (!player) return ERROR;
 
-    fprintf(stdout, " Player ID: %ld\n Name: %s\n Location: %ld\n Object: %ld\n", player->id, player->name, player->location, player->object);
+    fprintf(stdout, " Player ID: %ld\n Name: %s\n Location: %ld\n Object: %ld\n", player->id, player->name, player->location, player->object_id);
     return OK;
 }

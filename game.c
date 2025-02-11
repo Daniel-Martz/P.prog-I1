@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define INIT_ID 1 /*Constant that refers to the starting id of a player and object */
+
 /**
    Private functions
 */
@@ -51,8 +53,8 @@ Status game_create(Game *game) {
   }
 
   game->n_spaces = 0;
-  game->player = player_create(1); 
-  game->object = object_create(1); 
+  game->player = player_create(INIT_ID); 
+  game->object = object_create(INIT_ID); 
   game->last_cmd = command_create();
   game->finished = FALSE;
 
