@@ -19,29 +19,35 @@
 
 /**
  * @brief It initialices the game and the graphic engine controlling the errors (printing the reason of the failure)
- * @author Daniel Martínez
+ * @author Jaime Romero
  *
- * @param "game gengine file_name" a pointer to the game, a double pointer to the graphic engine and a string of the name of the file where the information of the game are
+ * @param game a pointer to game
+ * @param gengine a double pointer to the graphic engine
+ * @param file_name a string with the name of the file 
+ * 
  * @return 1 if everything was good and 0 if not 
  */
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
 
 /**
- * @brief It activates the graphic engine and do the action of the last command selected, it will wait until it recives the next command
- * and it won´t stop until the command introduced say it or the game finish, it also check that there is a graphic engine
- * @author Daniel Martínez
+ * @brief It initiates the graphic engine and do the action of the last command selected. It will keep on going (nothing will change) until it recives the next command.
+ * It won´t stop until the command introduced says so or the game finishes
+ * @author Jaime Romero
  *
- * @param "game and gengine" that are the structure of the game and a pointer to the grafic engine
- * @return nothing
+ * @param game A pointer to Game
+ * @param engine A pointer to the grafic engine
+ * 
+ * @return void (nothing)
  */
 void game_loop_run(Game game, Graphic_engine *gengine);
 
 /**
- * @brief It destroies the game and the graphic engine
- * @author Daniel Martínez
+ * @brief It destroys the game and the graphic engine
+ * @author Jaime Romero
  *
- * @param "game and gengine" that are the structure of the game and a pointer to the grafic engine
- * @return nothing
+ * @param game A pointer to Game
+ * @param gengine A pointer to the grafic engine
+ * @return void (nothing)
  */
 void game_loop_cleanup(Game game, Graphic_engine *gengine);
 
@@ -49,8 +55,9 @@ void game_loop_cleanup(Game game, Graphic_engine *gengine);
  * @brief Checks if the user has provided a game data file and initializes it
  * @author Daniel Martínez
  *
- * @param "argc and argv" first one refers to the number of arguments passed to the program and the other one is an array of strings with the aruments
- * @return 1 if everything was good and 0 if not
+ * @param argc It refers to the number of arguments passed to the program
+ * @param argv An array of strings with the aruments
+ * @return 1 if everything was correct and 0 if not
  */
 int main(int argc, char *argv[]) {
   Game game;

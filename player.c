@@ -1,3 +1,14 @@
+/**
+ * @brief It implements the player module
+ * @file player.h
+ * @author Jaime Romero
+ * 
+ * @version 0.1
+ * @date 2025-02-7
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -92,6 +103,6 @@ Status player_set_location (Player* player, Id location){
 Status player_print (Player* player){
     if (!player) return ERROR;
 
-    fprintf(stdout, " Player ID: %ld\n Name: %s\n Location: %ld\n Object: %ld\n", player->id, player->name, player->location, player->object_id);
+    fprintf(stdout, " Player ID: %ld\n Name: %s\n", player->id, player->name);
     return OK;
 }

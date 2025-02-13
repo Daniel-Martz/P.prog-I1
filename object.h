@@ -1,16 +1,20 @@
 /**
+ * @brief It defines the object module
+ * 
  * @file object.h
- * @author Daniel Martinez (you@domain.com)
- * @brief 
+ * @author Jaime Romero
+ * 
  * @version 0.1
  * @date 2025-02-08
  * 
  * @copyright Copyright (c) 2025
  */
+
 #ifndef OBJECT_H
 #define OBJECT_H
 
 #include "types.h"
+#include "player.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,83 +24,83 @@
 typedef struct _Object Object;
 
 /**
- * @brief Crea un nuevo objeto a partir de un Id y un nombre 
- * dado
+ * @brief Creates a new object from a given Id and name
  * 
- * @author Jaime y Dani
+ * @author Jaime Romero
  * 
- * @param id Identificador del objeto
- * @param name Nombre del objeto 
+ * @param id Object identifier
+ * @param name Object name
  * 
- * @return El objeto creado
-*/
+ * @return The created object
+ */
 Object* object_create (Id id);
 
 /**
- * @brief Destruye un nuevo objeto y libera la memoria
+ * @brief Destroys an object and frees memory
  * 
- * @author Jaime y Dani
+ * @author Jaime Romero
  * 
- * @param obj Un puntero al objeto que hay que destruri 
+ * @param obj A pointer to the object that needs to be destroyed
  * 
- * @return OK si todo va bien, ERROR si hay algún fallo
-*/
+ * @return OK if everything goes well, ERROR if there is a failure
+ */
 Status object_destroy(Object* obj);
 
 /**
- * @brief Obtiene el Id de un objeto
+ * @brief Gets the Id of an object
  * 
- * @author Jaime y Dani
+ * @author Jaime Romero
  * 
- * @param obj Un puntero al objeto
+ * @param obj A pointer to the object
  * 
- * @return El Id del objeto
+ * @return The Id of the object
  */
 Id object_get_id(Object* obj); 
 
 /**
- * @brief Adjudica un id a un objeto. No sé si esta función es 
- * necesaria ya que no está en space.h
+ * @brief Assigns an Id to an object. I'm not sure if this function 
+ * is necessary since it is not in space.h
  * 
- * @author Dani y Jaime
+ * @author Jaime Romero
  * 
- * @param obj Un puntero al objeto
- * @param id Una variable para el id del objeto
+ * @param obj A pointer to the object
+ * @param id A variable for the object's Id
  * 
- * @return OK si todo va bien, ERROR si hay algún fallo
+ * @return OK if everything goes well, ERROR if there is a failure
  */
 Status object_set_id (Object* obj, Id id);
 
 /**
- * @brief Adjudica un nombre a un objeto
+ * @brief Assigns a name to an object
  * 
- * @author Dani y Jaime
+ * @author Jaime Romero
  * 
- * @param obj Un puntero al objeto
- * @param name Una cadena con el nombre del objeto
+ * @param obj A pointer to the object
+ * @param name A string with the object's name
  * 
- * @return OK si todo va bien, ERROR si hay algún fallo
+ * @return OK if everything goes well, ERROR if there is a failure
  */
 Status object_set_name (Object* obj, char* name);
 
 /**
- * @brief Obtiene el nombre del objeto
- * @author Dani y Jaime
+ * @brief Gets the name of the object
+ * 
+ * @author Jaime Romero
  *
- * @param obj Un puntero al objeto
- * @return  Una cadena con el nombre del objeto
+ * @param obj A pointer to the object
+ * @return A string with the object's name
  */
 const char* object_get_name (Object* obj);
 
 /**
- * @brief Imprime la informacion del objeto
- * La función mustra el Id y el nombre del objeto
+ * @brief Prints the object's information  
+ * The function displays the Id and name of the object
  * 
- * @author Dani y Jaime
+ * @author Jaime Romero
  * 
- * @param obj a pointer to the space
+ * @param obj A pointer to the object
  * 
- * @return OK si todo va bien, ERROR si hay algún fallo
+ * @return OK if everything goes well, ERROR if there is a failure
  */
 Status object_print (Object* obj);
 

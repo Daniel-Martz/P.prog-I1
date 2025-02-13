@@ -1,7 +1,8 @@
 /**
+ * @brief It implements the object module
  * @file object.c
  * @author Jaime Romero
- * @brief 
+ * 
  * @version 0.1
  * @date 2025-02-08
  * 

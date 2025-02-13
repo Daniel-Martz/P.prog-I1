@@ -23,7 +23,7 @@
 /**
  * @brief This struct stores all the information of the game
  *
- * @author Daniel Martinez
+ * @author Jaime Romero
  */
 typedef struct _Game {
   Player *player; /*!< Current location of the player and it information */
@@ -35,110 +35,118 @@ typedef struct _Game {
 } Game;
 
 /**
- * @brief It initialices every vaible of a game to default values (0, NULL, NO_ID...)
+ * @brief It initialices every variable of Game to default values (0, NULL, NO_ID...)
  * 
- * @author Daniel Martinez
+ * @author Jaime Romero
  * @param game 
- * @return OK if everything was good, or ERROR if there was any issue
+ * @return OK if everything worked properly or ERROR if it didn't
  */
 Status game_create(Game *game);
 
 /**
- * @brief It destroies all the spaces and the commands
+ * @brief It destroys all the spaces and commands
  * 
- * @author Daniel Martinez
+ * @author Jaime Romero
  * @param game 
- * @return OK if everything was good, or ERROR if there was any issue
+ * @return OK if everything worked properly or ERROR if it didn't
  */
 Status game_destroy(Game *game);
 
 /**
- * @brief It search for the space from the Game that has the id passed by argument
+ * @brief It searches a certain space where an Id passed by argument is
  * 
- * @author Daniel Martinez
- * @param "game and id" a pointer to the game and the id we are looking for
+ * @author Jaime Romero
+ * 
+ * @param game A pointer to the game
+ * @param id The id we are looking for
+ * 
  * @return A Space
  */
 Space *game_get_space(Game *game, Id id);
 
 /**
- * @brief It returns the player id (location)
+ * @brief It just returns the player id (location)
  * 
- * @author Daniel Martinez
+ * @author Jaime Romero
  * @param game 
  * @return Id (player location)
  */
 Id game_get_player_location(Game *game);
 
 /**
- * @brief It sets to the player location the id passed as an argument
+ * @brief It sets the player location as the id passed as an argument
  * 
- * @author Daniel Martinez
- * @param  "game and id" a pointer to game where the player location will be changed
- * @return OK if everything was good, or ERROR if there was any issue
+ * @author Jaime Romero
+ * @param game A pointer to game 
+ * @param id The Id of a player whose location will be changed
+ * @return OK if everything worked properly or ERROR if it didn't
  */
 Status game_set_player_location(Game *game, Id location);
 
 /**
- * @brief It returns the the location of the object in the game
+ * @brief It returns the the location of the object
  * 
- * @author Daniel Martinez
- * @param  game
- * @return An id that is the location of the object
+ * @author Jaime Romero
+ * @param  game A pointer to game
+ * @return An id which is the location of the object
  */
 Id game_get_object_location(Game *game);
 
 /**
  * @brief It sets to the object location the id passed as an argument
  * 
- * @author Daniel Martinez
- * @param  "game and id" a pointer to game where the object location will be changed
+ * @author Jaime Romero
+ * @param game A pointer to game
+ * @param id  The id of an object whose location will be changed
+ * 
  * @return OK if everything was good, or ERROR if there was any issue
  */
 Status game_set_object_location(Game *game, Id id);
 
 /**
- * @brief It returns the las command
+ * @brief It returns the las command received
  * 
- * @author Daniel Martinez
- * @param  game
- * @return a pointer to the structure of the command
+ * @author Jaime Romero
+ * @param game A pointer to Game
+ * @return a pointer to the structure "command"
  */
 Command* game_get_last_command(Game *game);
 
 /**
- * @brief It set to the last command of the game the command passed aas an argument
+ * @brief It sets as the last command executed a command passed by argument
  * 
- * @author Daniel Martinez
- * @param  "game and command" a pointer to game where the object location will be changed and the respective command
- * @return OK if everything was good, or ERROR if there was any issue
+ * @author Jaime Romero
+ * @param game A pointer to game
+ * @param command The respective command which will be established as the last command used
+ * @return OK if everything worked properly or ERROR if it didn't
  */
 Status game_set_last_command(Game *game, Command *command);
 
 /**
- * @brief It returns is the game is finished or not
+ * @brief It says if the game is finished or not
  * 
- * @author Daniel Martinez
- * @param  game 
+ * @author Jaime Romero
+ * @param game A pointer to game
  * @return True(1) or False(0)
  */
 Bool game_get_finished(Game *game);
 
 /**
- * @brief It establishes the game to "finished" if the boolean variable entered is 1
+ * @brief It sets the game to "finished" if the boolean variable gotten by the last function is 1
  * 
- * @author Daniel Martinez
- * @param  "game and finished" game refers to the Game sructure finished refers to a boolean value (1 if the game is finished 0 if not)
- * @return OK if everything was good, or ERROR if there was any issue
+ * @author Jaime Romero
+ * @param game A pointer to Game
+ * @param finished It refers to a boolean value (1 if the game is finished 0 if not)
+ * @return OK if everything worked properly or ERROR if it didn't
  */
 Status game_set_finished(Game *game, Bool finished);
 
 /**
- * @brief It prints all the spaces and it also prints where the player and the object are 
+ * @brief It prints all the spaces and the player and object's location 
  * 
- * @author Daniel Martinez
- * @param  game pointer to the structure of the game
- * @return nothing
+ * @author Jaime Romero
+ * @param  game A pointer to Game
+ * @return VOID (Nothing)
  */
 void game_print(Game *game);
 
