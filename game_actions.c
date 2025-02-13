@@ -23,38 +23,38 @@ void game_actions_unknown(Game *game);
 void game_actions_exit(Game *game);
 
 /**
- * @brief It checks that the player is in a valid location and then change the location to the south if it is valid
- * @author Daniel Martínez
+ * @brief It checks that the player is in a valid location and then change the location to south if it is valid
+ * @author Jaime Romero
  * 
  * @param game a pointer to Game
- * @return nothing
+ * @return As a void, the function doesn't return anything
 */
 void game_actions_next(Game *game);
 
 /**
- * @brief It checks that the player is in a valid location and then change the location to the north if it is valid
- * @author Daniel Martínez
+ * @brief It checks that the player is in a valid location and then change the location to north if it is valid
+ * @author Jaime Romero
  * 
  * @param game a pointer to Game
- * @return nothing
+ * @return As a void, the function doesn't return anything
 */
 void game_actions_back(Game *game);
 
 /**
- * @brief It checks that the player is in a valid location and then change the location to the north if it is valid
+ * @brief It takes an object from a certain location
  * @author Daniel Martínez
  * 
  * @param game a pointer to Game
- * @return nothing
+ * @return As a void, the function doesn't return anything
 */
 void game_actions_take(Game *game);
 
 /**
- * @brief It checks that the player is in a valid location and then change the location to the north if it is valid
+ * @brief It drops the object previously taken
  * @author Daniel Martínez
  * 
  * @param game a pointer to Game
- * @return nothing
+ * @return As a void, the function doesn't return anything
 */
 void game_actions_drop(Game *game);
 

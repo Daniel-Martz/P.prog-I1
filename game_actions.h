@@ -24,7 +24,8 @@
  *  BACK: Moves to the south
  * @author Daniel Martínez
  * 
- * @param (game and cmd) pointers to the Game structure and to the command that contains the action
+ * @param game pointer to Game structure
+ * @param cmd  Pointer to the command that contains the action
  * @return OK if everything was correct, ERROR if not
 */
 Status game_actions_update(Game *game, Command *cmd);

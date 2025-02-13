@@ -1,3 +1,13 @@
+/**
+ * @brief It creates and adds the spaces 
+ * @file object.c
+ * @author Jaime Romero
+ * 
+ * @version 0.1
+ * @date 2025-02-08
+ * 
+ * @copyright Copyright (c) 2025
+ */
 #include "game_reader.h"
 
 #include <stdio.h>
@@ -10,20 +20,24 @@ Status game_load_spaces(Game *game, char *filename);
 
 /**
  * @brief It adds a new space to the game
- * @author Daniel Martínez
+ * @author Jaime Romero
  * 
- * @param "game and space" A pointer to the Game information and a pointer to Space struct
+ * @param game A pointer to Game
+ * @param space A pointer to Space
+ * 
  * @return OK if everything went good, ERROR if not
 */
 Status game_add_space(Game *game, Space *space);
 
 /**
  * @brief Determines the space where the player is
- * @author Daniel Martínez
+ * @author Jaime Romero
  * 
- * @param "game and position" A pointer to the Game information and a number with the position
- * @return Return NO_ID if the position is negative or higher than the number of spaces that there are
- * if its correct it return the space for that position
+ * @param game A pointer to Game
+ * @param position A number with the position
+ * 
+ * @return Return NO_ID if the position is negative or higher than the number of spaces available
+ * if it's correct, it returns the id of the space in that position
 */
 Id game_get_space_id_at(Game *game, int position);
 

@@ -30,7 +30,7 @@ typedef struct _Command Command;
     needed and initializates it and returns it
  * @author Profesores PPROG
  *
- * @param 
+ * @param void There is noargument passed to the function
  * @return a new command created
  */
 Command* command_create(void);
@@ -72,3 +72,4 @@ CommandCode command_get_code(Command* command);
 Status command_get_user_input(Command* command);
 
 #endif
+

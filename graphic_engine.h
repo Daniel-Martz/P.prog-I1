@@ -1,11 +1,11 @@
 /**
- * @brief It defines the textual graphic engine interface
- *
- * @file graphic_engine.h
- * @author Profesores PPROG
- * @version 0
- * @date 27-01-2025
- * @copyright GNU Public License
+ * @brief The function creates teverything showed on screen
+ * @file object.c
+ * @author Daniel Martinez
+ * @version 0.1
+ * @date 2025-02-08
+ * 
+ * @copyright Copyright (c) 2025
  */
 
 #ifndef GRAPHIC_ENGINE_H
@@ -16,31 +16,32 @@
 typedef struct _Graphic_engine Graphic_engine; 
 
 /**
- * @brief It creates the graphic engine doing the allocation of space and establish to every graphic object it dimension
+ * @brief It creates the graphic engine doing the allocation of space and establishes to every graphic object it dimension
  * @author Daniel Martínez
  * 
- * @param 
+ * @param void nothing is passed as an argument
  * @return It returns a pointer to the graphic engine or NULL if there is a problem during the allocation
 */
 Graphic_engine *graphic_engine_create(void);
 
 /**
- * @brief It destroys the every graphic object of the graphic engine passed by argument and free the memories
+ * @brief It destroys every object of the graphic engine passed by argument and frees the memories
  * @author Daniel Martínez
  * 
  * @param ge a pointer to a graphic engine
- * @return nothing
+ * @return void (Nothing)
 */
 void graphic_engine_destroy(Graphic_engine *ge);
 
 /**
  * @brief It is responsible for updating and displaying the game's text-based 
- * graphical interface. It draws the map with the player's and objects' 
- * locations, displays information in different screen areas 
- * (description, banner, help, and feedback), and finally prints the result to the terminal
+ * graphic interface. It draws the map with the player and object's 
+ * location and displays information in different screen areas.
+ * (description, banner, help, and feedback). Finally, it prints the result on the terminal
  * @author Daniel Martínez
  * 
- * @param "ge and game" pointers to a graphic engine struct and to a game struct
+ * @param ge A pointer to Grafic_engine
+ * @param game A pointer to Game
  * @return Nothing
 */
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game);

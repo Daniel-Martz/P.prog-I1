@@ -27,7 +27,7 @@
 #define HEIGHT_FDB 3 /*Constant asignated for the height of feedback interface*/
 
 /**
- * @brief This struct stores all the information of a graphic engine.
+ * @brief This struct stores all the information of the graphic engine (everything showed by screen).
  *
  * @author Daniel Martinez
  */
