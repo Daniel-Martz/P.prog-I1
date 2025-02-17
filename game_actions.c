@@ -2,7 +2,7 @@
  * @brief It implements the game update through user actions
  *
  * @file game.c
- * @author Profesores PPROG
+ * @author Daniel Martinez
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
@@ -18,8 +18,22 @@
    Private functions
 */
 
+/**
+ * @brief It is used for unknown commands and it does nothing
+ * 
+ * @author Jaime Romero
+ * @param game a pointer to game
+ * @return Nothing
+ */
 void game_actions_unknown(Game *game);
 
+/**
+ * @brief It exits the game
+ * 
+ * @author Jaime Romero
+ * @param game a pointer to game
+ * @return Nothing
+ */
 void game_actions_exit(Game *game);
 
 /**

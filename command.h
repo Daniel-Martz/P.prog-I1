@@ -2,7 +2,7 @@
  * @brief It defines the command interpreter interface
  *
  * @file command.h
- * @author Profesores PPROG
+ * @author Daniel Martinez
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
@@ -28,7 +28,7 @@ typedef struct _Command Command;
 /**
  * @brief It creates a command allocating the space 
     needed and initializates it and returns it
- * @author Profesores PPROG
+ * @author Daniel Martinez
  *
  * @param void There is noargument passed to the function
  * @return a new command created
