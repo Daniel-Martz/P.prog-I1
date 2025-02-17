@@ -11,9 +11,14 @@
 #include "object.h"
 #include <string.h>
 
+/**
+ * @brief It stores information about an object
+ * 
+ * @author Jaime Romero
+ */
 struct _Object {
-    Id id;
-    char name[NAME_SIZE];
+    Id id; /*The identification of the object*/
+    char name[NAME_SIZE]; /*Objects name*/
 };
 
 Object* object_create (Id id){

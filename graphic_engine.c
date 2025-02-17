@@ -2,7 +2,7 @@
  * @brief It implements a textual graphic engine
  *
  * @file graphic_engine.c
- * @author Profesores PPROG
+ * @author Daniel Martinez
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License

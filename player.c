@@ -1,7 +1,7 @@
 /**
  * @brief It implements the player module
  * @file player.h
- * @author Jaime Romero
+ * @author Daniel Martinez
  * 
  * @version 0.1
  * @date 2025-02-7
@@ -15,11 +15,17 @@
 
 #include "player.h"
 
+/**
+ * @brief It stores infomation about a player
+ * 
+ * @author Daniel Martinez
+ * 
+ */
 struct _Player {
-    Id id;
-    char name[WORD_SIZE];
-    Id location; 
-    Id object_id;
+    Id id; /*The identification for the player*/
+    char name[WORD_SIZE]; /*Player's name*/
+    Id location; /*Player's location (stored as an Id)*/
+    Id object_id; /*Id of the objcet carried by the player*/
 };
 
 Player* player_create (Id id){
