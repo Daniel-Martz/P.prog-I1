@@ -10,25 +10,25 @@ proyecto: $(OBJS)
 	$(CC) -o proyecto $(OBJS) -L. -lscreen
 
 # Compilacion de archivos individuales
-space.o: space.h types.h object.h space.c
+space.o: space.c space.h types.h object.h player.h
 	$(CC) $(CFLAGS) -o space.o space.c
 
 command.o: command.h types.h command.c
 	$(CC) $(CFLAGS) -o command.o command.c
 
-graphic_engine.o: graphic_engine.h game.h types.h space.h libscreen.h graphic_engine.c
+graphic_engine.o: graphic_engine.c graphic_engine.h game.h command.h types.h space.h player.h object.h libscreen.h
 	$(CC) $(CFLAGS) -o graphic_engine.o graphic_engine.c
 
-game_loop.o: game_actions.h game.h graphic_engine.h command.h game_loop.c
+game_loop.o: game_loop.c command.h types.h game.h space.h player.h object.h game_actions.h graphic_engine.h game_reader.h
 	$(CC) $(CFLAGS) -o game_loop.o game_loop.c
 
-game_actions.o: game_actions.h game_actions.c
+game_actions.o: game_actions.c game_actions.h command.h types.h game.h space.h player.h object.h
 	$(CC) $(CFLAGS) -o game_actions.o game_actions.c
 
-game.o: game.h command.h space.h types.h player.h object.h game_reader.h game.c
+game.o: game.c game.h command.h types.h space.h player.h object.h game_reader.h
 	$(CC) $(CFLAGS) -o game.o game.c
 
-game_reader.o: game_reader.h game.h game_reader.c 
+game_reader.o: game_reader.c game_reader.h game.h command.h types.h space.h player.h object.h 
 	$(CC) $(CFLAGS) -o game_reader.o game_reader.c
 
 object.o: object.h types.h object.c 

@@ -12,7 +12,6 @@
 #define SPACE_H
 
 #include "types.h"
-#include "object.h"
 
 typedef struct _Space Space;
 

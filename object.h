@@ -14,7 +14,6 @@
 #define OBJECT_H
 
 #include "types.h"
-#include "player.h"
 
 #include <stdio.h>
 #include <stdlib.h>
