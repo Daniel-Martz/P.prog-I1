@@ -27,7 +27,7 @@
  * 
  * @return 1 if everything was good and 0 if not 
  */
-int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
+int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name);
 
 /**
  * @brief It initiates the graphic engine and do the action of the last command selected. It will keep on going (nothing will change) until it recives the next command.
@@ -39,7 +39,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
  * 
  * @return void (nothing)
  */
-void game_loop_run(Game game, Graphic_engine *gengine);
+void game_loop_run(Game *game, Graphic_engine *gengine);
 
 /**
  * @brief It destroys the game and the graphic engine
@@ -49,7 +49,7 @@ void game_loop_run(Game game, Graphic_engine *gengine);
  * @param gengine A pointer to the grafic engine
  * @return void (nothing)
  */
-void game_loop_cleanup(Game game, Graphic_engine *gengine);
+void game_loop_cleanup(Game *game, Graphic_engine *gengine);
 
 /**
  * @brief Checks if the user has provided a game data file and initializes it
@@ -60,7 +60,7 @@ void game_loop_cleanup(Game game, Graphic_engine *gengine);
  * @return 1 if everything was correct and 0 if not
  */
 int main(int argc, char *argv[]) {
-  Game game;
+  Game *game = NULL;
   Graphic_engine *gengine;
 
   if (argc < 2) {
@@ -76,39 +76,39 @@ int main(int argc, char *argv[]) {
   return 0;
 }
 
-int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name) {
-  if (game_reader_create_from_file(game, file_name) == ERROR) {
+int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name) {
+  if (!(*game = game_create_from_file(file_name))) {
     fprintf(stderr, "Error while initializing game.\n");
     return 1;
   }
 
   if ((*gengine = graphic_engine_create()) == NULL) {
     fprintf(stderr, "Error while initializing graphic engine.\n");
-    game_destroy(game);
+    game_destroy(*game);
     return 1;
   }
 
   return 0;
 }
 
-void game_loop_run(Game game, Graphic_engine *gengine) {
+void game_loop_run(Game *game, Graphic_engine *gengine) {
   Command *last_cmd;
 
-  if (!gengine) {
+  if (!gengine || !game) {
     return;
   }
 
-  last_cmd=game_get_last_command(&game);
+  last_cmd=game_get_last_command(game);
 
-  while ((command_get_code(last_cmd) != EXIT) && (game_get_finished(&game) == FALSE)) {
-    graphic_engine_paint_game(gengine, &game);
+  while ((command_get_code(last_cmd) != EXIT) && (game_get_finished(game) == FALSE)) {
+    graphic_engine_paint_game(gengine, game);
     command_get_user_input(last_cmd);
-    game_actions_update(&game, last_cmd);
+    game_actions_update(game, last_cmd);
   }
 
 }
 
-void game_loop_cleanup(Game game, Graphic_engine *gengine) {
-  game_destroy(&game);
+void game_loop_cleanup(Game *game, Graphic_engine *gengine) {
+  game_destroy(game);
   graphic_engine_destroy(gengine);
 }

@@ -20,19 +20,7 @@
 
 #define MAX_SPACES 100 /* Constant that estabilshes the maximum number of spaces as 100*/
 
-/**
- * @brief This struct stores all the information of the game
- *
- * @author Jaime Romero
- */
-typedef struct _Game {
-  Player *player; /*!< Current location of the player and it information */
-  Object *object; /*!< Information of the object*/
-  Space *spaces[MAX_SPACES]; /*!< *an array of all the sapces of the game*/
-  int n_spaces; /*!< Number of spaces that the game has */
-  Command *last_cmd; /*!< It stores the last command called */
-  Bool finished; /*!< It defines if the game finished or not */
-} Game;
+typedef struct _Game Game;
 
 /**
  * @brief It initialices every variable of Game to default values (0, NULL, NO_ID...)
@@ -41,7 +29,29 @@ typedef struct _Game {
  * @param game 
  * @return OK if everything worked properly or ERROR if it didn't
  */
-Status game_create(Game *game);
+Game *game_create(void);
+
+/**
+ * @brief It adds a new space to the game
+ * @author Jaime Romero
+ * 
+ * @param game A pointer to Game
+ * @param space A pointer to Space
+ * 
+ * @return OK if everything went good, ERROR if not
+*/
+Status game_add_space(Game *game, Space *space);
+
+/**
+ * @brief It assigns a value from a file to every Game parameter, controling the errors
+ * 
+ * @author Jaime Romero
+ * @param game A pointer to Game
+ * @param filename A string with the name of the file
+ * 
+ * @return OK if everything worked correctly or ERROR if it didn't
+ */
+Game *game_create_from_file(char *filename);
 
 /**
  * @brief It destroys all the spaces and commands
@@ -63,6 +73,28 @@ Status game_destroy(Game *game);
  * @return A Space
  */
 Space *game_get_space(Game *game, Id id);
+
+/**
+ * @brief It searches for the player of the game
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param game A pointer to the game
+ * 
+ * @return A Player
+ */
+Player *game_get_player(Game *game);
+
+/**
+ * @brief It searches for the object of the game
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param game A pointer to the game
+ * 
+ * @return An object
+ */
+Object *game_get_object(Game *game);
 
 /**
  * @brief It just returns the player id (location)

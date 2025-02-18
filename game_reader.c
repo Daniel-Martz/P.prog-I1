@@ -14,50 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-/*private function*/
-
-Status game_load_spaces(Game *game, char *filename);
-
-/**
- * @brief It adds a new space to the game
- * @author Jaime Romero
- * 
- * @param game A pointer to Game
- * @param space A pointer to Space
- * 
- * @return OK if everything went good, ERROR if not
-*/
-Status game_add_space(Game *game, Space *space);
-
-/**
- * @brief Determines the space where the player is
- * @author Jaime Romero
- * 
- * @param game A pointer to Game
- * @param position A number with the position
- * 
- * @return Return NO_ID if the position is negative or higher than the number of spaces available
- * if it's correct, it returns the id of the space in that position
-*/
-Id game_get_space_id_at(Game *game, int position);
-
-Status game_reader_create_from_file(Game *game, char *filename) {
-  if (game_create(game) == ERROR) {
-    return ERROR;
-  }
-
-  if (game_load_spaces(game, filename) == ERROR) {
-    return ERROR;
-  }
-
-  /* The player and the object are located in the first space */
-  game_set_player_location(game, game_get_space_id_at(game, 0));
-  game_set_object_location(game, game_get_space_id_at(game, 0));
-
-  return OK;
-}
-
-Status game_load_spaces(Game *game, char *filename) {
+Status game_reader_load_spaces(Game *game, char *filename) {
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
@@ -66,7 +23,7 @@ Status game_load_spaces(Game *game, char *filename) {
   Space *space = NULL;
   Status status = OK;
 
-  if (!filename) {
+  if (!filename || !game) {
     return ERROR;
   }
 
@@ -111,23 +68,4 @@ Status game_load_spaces(Game *game, char *filename) {
   fclose(file);
 
   return status;
-}
-
-Status game_add_space(Game *game, Space *space) {
-  if ((space == NULL) || (game->n_spaces >= MAX_SPACES)) {
-    return ERROR;
-  }
-
-  game->spaces[game->n_spaces] = space;
-  game->n_spaces++;
-
-  return OK;
-}
-
-Id game_get_space_id_at(Game *game, int position) {
-  if (position < 0 || position >= game->n_spaces) {
-    return NO_ID;
-  }
-
-  return space_get_id(game->spaces[position]);
 }
