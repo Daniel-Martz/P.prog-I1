@@ -18,6 +18,7 @@
 #include "space.h"
 #include "types.h"
 
+#define MAX_STR 255 /*Comnstant assigned fpr the maximum length of a string*/
 #define WIDTH_MAP 48 /*Constant asignated for the width of the map*/
 #define WIDTH_DES 29 /*Constant asignated for the width of the description*/
 #define WIDTH_BAN 23 /*Constant asignated for the width of the banner*/
@@ -85,7 +86,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID; 
   Space *space_act = NULL;
   char obj = '*';
-  char str[255];
+  char str[MAX_STR];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 

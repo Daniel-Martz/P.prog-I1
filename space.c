@@ -61,7 +61,6 @@ Status space_destroy(Space* space) {
   }
 
   free(space);
-  space = NULL;
   return OK;
 }
 

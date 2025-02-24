@@ -41,7 +41,6 @@ Status object_destroy(Object* obj){
     if (!obj) return ERROR;
 
     free(obj);
-    obj=NULL;
     return OK;
 }
 

@@ -1,7 +1,7 @@
 /**
  * @brief It defines the game update interface
  *
- * @file game.h
+ * @file game_actions.h
  * @author Daniel Martinez
  * @version 0
  * @date 27-01-2025

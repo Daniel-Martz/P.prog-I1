@@ -1,6 +1,6 @@
 /**
  * @brief It defines the functions in charge of creating the spaces  
- * @file object.c
+ * @file game_reader.h
  * @author Jaime Romero
  * 
  * @version 0.1

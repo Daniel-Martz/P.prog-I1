@@ -52,7 +52,6 @@ Status player_destroy (Player* player){
     if (!player) return ERROR;
 
     free(player);
-    player=NULL;
     return OK;
 }
 

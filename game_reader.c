@@ -1,6 +1,6 @@
 /**
  * @brief It creates and adds the spaces 
- * @file object.c
+ * @file game_reader.c
  * @author Jaime Romero
  * 
  * @version 0.1
