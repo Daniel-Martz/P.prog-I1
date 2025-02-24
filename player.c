@@ -1,7 +1,7 @@
 /**
  * @brief It implements the player module
  * @file player.h
- * @author Daniel Martinez
+ * @author Daniel Martinez y Jaime Romero
  * 
  * @version 0.1
  * @date 2025-02-7
@@ -26,8 +26,10 @@ struct _Player {
     char name[WORD_SIZE]; /*!<Player's name*/
     Id location; /*!<Player's location (stored as an Id)*/
     Id object_id; /*!<Id of the objcet carried by the player*/
+    long health; /*!<Player's healthpoints*/
 };
 
+/*============================Init============================*/
 Player* player_create (Id id){
 
     Player *newPlayer=NULL;
@@ -43,6 +45,7 @@ Player* player_create (Id id){
     newPlayer->name[0] = '\0';
     newPlayer->location = NO_ID;
     newPlayer->object_id = NO_ID;
+    newPlayer->health = 0;
 
     return newPlayer;
 }
@@ -55,6 +58,7 @@ Status player_destroy (Player* player){
     return OK;
 }
 
+/*============================Get============================*/
 Id player_get_id (Player* player){
 
     if (!player) return NO_ID;
@@ -71,14 +75,26 @@ const char* player_get_name (Player* player){
     return player->name;
 }
 
+int player_get_health(Player* player){
+    if(!player) return NO_ID;
+    return player->health;
+}
+
 Id player_get_location (Player* player){
     if (!player) return NO_ID;
     return player->location;
 }
 
+/*============================Set============================*/
 Status player_set_id (Player* player, Id id){
     if (!player) return ERROR;
     player->id = id;
+    return OK;
+}
+
+Status player_set_object (Player* player, Id object){
+    if (!player) return ERROR;
+    player->object_id = object;
     return OK;
 }
 
@@ -93,9 +109,11 @@ Status player_set_name (Player* player, const char* name){
     return OK;
 }
 
-Status player_set_object (Player* player, Id object){
-    if (!player) return ERROR;
-    player->object_id = object;
+Status player_set_health(Player* player, int health){
+    if (!player || health < 0) return ERROR;
+
+    player->health = health;
+
     return OK;
 }
 
@@ -105,6 +123,7 @@ Status player_set_location (Player* player, Id location){
     return OK;
 }
 
+/*============================Print============================*/
 Status player_print (Player* player){
     if (!player) return ERROR;
 

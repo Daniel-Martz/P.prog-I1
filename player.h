@@ -1,7 +1,7 @@
 /**
  * @brief It defines the player module
  * @file player.h
- * @author Daniel Martinez
+ * @author Daniel Martinez y Jaime Romero
  * 
  * @version 0.1
  * @date 2025-02-7
@@ -16,6 +16,8 @@
 #include "types.h"
 
 typedef struct _Player Player;
+
+/*============================Init============================*/
 
 /**
  * @brief Creates a new player from a certain Id given
@@ -35,6 +37,9 @@ Player* player_create (Id id);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status player_destroy (Player* player);
+
+
+/*============================Get============================*/
 
 /**
  * @brief It gets the id of the player
@@ -64,6 +69,15 @@ Id player_get_object (Player* player);
 const char* player_get_name (Player* player);
 
 /**
+ * @brief Reads the player's health
+ * @author Jaime Romero
+ *
+ * @param player a pointer to Player
+ * @return An integrer with the player's health
+ */
+int player_get_health(Player* player);
+
+/**
  * @brief It gets the player's location
  * @author Daniel Martinez
  *
@@ -71,6 +85,9 @@ const char* player_get_name (Player* player);
  * @return the location of the player
  */
 Id player_get_location (Player* player);
+
+
+/*============================Set============================*/
 
 /**
  * @brief Assigns an id to a player
@@ -100,6 +117,17 @@ Status player_set_name (Player* player, const char* name);
 Status player_set_object (Player* player, Id object);
 
 /**
+ * @brief Establishes the player's hp
+ * @author Jaime Romero
+ *
+ * @param player a pointer to Player
+ * @param health Player's healthpoints
+ * 
+ * @return OK if everything goes well, ERROR if anything goes wrong
+ */
+Status player_set_health(Player* player, int health);
+
+/**
  * @brief Changes the player's location
  * @author Daniel Martinez
  *
@@ -107,6 +135,9 @@ Status player_set_object (Player* player, Id object);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status player_set_location (Player* player, Id location);
+
+
+/*============================Print============================*/
 
 /**
  * @brief Prints the player's information
