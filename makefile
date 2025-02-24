@@ -2,12 +2,14 @@
 CC = gcc
 CFLAGS = -Wall -ansi -pedantic -g -c
 OBJS = command.o space.o graphic_engine.o game_loop.o game_actions.o game.o game_reader.o object.o player.o
+EXEC = proyecto
 
+.PHONY: all clean
 # Regla principal
-all: proyecto
+all: $(EXEC)
 
-proyecto: $(OBJS)
-	$(CC) -o proyecto $(OBJS) -L. -lscreen
+$(EXEC): $(OBJS)
+	$(CC) -o $(EXEC) $(OBJS) -L. -lscreen
 
 # Compilacion de archivos individuales
 space.o: space.c space.h types.h object.h player.h
@@ -39,7 +41,10 @@ player.o: player.h types.h player.c
 
 # Limpiar archivos generados
 clean:
-	rm -f proyecto $(OBJS)
+	rm -f $(EXEC) $(OBJS)
+
+runv :
+	valgrind --leak-check=full ./$(EXEC) anthill.dat
 
 
 

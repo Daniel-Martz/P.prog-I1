@@ -17,8 +17,8 @@
  * @author Jaime Romero
  */
 struct _Object {
-    Id id; /*The identification of the object*/
-    char name[NAME_SIZE]; /*Objects name*/
+    Id id; /*!<The identification of the object*/
+    char name[NAME_SIZE]; /*!<Objects name*/
 };
 
 Object* object_create (Id id){

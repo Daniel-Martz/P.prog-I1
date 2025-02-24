@@ -22,10 +22,10 @@
  * 
  */
 struct _Player {
-    Id id; /*The identification for the player*/
-    char name[WORD_SIZE]; /*Player's name*/
-    Id location; /*Player's location (stored as an Id)*/
-    Id object_id; /*Id of the objcet carried by the player*/
+    Id id; /*!<The identification for the player*/
+    char name[WORD_SIZE]; /*!<Player's name*/
+    Id location; /*!<Player's location (stored as an Id)*/
+    Id object_id; /*!<Id of the objcet carried by the player*/
 };
 
 Player* player_create (Id id){

@@ -6,10 +6,10 @@
 
 struct _Character
 {
-    Id id;
-    char name[WORD_SIZE];
-    char gdesc[G_DESC];
-    long health;
-    Bool friendly;
-    char message[MAX_MESSAGE];
+    Id id;/*!<    */
+    char name[WORD_SIZE];/*!<    */
+    char gdesc[G_DESC];/*!<    */
+    long health;/*!<    */
+    Bool friendly;/*!<    */
+    char message[MAX_MESSAGE];/*!<    */
 };

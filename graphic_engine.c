@@ -33,7 +33,7 @@
  * @author Daniel Martinez
  */
 struct _Graphic_engine {
-  Area *map, *descript, *banner, *help, *feedback;
+  Area *map, *descript, *banner, *help, *feedback;/*!< It has all the variables needed*/
 };
 
 Graphic_engine *graphic_engine_create(void) {
