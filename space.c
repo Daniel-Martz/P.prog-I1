@@ -26,12 +26,10 @@ struct _Space {
   Id south;                 /*!< Id of the space at the south */
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
-  Id object_id;              /*!< Whether the space has an object or not */
+  Set *objects;              /*!< Whether the space has an object or not */
 };
 
-/** space_create allocates memory for a new space
- *  and initializes its members
- */
+/*=======================Create and Destroy========================*/
 Space* space_create(Id id) {
   Space* newSpace = NULL;
 
@@ -50,7 +48,7 @@ Space* space_create(Id id) {
   newSpace->south = NO_ID;
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
-  newSpace->object_id = NO_ID;
+  newSpace->objects = NULL;
 
   return newSpace;
 }
@@ -60,17 +58,13 @@ Status space_destroy(Space* space) {
     return ERROR;
   }
 
+  set_destroy(space->objects);
   free(space);
+  
   return OK;
 }
 
-Id space_get_id(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->id;
-}
-
+/*============================Set============================*/
 Status space_set_name(Space* space, char* name) {
   if (!space || !name) {
     return ERROR;
@@ -82,26 +76,12 @@ Status space_set_name(Space* space, char* name) {
   return OK;
 }
 
-const char* space_get_name(Space* space) {
-  if (!space) {
-    return NULL;
-  }
-  return space->name;
-}
-
 Status space_set_north(Space* space, Id id) {
   if (!space || id == NO_ID) {
     return ERROR;
   }
   space->north = id;
   return OK;
-}
-
-Id space_get_north(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->north;
 }
 
 Status space_set_south(Space* space, Id id) {
@@ -112,26 +92,12 @@ Status space_set_south(Space* space, Id id) {
   return OK;
 }
 
-Id space_get_south(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->south;
-}
-
 Status space_set_east(Space* space, Id id) {
   if (!space || id == NO_ID) {
     return ERROR;
   }
   space->east = id;
   return OK;
-}
-
-Id space_get_east(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->east;
 }
 
 Status space_set_west(Space* space, Id id) {
@@ -142,6 +108,53 @@ Status space_set_west(Space* space, Id id) {
   return OK;
 }
 
+Status space_set_new_object(Space* space, Id object_id) {
+  if (!space) {
+    return ERROR;
+  }
+
+  if(set_add(space->objects,object_id) == ERROR){
+    return ERROR;
+  }
+  return OK;
+}
+
+/*============================Get============================*/
+Id space_get_id(Space* space) {
+  if (!space) {
+    return NO_ID;
+  }
+  return space->id;
+}
+
+const char* space_get_name(Space* space) {
+  if (!space) {
+    return NULL;
+  }
+  return space->name;
+}
+
+Id space_get_north(Space* space) {
+  if (!space) {
+    return NO_ID;
+  }
+  return space->north;
+}
+
+Id space_get_south(Space* space) {
+  if (!space) {
+    return NO_ID;
+  }
+  return space->south;
+}
+
+Id space_get_east(Space* space) {
+  if (!space) {
+    return NO_ID;
+  }
+  return space->east;
+}
+
 Id space_get_west(Space* space) {
   if (!space) {
     return NO_ID;
@@ -149,21 +162,27 @@ Id space_get_west(Space* space) {
   return space->west;
 }
 
-Status space_set_object(Space* space, Id object_id) {
+Status space_object_is_there(Space* space, Id object_id) {
   if (!space) {
     return ERROR;
   }
-  space->object_id = object_id;
-  return OK;
+
+  return set_id_is_there(space->objects, object_id);
 }
 
-Id space_get_object(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->object_id;
+long space_get_nobjects(Space* space){
+  if(!space) return NO_ID;
+  
+  return set_get_nids(space->objects);
 }
 
+Id* space_get_objects_ids(Space* space){
+  if(!space) return NULL;
+
+  return set_get_ids(space->objects);
+}
+
+/*============================Print============================*/
 Status space_print(Space* space) {
   Id idaux = NO_ID;
 
@@ -202,7 +221,7 @@ Status space_print(Space* space) {
   }
 
   /* 3. Print if there is an object in the space or not */
-  if (space_get_object(space) != NO_ID) {
+  if (space_get_nobjecs(space)) {
     fprintf(stdout, "---> There is an object in the space.\n");
   } else {
     fprintf(stdout, "---> No object in the space.\n");

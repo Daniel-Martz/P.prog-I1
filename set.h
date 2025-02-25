@@ -63,7 +63,7 @@ Status set_print (Set* set);
  * 
  * @return OK if everything worked correctly, ERROR if it didn't
  */
-Status add_set (Set* set, Id id);
+Status set_add (Set* set, Id id);
 
 /**
  * @brief Deletes an element from the array of ids in set
@@ -75,6 +75,40 @@ Status add_set (Set* set, Id id);
  * 
  * @return OK if everything worked correctly, ERROR if it didn't
  */
-Status del_set (Set* set, Id id);
+Status set_del (Set* set, Id id);
+
+/**
+ * @brief This function gets the number of ids that there are in the set
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param set A pointer to Set structure
+ * 
+ * @return 0 if there was a problem, and the number of ids in the set if everything was OK.
+ */
+long set_get_nids(Set* set);
+
+/**
+ * @brief This function check if an id is in the set
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param set A pointer to Set structure
+ * @param id The id we want to check
+ * 
+ * @return ERROR if there was a problem or id is not in the set, OK if id is in the set
+ */
+Status set_id_is_there(Set* set, Id id);
+
+/**
+ * @brief This get the array of ids in the set
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param set A pointer to Set structure
+ * 
+ * @return NULL if there was a problem, or the array of ids if everything was OK.
+ */
+Id* set_get_ids(Set* set);
 
 #endif

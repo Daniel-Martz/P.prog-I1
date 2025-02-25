@@ -47,7 +47,7 @@ Status set_destroy (Set* set){
     return OK;
 }
 
-Status add_set (Set* set, Id id){
+Status set_add (Set* set, Id id){
     
     int i=0;
 
@@ -63,13 +63,13 @@ Status add_set (Set* set, Id id){
         }   
     }
     
-    set->ids[set->n_ids + 1] = id; /*The new id is added to the last position of the array of ids*/
+    set->ids[set->n_ids+1] = id; /*The new id is added to the last position of the array of ids*/
     set->n_ids++;
 
     return OK;    
 }
 
-Status del_set (Set* set, Id id){
+Status set_del (Set* set, Id id){
 
     int i=0, position=-1; /*The position is never going to be -1, so if the position is still -1 it means the id hasn't been found*/
 
@@ -112,3 +112,27 @@ Status set_print (Set* set){
     return OK;
 }
 
+long set_get_nids(Set* set){
+    if(!set) return 0;
+    return set->n_ids;
+}
+
+Id* set_get_ids(Set* set){
+    if(!set) return NULL;
+
+    return set->n_ids;
+}
+
+Status set_id_is_there(Set* set, Id id){
+    int i;
+
+    if(!set) return ERROR;
+    if(id == NO_ID) return ERROR;
+
+    for(i=0;i<set->n_ids;i++){
+        if(set->ids[i]==id){
+            return OK;
+        }
+    }
+    return ERROR;
+}

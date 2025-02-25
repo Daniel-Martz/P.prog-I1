@@ -12,6 +12,7 @@
 #define SPACE_H
 
 #include "types.h"
+#include "set.h"
 
 typedef struct _Space Space;
 
@@ -155,16 +156,50 @@ Status space_set_object(Space* space, Id object_id);
  * @param space a pointer to the space
  * @return a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
  */
-Id space_get_object(Space* space);
+Set* space_get_objects(Space* space);
 
 /**
- * @brief It prints the space information
+ * @brief This function gets the number of ids that there are in the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to the space
+ * 
+ * @return 0 if there was a problem or no objects, and the number of objects in the space if everything was OK.
+ */
+long space_get_nobjects(Space* space);
+
+/**
+ * @brief It prints the space information This fucntion shows the id and name 
+ * of the space, the spaces that surrounds it and wheter it has an object or not.
  * @author Daniel Martinez
- *ss
- * This fucntion shows the id and name of the space, the spaces that surrounds it and wheter it has an object or not.
+ * 
  * @param space a pointer to the space
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status space_print(Space* space);
+
+/**
+ * @brief This function check if an object is in the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to Space structure
+ * @param object_id The object id we want to check
+ * 
+ * @return ERROR if there was a problem or id is not in the space, OK if the object is in the space
+ */
+Status space_object_is_there(Space* space, Id object_id);
+
+/**
+ * @brief This get the array of objects ids in the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to Set structure
+ * 
+ * @return NULL if there was a problem, or the array of objects ids if everything was OK.
+ */
+Id* space_get_objects_ids(Space* space);
 
 #endif
