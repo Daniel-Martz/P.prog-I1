@@ -69,3 +69,51 @@ Status game_reader_load_spaces(Game *game, char *filename) {
 
   return status;
 }
+
+Status game_reader_load_objects(Game *game, char *filename){
+
+  FILE *file=NULL;
+  char line[WORD_SIZE] = "";
+  char name[WORD_SIZE] = "";
+  char *toks = NULL;
+  Id id = NO_ID, space_id = NO_ID;
+  Object *object = NULL;
+  Status status = OK;
+
+  if (!filename || !game) {
+    return ERROR;
+  }
+
+  file = fopen(filename, "r");
+  if (file == NULL) {
+    return ERROR;
+  }
+
+  while (fgets(line, WORD_SIZE, file)){
+    if (strncmp("#o:", line, 3) == 0){
+      /*Read all the data and then store it in variables*/
+      toks = strtok(line + 3, "|");
+      id = atol(toks);
+      toks = strtok(NULL, "|");
+      strcpy(name, toks);
+      toks = strtok(NULL, "|");
+      space_id = atol(toks);
+      
+      /*Create the object*/
+      object = object_create(id);
+      if (!object) return ERROR;
+      object_set_name(object, name);
+      object_set_id(object, id);
+      /*game_set_object_location(game, space_id);*/
+    }
+  }
+  
+  if (ferror(file)) {
+    status = ERROR;
+  }
+
+  fclose(file);
+
+  return status;
+
+}

@@ -63,7 +63,7 @@ Status add_set (Set* set, Id id){
         }   
     }
     
-    set->ids[set->n_ids+1] = id; /*The new id is added to the last position of the array of ids*/
+    set->ids[set->n_ids + 1] = id; /*The new id is added to the last position of the array of ids*/
     set->n_ids++;
 
     return OK;    
