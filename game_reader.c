@@ -76,7 +76,7 @@ Status game_reader_load_objects(Game *game, char *filename){
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
   char *toks = NULL;
-  Id id = NO_ID, space_id = NO_ID;
+  Id object_id = NO_ID, space_id = NO_ID;
   Object *object = NULL;
   Status status = OK;
 
@@ -93,7 +93,7 @@ Status game_reader_load_objects(Game *game, char *filename){
     if (strncmp("#o:", line, 3) == 0){
       /*Read all the data and then store it in variables*/
       toks = strtok(line + 3, "|");
-      id = atol(toks);
+      object_id = atol(toks);
       toks = strtok(NULL, "|");
       strcpy(name, toks);
       toks = strtok(NULL, "|");
@@ -104,7 +104,7 @@ Status game_reader_load_objects(Game *game, char *filename){
       if (!object) return ERROR;
       object_set_name(object, name);
       object_set_id(object, id);
-      /*game_set_object_location(game, space_id);*/
+      /*game_set_object_location(game, space_id, object_id);*/
     }
   }
   
