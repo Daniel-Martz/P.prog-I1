@@ -100,10 +100,10 @@ Status game_reader_load_objects(Game *game, char *filename){
       space_id = atol(toks);
       
       /*Create the object*/
-      object = object_create(id);
+      object = object_create(object_id);
       if (!object) return ERROR;
       object_set_name(object, name);
-      object_set_id(object, id);
+      object_set_id(object, object_id);
       /*game_set_object_location(game, space_id, object_id);*/
     }
   }
