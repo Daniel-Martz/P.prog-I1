@@ -104,7 +104,7 @@ Status game_reader_load_objects(Game *game, char *filename){
       if (!object) return ERROR;
       object_set_name(object, name);
       object_set_id(object, object_id);
-      /*game_set_object_location(game, space_id, object_id);*/
+      game_add_object(game, object);
     }
   }
   
