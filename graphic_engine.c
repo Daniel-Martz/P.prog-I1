@@ -96,7 +96,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     space_act = game_get_space(game, id_act);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
-    obj_loc = game_get_object_location(game);
+    obj_loc = game_get_object_location(game); 
 
     if (id_back != NO_ID) {
       sprintf(str, "  |        %3d|", (int)id_back);

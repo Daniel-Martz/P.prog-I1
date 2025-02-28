@@ -17,6 +17,7 @@
 
 #include "player.h"
 #include "object.h"
+#include "character.h"
 
 #define MAX_SPACES 100 /* Constant that estabilshes the maximum number of spaces as 100*/
 #define MAX_OBJECTS 100 /* Constant that estabilshes the maximum number of objects as 100*/
