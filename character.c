@@ -56,6 +56,12 @@ Status character_destroy (Character* character){
 }
 
 /*============================Get============================*/
+Id character_get_id (Character* character){
+
+    if (!character) return NO_ID;
+    return character->id;
+}
+
 const char* character_get_name(Character* character){
     if(!character) return NO_ID;
     return character->name;
@@ -82,6 +88,12 @@ Bool character_get_friendly(Character *character){
 }
 
 /*============================Set============================*/
+Status character_set_id (Character* character, Id id){
+    if (!character) return ERROR;
+    character->id = id;
+    return OK;
+}
+
 Status character_set_name(Character* character, const char* name){
     if (!character || !name) return ERROR;
 

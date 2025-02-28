@@ -26,7 +26,8 @@ struct _Space {
   Id south;                 /*!< Id of the space at the south */
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
-  Set *objects;              /*!< Whether the space has an object or not */
+  Set *objects;              /*!< It contains the set of the arrays of object */
+  Id character;              /*!< It contains the id of the character */
 };
 
 /*=======================Create and Destroy========================*/
@@ -49,6 +50,7 @@ Space* space_create(Id id) {
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
   newSpace->objects = NULL;
+  newSpace->character = NO_ID;
 
   return newSpace;
 }
@@ -119,6 +121,14 @@ Status space_set_new_object(Space* space, Id object_id) {
   return OK;
 }
 
+Status space_set_character(Space* space, Id id) {
+  if (!space || id == NO_ID) {
+    return ERROR;
+  }
+  space->character = id;
+  return OK;
+}
+
 /*============================Get============================*/
 Id space_get_id(Space* space) {
   if (!space) {
@@ -182,6 +192,13 @@ Id* space_get_objects_ids(Space* space){
   return set_get_ids(space->objects);
 }
 
+Id space_get_character(Space* space) {
+  if (!space) {
+    return NO_ID;
+  }
+  return space->character;
+}
+
 /*============================Print============================*/
 Status space_print(Space* space) {
   Id idaux = NO_ID;
@@ -221,10 +238,17 @@ Status space_print(Space* space) {
   }
 
   /* 3. Print if there is an object in the space or not */
-  if (space_get_nobjecs(space)) {
+  if (space_get_nobjects(space)) {
     fprintf(stdout, "---> There is an object in the space.\n");
   } else {
     fprintf(stdout, "---> No object in the space.\n");
+  }
+
+  /* 4. Print if there is a character in the space or not */
+  if (space_get_character(space) != NO_ID) {
+    fprintf(stdout, "---> There is a character in the space.\n");
+  } else {
+    fprintf(stdout, "---> No character in the space.\n");
   }
 
   return OK;

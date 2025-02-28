@@ -19,6 +19,8 @@
 #include "object.h"
 
 #define MAX_SPACES 100 /* Constant that estabilshes the maximum number of spaces as 100*/
+#define MAX_OBJECTS 100 /* Constant that estabilshes the maximum number of objects as 100*/
+#define MAX_CHARACTERS 100 /* Constant that estabilshes the maximum number of characters as 100*/
 
 typedef struct _Game Game;
 
@@ -43,9 +45,31 @@ Game *game_create(void);
 Status game_add_space(Game *game, Space *space);
 
 /**
+ * @brief It adds a new object to the game
+ * @author Daniel Martínez
+ * 
+ * @param game A pointer to Game
+ * @param object A pointer to Object
+ * 
+ * @return OK if everything went good, ERROR if not
+*/
+Status game_add_object(Game *game, Object *object);
+
+/**
+ * @brief It adds a new character to the game
+ * @author Daniel Martínez
+ * 
+ * @param game A pointer to Game
+ * @param character A pointer to Character
+ * 
+ * @return OK if everything went good, ERROR if not
+*/
+Status game_add_character(Game *game, Character *character);
+
+/**
  * @brief It assigns a value from a file to every Game parameter, controling the errors
  * 
- * @author Jaime Romero
+ * @author Daniel Martínez
  * @param game A pointer to Game
  * @param filename A string with the name of the file
  * 
@@ -75,6 +99,30 @@ Status game_destroy(Game *game);
 Space *game_get_space(Game *game, Id id);
 
 /**
+ * @brief It searches a certain object where an Id passed by argument is
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param game A pointer to the game
+ * @param id The id we are looking for
+ * 
+ * @return A Object
+ */
+Object *game_get_object(Game *game, Id id);
+
+/**
+ * @brief It searches a certain character where an Id passed by argument is
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param game A pointer to the game
+ * @param id The id we are looking for
+ * 
+ * @return A Character
+ */
+Character *game_get_character(Game *game, Id id);
+
+/**
  * @brief It searches for the player of the game
  * 
  * @author Daniel Martínez
@@ -85,25 +133,25 @@ Space *game_get_space(Game *game, Id id);
  */
 Player *game_get_player(Game *game);
 
-/**
- * @brief It searches for the object of the game
- * 
- * @author Daniel Martínez
- * 
- * @param game A pointer to the game
- * 
- * @return An object
- */
-Object *game_get_object(Game *game);
 
 /**
- * @brief It just returns the player id (location)
+ * @brief It just returns the id of the space where the player is
  * 
  * @author Jaime Romero
- * @param game 
+ * @param game A pointer to the game
  * @return Id (player location)
  */
 Id game_get_player_location(Game *game);
+
+/**
+ * @brief It just returns the id of the space where an object is
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to the game
+ * @param id The id of the object which location are searching
+ * @return Id (object location)
+ */
+Id game_get_object_location(Game *game, Id id);
 
 /**
  * @brief It sets the player location as the id passed as an argument
@@ -116,24 +164,38 @@ Id game_get_player_location(Game *game);
 Status game_set_player_location(Game *game, Id location);
 
 /**
- * @brief It returns the the location of the object
+ * @brief It just returns the id of the space where a character is
  * 
- * @author Jaime Romero
- * @param  game A pointer to game
- * @return An id which is the location of the object
+ * @author Daniel Martínez
+ * @param game A pointer to the game
+ * @param id The id of the character which location are searching
+ * @return Id (character location)
  */
-Id game_get_object_location(Game *game);
+Id game_get_character_location(Game *game, Id id);
 
 /**
- * @brief It sets to the object location the id passed as an argument
+ * @brief It sets to an object a location
  * 
- * @author Jaime Romero
+ * @author Daniel Martínez
  * @param game A pointer to game
- * @param id  The id of an object whose location will be changed
+ * @param object_id  The id of the object whose location will be setted
+ * @param space_id  The id of the location
  * 
  * @return OK if everything was good, or ERROR if there was any issue
  */
-Status game_set_object_location(Game *game, Id id);
+Status game_set_object_location(Game *game, Id space_id, Id object_id);
+
+/**
+ * @brief It sets to a character a location
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to game
+ * @param character_id  The id of the character whose location will be setted
+ * @param space_id  The id of the location
+ * 
+ * @return OK if everything was good, or ERROR if there was any issue
+ */
+Status game_set_character_location(Game *game, Id space_id, Id character_id);
 
 /**
  * @brief It returns the las command received

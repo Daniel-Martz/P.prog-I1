@@ -140,25 +140,6 @@ Status space_set_west(Space* space, Id id);
 Id space_get_west(Space* space);
 
 /**
- * @brief It sets whether the space has an object or not
- * @author Daniel Martinez
- *
- * @param space a pointer to the space
- * @param value a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status space_set_object(Space* space, Id object_id);
-
-/**
- * @brief It gets whether the space has an object or not
- * @author Daniel Martinez
- *
- * @param space a pointer to the space
- * @return a boolean, specifying if in the space there is an object (TRUE) or not (FALSE)
- */
-Set* space_get_objects(Space* space);
-
-/**
  * @brief This function gets the number of ids that there are in the space
  * 
  * @author Daniel Martínez
@@ -196,10 +177,45 @@ Status space_object_is_there(Space* space, Id object_id);
  * 
  * @author Daniel Martínez
  * 
- * @param space A pointer to Set structure
+ * @param space A pointer to space
  * 
  * @return NULL if there was a problem, or the array of objects ids if everything was OK.
  */
 Id* space_get_objects_ids(Space* space);
+
+/**
+ * @brief This get the id of the character in the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to Space structure
+ * 
+ * @return NO_ID if there was a problem or there is no caharacter in the sapce, or the character id of the space.
+ */
+Id space_get_character(Space *space);
+
+/**
+ * @brief This set the character of the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to Space structure
+ * @param id The id of the character
+ * 
+ * @return ERROR if there was a problem, OK if everything was good
+ */
+Status space_set_character(Space *space, Id id);
+
+/**
+ * @brief This set a new object to the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to Space structure
+ * @param id The id of the object
+ * 
+ * @return ERROR if there was a problem, OK if everything was good
+ */
+Status space_set_new_object(Space* space, Id object_id);
 
 #endif

@@ -43,6 +43,14 @@ Character* character_create(Id id);
 Status character_destroy (Character* character);
 
 /*============================Get============================*/
+/**
+ * @brief It gets the id of the character
+ * @author Jaime Romero
+ *
+ * @param character a pointer to the character
+ * @return the id of the character
+ */
+Id character_get_id (Character* character);
 
 /**
  * @brief Gets the character's name
@@ -90,6 +98,15 @@ int character_get_health(Character* character);
 Bool character_is_friendly(Character* character);
 
 /*============================Set============================*/
+
+/**
+ * @brief Assigns an id to a character
+ * @author Jaime Romero
+ *
+ * @param character a pointer to the character
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status character_set_id (Character* character, Id id);
 
 /**
  * @brief Assigns a name to the character
