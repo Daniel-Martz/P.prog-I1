@@ -28,11 +28,13 @@ struct _Space {
   Id west;                  /*!< Id of the space at the west */
   Set *objects;              /*!< It contains the set of the arrays of object */
   Id character;              /*!< It contains the id of the character */
+  char gdesc[N_ROWS][N_COLUMNS]; /*!< An array of five strings, with 9 characters each (+1 for the '\0')*/
 };
 
 /*=======================Create and Destroy========================*/
 Space* space_create(Id id) {
   Space* newSpace = NULL;
+  int i=0;
 
   /* Error control */
   if (id == NO_ID) return NULL;
@@ -51,6 +53,10 @@ Space* space_create(Id id) {
   newSpace->west = NO_ID;
   newSpace->objects = NULL;
   newSpace->character = NO_ID;
+  for (i = 0; i < 5; i++)
+  {
+    newSpace->gdesc[i][0] = '\0';
+  }
 
   return newSpace;
 }
@@ -59,6 +65,8 @@ Status space_destroy(Space* space) {
   if (!space) {
     return ERROR;
   }
+
+  /*Piden modificar space con gdesc pero creo que no hace falta ya que su reserva es estatica*/
 
   set_destroy(space->objects);
   free(space);
@@ -126,6 +134,26 @@ Status space_set_character(Space* space, Id id) {
     return ERROR;
   }
   space->character = id;
+  return OK;
+}
+
+Status space_set_gdesc (Space* space, const char new_gdesc[N_ROWS][N_COLUMNS]){
+  int i=0;
+
+  if (!space || new_gdesc == NULL)
+  {
+    return ERROR; 
+  }
+  
+  /*Copy in the game description the new game description, copying only 9 characters plus '\0'*/
+  for (i = 0; i < N_ROWS; i++)
+  {
+    /*Check if the number of characters in the new description is equal to 9 to avoid errors*/
+    if (strlen(new_gdesc[i] != 9)) return ERROR;
+    
+    strncpy(space->gdesc[i], new_gdesc[i], N_COLUMNS); 
+  }
+  
   return OK;
 }
 
@@ -199,9 +227,16 @@ Id space_get_character(Space* space) {
   return space->character;
 }
 
+const char* space_get_gdesc(Space* space){
+  if (!space) return ERROR;
+
+  return space->gdesc;
+}
+
 /*============================Print============================*/
 Status space_print(Space* space) {
   Id idaux = NO_ID;
+  int i=0;
 
   /* Error Control */
   if (!space) {
@@ -211,7 +246,12 @@ Status space_print(Space* space) {
   /* 1. Print the id and the name of the space */
   fprintf(stdout, "--> Space (Id: %ld; Name: %s)\n", space->id, space->name);
 
-  /* 2. For each direction, print its link */
+  /*2. Print the new graphic description*/
+  for (i = 0; i < N_ROWS; i++) {
+      fprintf(stdout, "%s\n", space->gdesc[i]);
+  }
+
+  /* 3. For each direction, print its link */
   idaux = space_get_north(space);
   if (idaux != NO_ID) {
     fprintf(stdout, "---> North link: %ld.\n", idaux);
@@ -237,14 +277,14 @@ Status space_print(Space* space) {
     fprintf(stdout, "---> No west link.\n");
   }
 
-  /* 3. Print if there is an object in the space or not */
+  /* 4. Print if there is an object in the space or not */
   if (space_get_nobjects(space)) {
     fprintf(stdout, "---> There is an object in the space.\n");
   } else {
     fprintf(stdout, "---> No object in the space.\n");
   }
 
-  /* 4. Print if there is a character in the space or not */
+  /* 5. Print if there is a character in the space or not */
   if (space_get_character(space) != NO_ID) {
     fprintf(stdout, "---> There is a character in the space.\n");
   } else {

@@ -2,7 +2,7 @@
  * @brief It defines the space module interface
  *
  * @file space.h
- * @author Daniel Martinez
+ * @author Daniel Martinez y Jaime Romero
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
@@ -14,7 +14,12 @@
 #include "types.h"
 #include "set.h"
 
+#define N_ROWS 5
+#define N_COLUMNS 10 /*9 plus a space for '\0'*/
+
 typedef struct _Space Space;
+
+/*=======================Create and Destroy========================*/
 
 /**
  * @brief It creates a new space, allocating memory and initializing its members
@@ -34,14 +39,7 @@ Space* space_create(Id id);
  */
 Status space_destroy(Space* space);
 
-/**
- * @brief It gets the id of a space
- * @author Daniel Martinez
- *
- * @param space a pointer to the space
- * @return the id of space
- */
-Id space_get_id(Space* space);
+/*============================Set============================*/
 
 /**
  * @brief It sets the name of a space
@@ -52,15 +50,6 @@ Id space_get_id(Space* space);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status space_set_name(Space* space, char* name);
-
-/**
- * @brief It gets the name of a space
- * @author Daniel Martinez
- *
- * @param space a pointer to the space
- * @return  a string with the name of the space
- */
-const char* space_get_name(Space* space);
 
 /**
  * @brief It sets the id of the space located at the north
@@ -74,15 +63,6 @@ const char* space_get_name(Space* space);
 Status space_set_north(Space* space, Id id);
 
 /**
- * @brief It gets the id of the space located at the north
- * @author Daniel Martinez
- *
- * @param space a pointer to the space
- * @return the id number of the space located at the north
- */
-Id space_get_north(Space* space);
-
-/**
  * @brief It sets the id of the space located at the south
  * @author Daniel Martinez
  *
@@ -91,15 +71,6 @@ Id space_get_north(Space* space);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status space_set_south(Space* space, Id id);
-
-/**
- * @brief It gets the id of the space located at the south
- * @author Daniel Martinez
- *
- * @param space a pointer to the space
- * @return the id number of the space located at the south
- */
-Id space_get_south(Space* space);
 
 /**
  * @brief It sets the id of the space located at the east
@@ -112,15 +83,6 @@ Id space_get_south(Space* space);
 Status space_set_east(Space* space, Id id);
 
 /**
- * @brief It gets the id of the space located at the east
- * @author Daniel Martinez
- *
- * @param space a pointer to the space
- * @return the id number of the space located at the east
- */
-Id space_get_east(Space* space);
-
-/**
  * @brief It sets the id of the space located at the west
  * @author Daniel Martinez
  *
@@ -129,6 +91,88 @@ Id space_get_east(Space* space);
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status space_set_west(Space* space, Id id);
+
+/**
+ * @brief This set the character of the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to Space structure
+ * @param id The id of the character
+ * 
+ * @return ERROR if there was a problem, OK if everything was good
+ */
+Status space_set_character(Space *space, Id id);
+
+/**
+ * @brief This set a new object to the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to Space structure
+ * @param id The id of the object
+ * 
+ * @return ERROR if there was a problem, OK if everything was good
+ */
+Status space_set_new_object(Space* space, Id object_id);
+
+/**
+ * @brief Defines the new space's description
+ * @author Jaime Romero
+ *
+ * @param space A pointer to space
+ * @param new_gdesc space's description
+ * 
+ * @return OK if everything goes well, ERROR if anything goes wrong
+ */
+Status space_set_gdesc (Space* space, const char new_gdesc[N_ROWS][N_COLUMNS]);
+
+/*============================Get============================*/
+
+/**
+ * @brief It gets the id of a space
+ * @author Daniel Martinez
+ *
+ * @param space a pointer to the space
+ * @return the id of space
+ */
+Id space_get_id(Space* space);
+
+/**
+ * @brief It gets the name of a space
+ * @author Daniel Martinez
+ *
+ * @param space a pointer to the space
+ * @return  a string with the name of the space
+ */
+const char* space_get_name(Space* space);
+
+/**
+ * @brief It gets the id of the space located at the north
+ * @author Daniel Martinez
+ *
+ * @param space a pointer to the space
+ * @return the id number of the space located at the north
+ */
+Id space_get_north(Space* space);
+
+/**
+ * @brief It gets the id of the space located at the south
+ * @author Daniel Martinez
+ *
+ * @param space a pointer to the space
+ * @return the id number of the space located at the south
+ */
+Id space_get_south(Space* space);
+
+/**
+ * @brief It gets the id of the space located at the east
+ * @author Daniel Martinez
+ *
+ * @param space a pointer to the space
+ * @return the id number of the space located at the east
+ */
+Id space_get_east(Space* space);
 
 /**
  * @brief It gets the id of the space located at the west
@@ -149,16 +193,6 @@ Id space_get_west(Space* space);
  * @return 0 if there was a problem or no objects, and the number of objects in the space if everything was OK.
  */
 long space_get_nobjects(Space* space);
-
-/**
- * @brief It prints the space information This fucntion shows the id and name 
- * of the space, the spaces that surrounds it and wheter it has an object or not.
- * @author Daniel Martinez
- * 
- * @param space a pointer to the space
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status space_print(Space* space);
 
 /**
  * @brief This function check if an object is in the space
@@ -195,27 +229,24 @@ Id* space_get_objects_ids(Space* space);
 Id space_get_character(Space *space);
 
 /**
- * @brief This set the character of the space
- * 
- * @author Daniel Martínez
- * 
- * @param space A pointer to Space structure
- * @param id The id of the character
- * 
- * @return ERROR if there was a problem, OK if everything was good
+ * @brief Gets the game's description (game's interface)
+ * @author Jaime Romero
+ *
+ * @param space A pointer to Space
+ * @return a string with the description of the space
  */
-Status space_set_character(Space *space, Id id);
+const char* space_get_gdesc(Space* space);
+
+/*============================Print============================*/
 
 /**
- * @brief This set a new object to the space
+ * @brief It prints the space information This fucntion shows the id and name 
+ * of the space, the spaces that surrounds it and wheter it has an object or not.
+ * @author Daniel Martinez
  * 
- * @author Daniel Martínez
- * 
- * @param space A pointer to Space structure
- * @param id The id of the object
- * 
- * @return ERROR if there was a problem, OK if everything was good
+ * @param space a pointer to the space
+ * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status space_set_new_object(Space* space, Id object_id);
+Status space_print(Space* space);
 
 #endif
