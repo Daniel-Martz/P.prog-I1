@@ -29,7 +29,7 @@ typedef struct _Set Set;
  * 
  * @return A pointer to set with the structure (and its arguments) created
  */
-Set* set_create ();
+Set* set_create (void);
 
 /**
  * @brief "Destroys" the set of elements and frees its memory

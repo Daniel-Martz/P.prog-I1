@@ -90,13 +90,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 
-  /* Paint the in the map area */
+  /* Paint the object in the map area */
   screen_area_clear(ge->map);
   if ((id_act = (game_get_player_location(game))) != NO_ID) {
     space_act = game_get_space(game, id_act);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
-    obj_loc = game_get_object_location(game); 
+    obj_loc = game_get_object_location(game, NO_ID); 
 
     if (id_back != NO_ID) {
       sprintf(str, "  |        %3d|", (int)id_back);

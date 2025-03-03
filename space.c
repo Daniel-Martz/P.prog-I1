@@ -66,8 +66,6 @@ Status space_destroy(Space* space) {
     return ERROR;
   }
 
-  /*Piden modificar space con gdesc pero creo que no hace falta ya que su reserva es estatica*/
-
   set_destroy(space->objects);
   free(space);
   
@@ -149,7 +147,7 @@ Status space_set_gdesc (Space* space, const char new_gdesc[N_ROWS][N_COLUMNS]){
   for (i = 0; i < N_ROWS; i++)
   {
     /*Check if the number of characters in the new description is equal to 9 to avoid errors*/
-    if (strlen(new_gdesc[i]) != 9) return ERROR;
+    if (strlen(new_gdesc[i]) != MAX_DESC) return ERROR;
     
     strncpy(space->gdesc[i], new_gdesc[i], N_COLUMNS); 
   }
@@ -227,12 +225,11 @@ Id space_get_character(Space* space) {
   return space->character;
 }
 
-const char* space_get_gdesc(Space* space){
-  if (!space) return ERROR;
+const char* space_get_gdesc(Space* space, int row){
+  if (!space || row < 0 || row >= N_ROWS) return NULL;
 
-  return space->gdesc;
+  return space->gdesc[row];
 }
-
 /*============================Print============================*/
 Status space_print(Space* space) {
   Id idaux = NO_ID;

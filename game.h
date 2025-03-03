@@ -100,24 +100,24 @@ Status game_destroy(Game *game);
 Space *game_get_space(Game *game, Id id);
 
 /**
- * @brief It searches a certain object where an Id passed by argument is
+ * @brief It looks for an object
  * 
  * @author Daniel Martínez
  * 
  * @param game A pointer to the game
- * @param id The id we are looking for
+ * @param id The id of the object
  * 
- * @return A Object
+ * @return An Object
  */
 Object *game_get_object(Game *game, Id id);
 
 /**
- * @brief It searches a certain character where an Id passed by argument is
+ * @brief It looks for a character
  * 
  * @author Daniel Martínez
  * 
  * @param game A pointer to the game
- * @param id The id we are looking for
+ * @param id The id of the character
  * 
  * @return A Character
  */
@@ -235,6 +235,16 @@ Bool game_get_finished(Game *game);
  * @return OK if everything worked properly or ERROR if it didn't
  */
 Status game_set_finished(Game *game, Bool finished);
+
+/**
+ * @brief This function is used to get the object of a certain space which id is passed by argument
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to Game
+ * @param space_id Id of the space 
+ * @return NO_ID if there is no object in the space, or the Id of the object if it is there
+ */
+Id game_object_in_the_space(Game *game, Id space_id);
 
 /**
  * @brief It prints all the spaces and the player and object's location 
