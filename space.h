@@ -14,8 +14,9 @@
 #include "types.h"
 #include "set.h"
 
-#define N_ROWS 5
+#define N_ROWS 5  /*Number of rows in the description*/
 #define N_COLUMNS 10 /*9 plus a space for '\0'*/
+#define MAX_DESC 9 /*the maximum size for gdesc*/
 
 typedef struct _Space Space;
 
@@ -235,7 +236,7 @@ Id space_get_character(Space *space);
  * @param space A pointer to Space
  * @return a string with the description of the space
  */
-const char* space_get_gdesc(Space* space);
+const char* space_get_gdesc(Space* space, int row);
 
 /*============================Print============================*/
 

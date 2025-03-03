@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 /**
    Private functions
@@ -55,6 +56,24 @@ void game_actions_next(Game *game);
 void game_actions_back(Game *game);
 
 /**
+ * @brief It checks that the player is in a valid location and then change the location to west if it is valid
+ * @author Daniel Martínez
+ * 
+ * @param game a pointer to Game
+ * @return As a void, the function doesn't return anything
+*/
+void game_actions_left(Game *game);
+
+/**
+ * @brief It checks that the player is in a valid location and then change the location to east if it is valid
+ * @author Daniel Martínez
+ * 
+ * @param game a pointer to Game
+ * @return As a void, the function doesn't return anything
+*/
+void game_actions_right(Game *game);
+
+/**
  * @brief It takes an object from a certain location
  * @author Daniel Martínez
  * 
@@ -71,6 +90,24 @@ void game_actions_take(Game *game);
  * @return As a void, the function doesn't return anything
 */
 void game_actions_drop(Game *game);
+
+/**
+ * @brief It attacks an enemy
+ * @author Daniel Martínez
+ * 
+ * @param game a pointer to Game
+ * @return As a void, the function doesn't return anything
+*/
+void game_actions_attack(Game *game);
+
+/**
+ * @brief It allows the player to chat with a friendly character
+ * @author Daniel Martínez
+ * 
+ * @param game a pointer to Game
+ * @return As a void, the function doesn't return anything
+*/
+void game_actions_chat(Game *game);
 
 /**
    Game actions implementation
@@ -99,6 +136,14 @@ Status game_actions_update(Game *game, Command *command) {
     case BACK:
       game_actions_back(game);
       break;
+    
+    case LEFT:
+      game_actions_left(game);
+      break;
+
+    case RIGHT:
+      game_actions_right(game);
+      break;
       
     case TAKE:
       game_actions_take(game);
@@ -106,6 +151,14 @@ Status game_actions_update(Game *game, Command *command) {
     
     case DROP:
       game_actions_drop(game);
+      break;
+
+    case ATTACK:
+      game_actions_attack(game);
+      break;
+
+    case CHAT:
+      game_actions_chat(game);
       break;
 
     default:
@@ -156,32 +209,61 @@ void game_actions_back(Game *game) {
   return;
 }
 
+void game_actions_left(Game *game) {
+  Id current_id = NO_ID;
+  Id space_id = NO_ID;
+
+  space_id = game_get_player_location(game);
+  if (space_id == NO_ID) {
+    return;
+  }
+
+  current_id = space_get_west(game_get_space(game, space_id));
+  if (current_id != NO_ID) {
+    game_set_player_location(game, current_id);
+  }
+  return;
+}
+
+void game_actions_right(Game *game) {
+  Id current_id = NO_ID;
+  Id space_id = NO_ID;
+
+  space_id = game_get_player_location(game);
+  if (space_id == NO_ID) {
+    return;
+  }
+
+  current_id = space_get_east(game_get_space(game, space_id));
+  if (current_id != NO_ID) {
+    game_set_player_location(game, current_id);
+  }
+  return;
+}
+
 void game_actions_take(Game *game){
   Id player_location = NO_ID;
-  Id object_location = NO_ID;
+  Id object = NO_ID;
   Player *player = NULL;
 
   if(!(player = game_get_player(game))) return;
 
   if(!game) return;
 
-  object_location = game_get_object_location(game); /* Initializate object_location*/
-  if(object_location == NO_ID){
-    return;
-    }
 
   player_location = game_get_player_location(game);/* Initializate player_location*/
   if(player_location == NO_ID){
     return;
   }
 
-  if((player_location == object_location) && (player_get_object(player) == NO_ID)) /* conditions needed to take an object */
-  {
-    player_set_object(player, object_get_id(game_get_object(game)));/* Copy the object in the player */
-    space_set_object(game_get_space(game, player_location), NO_ID);/* Delete the object from the space*/
-    game_set_object_location(game, NO_ID);
+  object = game_object_in_the_space(game, player_location);
+  if(object == NO_ID){
     return;
   }
+
+  player_set_object(player, object_get_id(game_get_object(game)));/* Copy the object in the player */
+  space_set_object(game_get_space(game, player_location), NO_ID);/* Delete the object from the space*/
+  game_set_object_location(game, NO_ID);
 
   return;
 }
@@ -211,6 +293,10 @@ void game_actions_drop(Game *game){
   }
 
   return;   
+}
+
+void game_actions_attack(Game *game) {
+  charact
 }
 
 
