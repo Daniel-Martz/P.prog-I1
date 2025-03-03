@@ -149,7 +149,7 @@ Status space_set_gdesc (Space* space, const char new_gdesc[N_ROWS][N_COLUMNS]){
   for (i = 0; i < N_ROWS; i++)
   {
     /*Check if the number of characters in the new description is equal to 9 to avoid errors*/
-    if (strlen(new_gdesc[i] != 9)) return ERROR;
+    if (strlen(new_gdesc[i]) != 9) return ERROR;
     
     strncpy(space->gdesc[i], new_gdesc[i], N_COLUMNS); 
   }
