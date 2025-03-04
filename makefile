@@ -44,7 +44,7 @@ set.o: set.c set.h types.h
 
 character.o: character.c character.h types.h
 	$(CC) $(CFLAGS) -o character.o character.c
-
+	
 # Limpiar archivos generados
 clean:
 	rm -f $(EXEC) $(OBJS)

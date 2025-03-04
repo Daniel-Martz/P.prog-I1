@@ -80,7 +80,7 @@ void game_actions_right(Game *game);
  * @param game a pointer to Game
  * @return As a void, the function doesn't return anything
 */
-void game_actions_take(Game *game);
+void game_actions_take(Game *game, char *objname);
 
 /**
  * @brief It drops the object previously taken
@@ -146,6 +146,7 @@ Status game_actions_update(Game *game, Command *command) {
       break;
       
     case TAKE:
+
       game_actions_take(game);
       break;
     
@@ -241,10 +242,11 @@ void game_actions_right(Game *game) {
   return;
 }
 
-void game_actions_take(Game *game){
+void game_actions_take(Game *game, char *objname){
   Id player_location = NO_ID;
   Id object = NO_ID;
   Player *player = NULL;
+
 
   if(!(player = game_get_player(game))) return;
 
@@ -296,7 +298,48 @@ void game_actions_drop(Game *game){
 }
 
 void game_actions_attack(Game *game) {
-  charact
+  int turn = -1;
+  Id character = NO_ID;
+  Id player_location = NO_ID;
+  if(!game) return;
+
+  if((player_location = game_get_player_location(game)) == NO_ID) return;
+
+  character = space_get_character(game_get_space(game, player_location));
+
+  if(character == NO_ID || character_is_friendly(game_get_character(game, character)) == TRUE) return;
+
+  /* If one of them has no health*/
+  if(!((player_get_health(game_get_player)>0) && (character_get_health(game_get_character(game, character)>0)))) return; 
+
+  srand(time(NULL));
+
+  turn = rand()%10;
+  if((turn<0)||turn>9) return;
+  if(turn<5){
+    player_set_health(game_get_player(game), player_get_health(game_get_player(game))-1);
+  }
+  else
+    character_set_health(game_get_character(game, character),character_get_health(game_get_character(game, character))-1);
+  
+  if(player_get_health(game_get_player(game))<=0){
+    game_set_finished(game, TRUE);
+    return;
+  }
 }
 
+void game_actions_chat(Game *game) {
+  Id character = NO_ID;
+  Id player_location = NO_ID;
+  if(!game) return;
+
+  if((player_location = game_get_player_location(game)) == NO_ID) return;
+
+  character = space_get_character(game_get_space(game, player_location));
+
+  if((character == NO_ID) || (character_is_friendly(game_get_character(game,character)) == FALSE)) return;
+  
+  character_get_message(game_get_character(game, character));
+  /* Qué hago con el mensaje del character!??*/
+}
 

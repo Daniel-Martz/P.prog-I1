@@ -33,6 +33,7 @@ struct _Game {
   Command *last_cmd; /*!< It stores the last command called */
   Bool finished; /*!< It defines if the game finished or not */
   Character *characters[MAX_CHARACTERS]; /*!< It contains all the characters of the game*/
+  char *message; /*!< It contains all the characters of the game*/
 };
 
 
@@ -76,6 +77,7 @@ Game *game_create(void){
   game->player = player_create(INIT_ID); 
   game->last_cmd = command_create();
   game->finished = FALSE;
+  game->message = NULL;
 
   if (!game->player || !game->last_cmd) {
     return NULL;
@@ -300,6 +302,20 @@ Status game_set_finished(Game *game, Bool finished) {
   game->finished = finished;
 
   return OK;
+}
+
+Id game_get_object_from_name(Game *game, char *objname){
+  int i;
+  if(!objname || !game){
+    return NO_ID;
+  }
+
+  for(i=0; i<game->n_objects; i++){
+    if(!strcmp(object_get_name(game->objects[i]),objname)){
+      return object_get_id(game->objects[i]);
+    }
+  }
+  return NO_ID; 
 }
 
 void game_print(Game *game) {

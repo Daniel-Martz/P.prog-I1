@@ -208,6 +208,16 @@ Status game_set_character_location(Game *game, Id space_id, Id character_id);
 Command* game_get_last_command(Game *game);
 
 /**
+ * @brief It gets the id of the object which name is passed by argument
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to game
+ * @param objname The name of the object
+ * @return NO_ID if there was a problem, or the id of the object if everyithing was OK.
+ */
+Id game_get_object_from_name(Game *game, char *objname);
+
+/**
  * @brief It sets as the last command executed a command passed by argument
  * 
  * @author Jaime Romero
