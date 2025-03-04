@@ -218,6 +218,21 @@ Player *game_get_player(Game *game){
 
 Id game_get_player_location(Game *game) { return player_get_location (game->player); }
 
+char *game_get_message(Game *game){
+  if(!game) return NULL;
+
+  return game->message;
+}
+
+Status game_set_message(Game *game, const char *message){
+  if(!game || !message){
+    return ERROR;
+  }
+
+  game->message = message;
+  return OK;
+}
+
 Status game_set_player_location(Game *game, Id location) {
   if (!location) {
     return ERROR;
@@ -315,7 +330,7 @@ Id game_get_object_from_name(Game *game, char *objname){
       return object_get_id(game->objects[i]);
     }
   }
-  return NO_ID; 
+  return NO_ID;
 }
 
 void game_print(Game *game) {
