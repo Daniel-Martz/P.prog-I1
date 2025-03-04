@@ -121,7 +121,7 @@ Status space_set_new_object(Space* space, Id object_id) {
     return ERROR;
   }
 
-  if(set_add(space->objects,object_id) == ERROR){
+  if(set_add(space->objects, object_id) == ERROR){
     return ERROR;
   }
   return OK;
@@ -152,6 +152,14 @@ Status space_set_gdesc (Space* space, const char new_gdesc[N_ROWS][N_COLUMNS]){
     strncpy(space->gdesc[i], new_gdesc[i], N_COLUMNS); 
   }
   
+  return OK;
+}
+
+Status space_object_del(Space *space, Id object_id){
+  if(!space || (object_id == NO_ID)){
+    return ERROR;
+  }
+  set_del(space->objects, object_id);
   return OK;
 }
 

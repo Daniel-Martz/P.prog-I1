@@ -14,8 +14,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-/* It denotes the length needed for the string that stores the introduced command */
-#define CMD_LENGHT 30
+
+#define CMD_LENGHT 30 /* It denotes the length needed for the string that stores the introduced command */
+#define MAX_SIZE 30  /* It denotes the maximum sizez for an array*/
+
 /* Store commands and it significate */
 char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"n", "Next"}, {"b", "Back"}, {"l", "Left"}, {"R", "Right"}, {"t", "Take"}, {"d", "Drop"}, {"a", "Attack"}, {"c", "Chat"}};
 
@@ -26,6 +28,7 @@ char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "E
  */
 struct _Command {
   CommandCode code; /*!< Name of the command */
+  char objname[MAX_SIZE]; /*!< Name of the object to take */
 };
 
 /** space_create allocates memory for a new space
@@ -41,6 +44,7 @@ Command* command_create(void) {
 
   /* Initialization of an empty command*/
   newCommand->code = NO_CMD;
+  newCommand->objname[0] = '\0';
 
   return newCommand;
 }
@@ -72,6 +76,23 @@ CommandCode command_get_code(Command* command) {
   return command->code;
 }
 
+Status command_set_objname(Command *command, const char *objname){
+  if(!command || !objname){
+    return ERROR;
+  }
+
+  strcpy(command->objname,objname);
+  return OK;
+}
+
+char *command_get_objname(Command *command){
+  if(!command){
+  return NULL;
+  }
+  return command->objname;
+}
+
+
 Status command_get_user_input(Command* command) {
   char input[CMD_LENGHT] = "", *token = NULL;
   int i = UNKNOWN - NO_CMD + 1;
@@ -94,6 +115,10 @@ Status command_get_user_input(Command* command) {
       } else {
         i++;
       }
+    }
+    if(cmd == TAKE){
+      token = strtok(NULL, "0 \n");
+      command_set_objname(command, token);
     }
     return command_set_code(command, cmd);
   }

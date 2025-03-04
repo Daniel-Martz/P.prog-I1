@@ -275,6 +275,44 @@ void game_print(Game *game);
 Status game_set_message(Game *game, const char *message);
 
 /**
+ * @brief It returns the number of objects in the game
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to the game
+ * @return an integer (NO_ID if there was a problem)
+ */
+int game_get_nobjects(Game *game);
+
+/**
+ * @brief It set the number of objects in the game
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to game
+ * @param n_objects an integuer with the number of objects
+ * @return OK if everything worked properly or ERROR if it didn't
+ */
+Status game_set_nobjects(Game *game, int n_objects);
+
+/**
+ * @brief It returns the number of characters in the game
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to the game
+ * @return an integer (NO_ID if there was a problem)
+ */
+int game_get_ncharacters(Game *game);
+
+/**
+ * @brief It set the number of characters in the game
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to game
+ * @param n_objects an integuer with the number of characters
+ * @return OK if everything worked properly or ERROR if it didn't
+ */
+Status game_set_ncharacters(Game *game, int n_characters);
+
+/**
  * @brief It says if the game is finished or not
  * 
  * @author Jaime Romero
