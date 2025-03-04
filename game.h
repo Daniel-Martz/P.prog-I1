@@ -265,4 +265,22 @@ Id game_object_in_the_space(Game *game, Id space_id);
  */
 void game_print(Game *game);
 
+/**
+ * @brief It says if the game is finished or not
+ * 
+ * @author Jaime Romero
+ * @param game A pointer to game
+ * @return True(1) or False(0)
+ */
+Status game_set_message(Game *game, const char *message);
+
+/**
+ * @brief It says if the game is finished or not
+ * 
+ * @author Jaime Romero
+ * @param game A pointer to game
+ * @return True(1) or False(0)
+ */
+char *game_get_message(Game *game);
+
 #endif
