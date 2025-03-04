@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2 /* It defines a constant for the the abreviature of the command and the command*/
-#define N_CMD 7 /* It defines a constant for the number of commands */
+#define N_CMD 11 /* It defines a constant for the number of commands */
 
 /* It establishes a data type for the two posible ways to refer to a command */
 typedef enum { CMDS, CMDL } CommandType;
@@ -72,4 +72,3 @@ CommandCode command_get_code(Command* command);
 Status command_get_user_input(Command* command);
 
 #endif
-
