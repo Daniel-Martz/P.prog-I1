@@ -322,3 +322,4 @@ Status game_set_ncharacters(Game *game, int n_characters);
 char *game_get_message(Game *game);
 
 #endif
+
