@@ -95,7 +95,7 @@ int character_get_health(Character* character);
  * @param character A pointer to Character
  * @return TRUE if the character is friendly or FALSE if not
  */
-Bool character_is_friendly(Character* character);
+Bool character_get_friendly(Character* character);
 
 /*============================Set============================*/
 

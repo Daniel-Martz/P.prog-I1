@@ -328,7 +328,7 @@ void game_actions_attack(Game *game) {
 
   character = space_get_character(game_get_space(game, player_location));
 
-  if(character == NO_ID || character_is_friendly(game_get_character(game, character)) == TRUE) return;
+  if(character == NO_ID || character_get_friendly(game_get_character(game, character)) == TRUE) return;
 
   /* If one of them has no health*/
   if(!((player_get_health(game_get_player(game))>0) && (character_get_health(game_get_character(game, character))>0))) return; 
@@ -358,7 +358,7 @@ void game_actions_chat(Game *game) {
 
   character = space_get_character(game_get_space(game, player_location));
 
-  if((character == NO_ID) || (character_is_friendly(game_get_character(game,character)) == FALSE)) return;
+  if((character == NO_ID) || (character_get_friendly(game_get_character(game,character)) == FALSE)) return;
   
   game_set_message(game,character_get_message(game_get_character(game, character)));
 
