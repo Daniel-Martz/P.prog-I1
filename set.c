@@ -18,7 +18,7 @@ struct _Set {
 
 /*Public functions*/
 
-Set* set_create (){
+Set* set_create(void){
 
     Set *set = NULL;
     
@@ -120,7 +120,7 @@ long set_get_nids(Set* set){
 Id* set_get_ids(Set* set){
     if(!set) return NULL;
 
-    return set->n_ids;
+    return set->ids;
 }
 
 Status set_id_is_there(Set* set, Id id){

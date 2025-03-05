@@ -80,7 +80,7 @@ void game_actions_right(Game *game);
  * @param game a pointer to Game
  * @return As a void, the function doesn't return anything
 */
-void game_actions_take(Game *game, char *objname);
+void game_actions_take(Game *game);
 
 /**
  * @brief It drops the object previously taken
@@ -181,6 +181,8 @@ void game_actions_next(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
+  game_set_message(game,NULL);
+
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
     return;
@@ -198,6 +200,8 @@ void game_actions_back(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
+  game_set_message(game,NULL);
+
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
     return;
@@ -213,6 +217,8 @@ void game_actions_back(Game *game) {
 void game_actions_left(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
+
+  game_set_message(game, NULL);
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
@@ -230,6 +236,8 @@ void game_actions_right(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
+  game_set_message(game,NULL);
+
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
     return;
@@ -242,30 +250,40 @@ void game_actions_right(Game *game) {
   return;
 }
 
-void game_actions_take(Game *game, char *objname){
+void game_actions_take(Game *game){
   Id player_location = NO_ID;
   Id object = NO_ID;
   Player *player = NULL;
+  char *objname = NULL;
 
-
-  if(!(player = game_get_player(game))) return;
+  game_set_message(game, NULL);
 
   if(!game) return;
 
+  if(!(objname = command_get_objname(game_get_last_command(game)))){
+    return;
+  }
+  /* Take the player*/
+  if(!(player = game_get_player(game))) return;
+  /* Make sure that the player has no objects*/
+  if(player_get_object(player) != NO_ID) return;
 
   player_location = game_get_player_location(game);/* Initializate player_location*/
   if(player_location == NO_ID){
     return;
   }
 
-  object = game_object_in_the_space(game, player_location);
-  if(object == NO_ID){
+  /* We get the object id from the name*/
+  if((object = game_get_object_from_name(game, objname)) == NO_ID){
+    return;
+  }
+  /* object location and player location must be the same*/
+  if(game_get_object_location(game, object) != player_location){
     return;
   }
 
-  player_set_object(player, object_get_id(game_get_object(game)));/* Copy the object in the player */
-  space_set_object(game_get_space(game, player_location), NO_ID);/* Delete the object from the space*/
-  game_set_object_location(game, NO_ID);
+  player_set_object(player, object);/* Copy the object in the player */
+  space_object_del(game_get_space(game, player_location), object); /*Delete the object from the sapce*/
 
   return;
 }
@@ -275,6 +293,8 @@ void game_actions_drop(Game *game){
   Space *current_space = NULL;
   Player *player = NULL;
 
+  game_set_message(game,NULL);
+  
   if(!(player = game_get_player(game))) return;
 
   if(!game) return;
@@ -287,13 +307,12 @@ void game_actions_drop(Game *game){
     return;
   }
 
-  current_space = game_get_space(game, player_location);
-  if((space_get_object(current_space)== NO_ID)){
-    space_set_object(current_space, object_id); /* we establish the space object id of the player's object*/
-    game_set_object_location(game, player_location);
-    player_set_object(player, NO_ID);/* we "delete" the object from the player*/
+  if(!(current_space = game_get_space(game, player_location))){
+    return;
   }
 
+  space_set_new_object(current_space, object_id);
+  player_set_object(player, NO_ID);
   return;   
 }
 
@@ -301,16 +320,18 @@ void game_actions_attack(Game *game) {
   int turn = -1;
   Id character = NO_ID;
   Id player_location = NO_ID;
+
+  game_set_message(game,NULL);
   if(!game) return;
 
   if((player_location = game_get_player_location(game)) == NO_ID) return;
 
   character = space_get_character(game_get_space(game, player_location));
 
-  if(character == NO_ID || character_is_friendly(game_get_character(game, character)) == TRUE) return;
+  if(character == NO_ID || character_get_friendly(game_get_character(game, character)) == TRUE) return;
 
   /* If one of them has no health*/
-  if(!((player_get_health(game_get_player)>0) && (character_get_health(game_get_character(game, character)>0)))) return; 
+  if(!((player_get_health(game_get_player(game))>0) && (character_get_health(game_get_character(game, character))>0))) return; 
 
   srand(time(NULL));
 
@@ -337,9 +358,10 @@ void game_actions_chat(Game *game) {
 
   character = space_get_character(game_get_space(game, player_location));
 
-  if((character == NO_ID) || (character_is_friendly(game_get_character(game,character)) == FALSE)) return;
+  if((character == NO_ID) || (character_get_friendly(game_get_character(game,character)) == FALSE)) return;
   
-  character_get_message(game_get_character(game, character));
-  /* Qué hago con el mensaje del character!??*/
+  game_set_message(game,character_get_message(game_get_character(game, character)));
+
+  return;
 }
 

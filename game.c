@@ -33,7 +33,7 @@ struct _Game {
   Command *last_cmd; /*!< It stores the last command called */
   Bool finished; /*!< It defines if the game finished or not */
   Character *characters[MAX_CHARACTERS]; /*!< It contains all the characters of the game*/
-  char *message; /*!< It contains all the characters of the game*/
+  char *message; /*!< It contains the message of the chat*/
 };
 
 
@@ -130,9 +130,12 @@ Game *game_create_from_file(char *filename) {
     return NULL;
   }
 
+  if (game_reader_load_objects(game, filename) == ERROR) {
+    return NULL;
+  }
+
   /* The player and the object are located in the first space */
   game_set_player_location(game, game_get_space_id_at(game, 0));
-  game_set_object_location(game, game_get_space_id_at(game, 0));
 
   return game;
 }
@@ -229,7 +232,7 @@ Status game_set_message(Game *game, const char *message){
     return ERROR;
   }
 
-  game->message = message;
+  game->message[0] = message[0];
   return OK;
 }
 
@@ -331,6 +334,40 @@ Id game_get_object_from_name(Game *game, char *objname){
     }
   }
   return NO_ID;
+}
+
+int game_get_nobjects(Game *game){
+  if(!game){
+  return NO_ID;
+  }
+
+  return game->n_objects;
+}
+
+Status game_set_nobjects(Game *game, int n_objects){
+  if(!game || (n_objects < 0) || (n_objects > MAX_OBJECTS)){
+    return ERROR;
+  }
+
+  game->n_objects = n_objects;
+  return OK;
+}
+
+int game_get_ncharacters(Game *game){
+  if(!game){
+  return NO_ID;
+  }
+
+  return game->n_characters;
+}
+
+Status game_set_ncharacters(Game *game, int n_characters){
+  if(!game || (n_characters < 0) || (n_characters > MAX_CHARACTERS)){
+    return ERROR;
+  }
+
+  game->n_characters = n_characters;
+  return OK;
 }
 
 void game_print(Game *game) {

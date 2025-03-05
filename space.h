@@ -128,6 +128,17 @@ Status space_set_new_object(Space* space, Id object_id);
  */
 Status space_set_gdesc (Space* space, const char new_gdesc[N_ROWS][N_COLUMNS]);
 
+/**
+ * @brief This delete an object from the space
+ * 
+ * @author Daniel Martínez
+ * 
+ * @param space A pointer to Space structure
+ * @param id The id of the object
+ * 
+ * @return ERROR if there was a problem, OK if everything was good
+ */
+Status space_object_del(Space *space, Id object_id);
 /*============================Get============================*/
 
 /**

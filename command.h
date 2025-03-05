@@ -49,6 +49,7 @@ Status command_destroy(Command* command);
  * @author Daniel Martínez
  * 
  * @param command a pointer to a command structure
+ * @param code the code of the command
  * @return OK if everything was correct, ERROR if not
 */
 Status command_set_code(Command* command, CommandCode code);
@@ -61,6 +62,25 @@ Status command_set_code(Command* command, CommandCode code);
  * @return CommandCode It coould be NO_CMD, NEXT; EXIT...
 */
 CommandCode command_get_code(Command* command);
+
+/**
+ * @brief It asignates the object name passed as an argument to the command and control errors
+ * @author Daniel Martínez
+ * 
+ * @param command a pointer to a command structure
+ * @param objname the name of the object
+ * @return OK if everything was correct, ERROR if not
+*/
+Status command_set_objname(Command *command, const char *objname);
+
+/**
+ * @brief It returns the object name stored in the command passed by argument and control errors
+ * @author Daniel Martínez
+ * 
+ * @param command a pointer to a command structure
+ * @return A string
+*/
+char *command_get_objname(Command *command);
 
 /**
  * @brief The users introduces a command and it is asigned to a variable command, controlling erors 
