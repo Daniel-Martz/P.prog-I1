@@ -266,7 +266,7 @@ void game_actions_take(Game *game){
   /* Take the player*/
   if(!(player = game_get_player(game))) return;
   /* Make sure that the player has no objects*/
-  if(player_get_object != NO_ID) return;
+  if(player_get_object(player) != NO_ID) return;
 
   player_location = game_get_player_location(game);/* Initializate player_location*/
   if(player_location == NO_ID){
@@ -331,7 +331,7 @@ void game_actions_attack(Game *game) {
   if(character == NO_ID || character_is_friendly(game_get_character(game, character)) == TRUE) return;
 
   /* If one of them has no health*/
-  if(!((player_get_health(game_get_player)>0) && (character_get_health(game_get_character(game, character)>0)))) return; 
+  if(!((player_get_health(game_get_player(game))>0) && (character_get_health(game_get_character(game, character))>0))) return; 
 
   srand(time(NULL));
 

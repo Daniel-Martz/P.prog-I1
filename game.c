@@ -232,7 +232,7 @@ Status game_set_message(Game *game, const char *message){
     return ERROR;
   }
 
-  game->message = message;
+  game->message[0] = message[0];
   return OK;
 }
 

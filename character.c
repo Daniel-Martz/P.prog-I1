@@ -63,27 +63,27 @@ Id character_get_id (Character* character){
 }
 
 const char* character_get_name(Character* character){
-    if(!character) return NO_ID;
+    if(!character) return NULL;
     return character->name;
 }
 
 const char* character_get_gdesc(Character* character){
-    if(!character) return NO_ID;
+    if(!character) return NULL;
     return character->gdesc;
 }
 
 const char* character_get_message(Character* character){
-    if(!character) return NO_ID;
+    if(!character) return NULL;
     return character->message;
 }
 
 int character_get_health(Character* character){
-    if(!character) return NO_ID;
+    if(!character) return -1;
     return character->health;
 }
 
 Bool character_get_friendly(Character *character){
-    if(!character) return NO_ID;
+    if(!character) return FALSE;
     return character->friendly;
 }
 
@@ -144,7 +144,7 @@ Status character_print (Character* character){
     if (!character) return ERROR;
 
     fprintf(stdout, " Character Id: %ld\n Name: %s\n Description: %s\n", character->id, character->name, character->gdesc);
-    fprintf(stdout, " Health: %ld\n Friendly: %s\n Message: %s\n", character->health, character->friendly, character->message);
+    fprintf(stdout, " Health: %ld\n Friendly: %u\n Message: %s\n", character->health, character->friendly, character->message);
 
     return OK;
 }
