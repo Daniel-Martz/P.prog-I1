@@ -266,20 +266,21 @@ Id game_object_in_the_space(Game *game, Id space_id);
 void game_print(Game *game);
 
 /**
- * @brief It says if the game is finished or not
+ * @brief It sets the message the character is going to say
  * 
- * @author Jaime Romero
+ * @author Daniel Martinez
  * @param game A pointer to game
+ * @param message A pointer to the message
  * @return True(1) or False(0)
  */
 Status game_set_message(Game *game, const char *message);
 
 /**
- * @brief It says if the game is finished or not
+ * @brief It reads the message the character says
  * 
- * @author Jaime Romero
+ * @author Daniel Martinez
  * @param game A pointer to game
- * @return True(1) or False(0)
+ * @return a char with the message
  */
 char *game_get_message(Game *game);
 
