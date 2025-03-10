@@ -19,12 +19,12 @@
 #include "types.h"
 
 #define MAX_STR 255 /*Comnstant assigned fpr the maximum length of a string*/
-#define WIDTH_MAP 48 /*Constant asignated for the width of the map*/
-#define WIDTH_DES 29 /*Constant asignated for the width of the description*/
-#define WIDTH_BAN 23 /*Constant asignated for the width of the banner*/
-#define HEIGHT_MAP 13 /*Constant asignated for the height of the map*/
-#define HEIGHT_BAN 1 /*Constant asignated for the height of the banner*/
-#define HEIGHT_HLP 2 /*Constant asignated for the height of help interface*/
+#define WIDTH_MAP 57 /*Constant asignated for the width of the map*/
+#define WIDTH_DES 31 /*Constant asignated for the width of the description*/
+#define WIDTH_BAN 28 /*Constant asignated for the width of the banner*/
+#define HEIGHT_MAP 29 /*Constant asignated for the height of the map*/
+#define HEIGHT_BAN 3 /*Constant asignated for the height of the banner*/
+#define HEIGHT_HLP 3 /*Constant asignated for the height of help interface*/
 #define HEIGHT_FDB 3 /*Constant asignated for the height of feedback interface*/
 
 /**
@@ -83,7 +83,7 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   /* Declare de needed local variables of the function */
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID; 
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID, character_id = NO_ID; 
   Space *space_act = NULL;
   char obj = '*';
   char str[MAX_STR];
@@ -96,10 +96,17 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     space_act = game_get_space(game, id_act);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
-    obj_loc = game_get_object_location(game, NO_ID); 
+    obj_loc = game_get_object_location(game, NO_ID);
 
     if (id_back != NO_ID) {
-      sprintf(str, "  |        %3d|", (int)id_back);
+      sprintf(str, "  +----------------+");
+      character_id = space_get_character(game_get_space(game, id_back));
+      if(character_id != NO_ID){
+        sprintf(str, "  |      %s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)id_back);
+      }
+      else{
+        sprintf(str, "  |             %3d|", (int)id_back);
+      }
       screen_area_puts(ge->map, str);
       if(obj_loc == id_back){
         sprintf(str, "  |     %c     |", obj);
@@ -109,14 +116,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         sprintf(str, "  |           |");
         screen_area_puts(ge->map, str);
       }
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +----------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "        ^");
+      sprintf(str, "            ^");
       screen_area_puts(ge->map, str);
     }
 
     if (id_act != NO_ID) {
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +----------------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "  | m0^    %3d|", (int)id_act);
       screen_area_puts(ge->map, str);
@@ -128,14 +135,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         sprintf(str, "  |           |");
         screen_area_puts(ge->map, str);
       }
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +----------------+");
       screen_area_puts(ge->map, str);
     }
 
     if (id_next != NO_ID) {
       sprintf(str, "        v");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +----------------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "  |        %3d|", (int)id_next);
       screen_area_puts(ge->map, str);
@@ -147,7 +154,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         sprintf(str, "  |           |");
         screen_area_puts(ge->map, str);
       }
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +----------------+");
       screen_area_puts(ge->map, str);
     }
   }

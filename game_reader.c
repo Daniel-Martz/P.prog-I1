@@ -22,6 +22,8 @@ Status game_reader_load_spaces(Game *game, char *filename) {
   Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
   Space *space = NULL;
   Status status = OK;
+  char gdesc[N_ROWS][N_COLUMNS];
+  int row=0;
 
   if (!filename || !game) {
     return ERROR;
@@ -46,6 +48,14 @@ Status game_reader_load_spaces(Game *game, char *filename) {
       south = atol(toks);
       toks = strtok(NULL, "|");
       west = atol(toks);
+
+      for (row = 0; row < N_ROWS; row++)
+      {
+        toks=strtok(NULL, "|");
+        strncpy(gdesc[row], toks, N_COLUMNS-1);
+        gdesc[row][N_COLUMNS-1]= '\0';
+      }
+
 #ifdef DEBUG
       printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
 #endif
@@ -56,6 +66,7 @@ Status game_reader_load_spaces(Game *game, char *filename) {
         space_set_east(space, east);
         space_set_south(space, south);
         space_set_west(space, west);
+        space_set_gdesc(space, gdesc);
         game_add_space(game, space);
       }
     }
