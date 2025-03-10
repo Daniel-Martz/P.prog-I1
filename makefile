@@ -52,6 +52,6 @@ clean:
 runv :
 	valgrind --leak-check=full ./$(EXEC) anthill.dat
 
-
-
+run: $(EXEC)
+	./$(EXEC) anthill.dat
 

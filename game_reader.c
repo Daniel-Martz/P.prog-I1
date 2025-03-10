@@ -66,7 +66,7 @@ Status game_reader_load_spaces(Game *game, char *filename) {
         space_set_east(space, east);
         space_set_south(space, south);
         space_set_west(space, west);
-        space_set_gdesc(space, gdesc);
+        space_set_gdesc(space, (const char(*)[N_COLUMNS])gdesc); /*Hacemos casting al llamar a la fucnión set_gdesc para que concuerde con el tipo de dato que requiere la fucnión*/
         game_add_space(game, space);
       }
     }
