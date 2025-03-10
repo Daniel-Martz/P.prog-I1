@@ -94,6 +94,6 @@ void screen_area_reset_cursor(Area* area);
  * @param area the area to be modified
  * @param str a string that contains the information to be included in a particular area
  */
-void screen_area_puts(Area* area, char* str);
+void screen_area_puts(Area* area, const char* str);
 
 #endif

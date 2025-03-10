@@ -87,6 +87,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Space *space_act = NULL;
   char obj = '*';
   char str[MAX_STR];
+  const char* gdesc[N_ROWS]; 
+  int i=0;
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 
@@ -97,6 +99,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
     obj_loc = game_get_object_location(game, NO_ID);
+    for (i = 0; i < N_ROWS; i++)
+    {
+      gdesc[i]=space_get_gdesc(space_act, i); /*Obtener la descripcion grafica del espacio*/
+    }
+    
+    screen_area_clear(ge->descript); 
+    for (i = 0; i < N_ROWS; i++) {
+        screen_area_puts(ge->descript, gdesc[i]);  /*Imprimir cada línea en la pantalla*/
+    }
 
     if (id_back != NO_ID) {
       sprintf(str, "  +----------------+");
@@ -161,6 +172,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
+
   if (obj_loc != NO_ID) {
     sprintf(str, "  Object location:%d", (int)obj_loc);
     screen_area_puts(ge->descript, str);
