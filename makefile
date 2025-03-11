@@ -51,10 +51,17 @@ space_test: space_test.o space.o set.o
 space_test.o: space_test.c space.h space_test.h test.h
 	$(CC) $(CFLAGS) -o space_test.o space_test.c
 
+set_test: set_test.o set.o
+	$(CC) -o set_test set_test.o set.o
+
+set_test.o: set_test.c set_test.h set.h test.h
+	$(CC) $(CFLAGS) -o set_test.o set_test.c
+
+
 	
 # Limpiar archivos generados
 clean:
-	rm -f $(EXEC) $(OBJS) space_test space_test.o
+	rm -f $(EXEC) $(OBJS) space_test space_test.o set_test set_test.o
 
 # Correr valgrind
 runv :
@@ -64,6 +71,11 @@ runv :
 run: $(EXEC)
 	./$(EXEC) anthill.dat
 
-# Ejecutar el archivo de testeo
-test: space_test
-	./space_test
+# Ejecutar el archivo de testeo space
+testspace: space_test 
+	./space_test 
+
+# Ejecutar el archivo de testeo set
+testset: set_test 
+	./set_test 
+

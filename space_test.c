@@ -240,7 +240,7 @@ void test2_space_get_name() {
 void test1_space_get_nobjects() {
   Space *s;
   s = space_create(1);
-  PRINT_TEST_RESULT(space_get_nobjects(s) == FALSE);
+  PRINT_TEST_RESULT(space_get_nobjects(s) == POINT_ERROR);
   space_destroy(s);
 }
 

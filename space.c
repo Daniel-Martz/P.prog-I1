@@ -215,7 +215,7 @@ Status space_object_is_there(Space* space, Id object_id) {
 }
 
 long space_get_nobjects(Space* space){
-  if(!space) return NO_ID;
+  if(!space) return POINT_ERROR;
   
   return set_get_nids(space->objects);
 }
