@@ -13,6 +13,7 @@
 
 #define WORD_SIZE 1000 /* It is the constant for the maximun size of a word*/
 #define NO_ID -1 /* It is a constant that established not having ID to -1*/
+#define POINT_ERROR -1 /*A constant established to reffer the error when the return type of a function is an integrer*/
 
 typedef long Id; /* It establishes a new type of "variable" of type long that is the Id */
 

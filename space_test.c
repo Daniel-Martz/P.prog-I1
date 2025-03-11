@@ -2,7 +2,7 @@
  * @brief It tests space module
  * 
  * @file space_test.c
- * @author Profesores Pprog
+ * @author Jaime Romero
  * @version 0.0 
  * @date 17-02-2025
  * @copyright GNU Public License
@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
 
   PRINT_PASSED_PERCENTAGE;
 
-  return 1;
+  return 0;
 }
 
 void test1_space_create() {

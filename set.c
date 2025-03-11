@@ -113,7 +113,7 @@ Status set_print (Set* set){
 }
 
 long set_get_nids(Set* set){
-    if(!set) return 0;
+    if(!set) return POINT_ERROR;
     return set->n_ids;
 }
 
@@ -126,8 +126,7 @@ Id* set_get_ids(Set* set){
 Status set_id_is_there(Set* set, Id id){
     int i;
 
-    if(!set) return ERROR;
-    if(id == NO_ID) return ERROR;
+    if(!set || id == NO_ID) return ERROR;
 
     for(i=0;i<set->n_ids;i++){
         if(set->ids[i]==id){
