@@ -245,6 +245,7 @@ Id space_get_character(Space *space);
  * @author Jaime Romero
  *
  * @param space A pointer to Space
+ * @param row the row of the array
  * @return a string with the description of the space
  */
 const char* space_get_gdesc(Space* space, int row);

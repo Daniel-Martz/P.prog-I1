@@ -121,7 +121,7 @@ Status space_set_new_object(Space* space, Id object_id) {
     return ERROR;
   }
 
-  if(set_add(space->objects, object_id) == ERROR){
+  if(set_add(space->objects, object_id) == ERROR){ /*Esta función está mal, hay que pasar un puntero a set, no space->objects*/
     return ERROR;
   }
   return OK;

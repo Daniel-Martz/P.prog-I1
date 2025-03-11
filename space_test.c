@@ -11,9 +11,7 @@
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <string.h> 
-#include "space.h"
 #include "space_test.h"
-#include "test.h"
 
 #define MAX_TESTS 30
 
@@ -178,14 +176,14 @@ void test2_space_set_west() {
 
 void test1_space_set_new_object() {
   Space *s;
-  s = space_create(1);
-  PRINT_TEST_RESULT(space_set_new_object(s,TRUE) == OK);
+  s = space_create(5);
+  PRINT_TEST_RESULT(space_set_new_object(s, 245) == OK); /*Falla en set_add*/
   space_destroy(s);
 }
 
 void test2_space_set_new_object() {
   Space *s = NULL;
-  PRINT_TEST_RESULT(space_set_new_object(s,TRUE) == ERROR);
+  PRINT_TEST_RESULT(space_set_new_object(s, 3) == ERROR);
 }
 
 void test1_space_set_character(){
@@ -203,11 +201,11 @@ void test2_space_set_character(){
 void test1_space_set_gdesc(){
   Space *s;
   const char array[5][10] = {
-    "Fila1",
-    "Fila2",
-    "Fila3",
-    "Fila4",
-    "Fila5"
+    "Fila11111",
+    "Fila22222",
+    "Fila33333",
+    "Fila44444",
+    "Fila55555"
   };
   s = space_create(3);
   PRINT_TEST_RESULT(space_set_gdesc(s, array) == OK);
@@ -217,11 +215,11 @@ void test1_space_set_gdesc(){
 void test2_space_set_gdesc(){
   Space* s = NULL;
   const char array[5][10] = {
-    "Fila1",
-    "Fila2",
-    "Fila3",
-    "Fila4",
-    "Fila5"
+    "Fila11111",
+    "Fila22222",
+    "Fila33333",
+    "Fila44444",
+    "Fila55555"
   };
   PRINT_TEST_RESULT(space_set_gdesc(s, array) == ERROR);
 }
@@ -248,7 +246,7 @@ void test1_space_get_nobjects() {
 
 void test2_space_get_nobjects() {
   Space *s = NULL;
-  PRINT_TEST_RESULT(space_get_nobjects(s) == FALSE);
+  PRINT_TEST_RESULT(space_get_nobjects(s) == NO_ID);
 }
 
 void test1_space_get_north() {
@@ -332,58 +330,70 @@ void test2_space_get_character(){
   Space *s=NULL;
   PRINT_TEST_RESULT(space_get_character(s) == NO_ID);
 }
+
 void test1_space_get_gdesc(){
   Space *s;
+  int i=0; 
   const char array[5][10] = {
-    "Fila1",
-    "Fila2",
-    "Fila3",
-    "Fila4",
-    "Fila5"
+    "Fila11111",
+    "Fila22222",
+    "Fila33333",
+    "Fila44444",
+    "Fila55555"
   };
   s = space_create(21);
   space_set_gdesc(s, array);
-  PRINT_TEST_RESULT(space_get_gdesc(s, 1) == array[1]);
+  
+  for (i = 0; i < 5; i++)
+  {
+    if (space_get_gdesc(s, i) != array[i])
+    {
+      PRINT_TEST_RESULT(FALSE);
+      space_destroy(s);
+      return;
+    }
+  }
+  PRINT_TEST_RESULT(TRUE);
   space_destroy(s);
 }
 
 void test2_space_get_gdesc(){
   Space *s=NULL;
   const char array[5][10] = {
-    "Fila1",
-    "Fila2",
-    "Fila3",
-    "Fila4",
-    "Fila5"
+    "Fila11111",
+    "Fila22222",
+    "Fila33333",
+    "Fila44444",
+    "Fila55555"
   };
   space_set_gdesc(s, array);
-  PRINT_TEST_RESULT(space_get_gdesc(s, 1) == array[1]);
+  PRINT_TEST_RESULT(space_get_gdesc(s, 1) == NULL);
 }
 
 void test3_space_get_gdesc(){
   Space *s;
   const char array[5][10] = {
-    "Fila1",
-    "Fila2",
-    "Fila3",
-    "Fila4",
-    "Fila5"
+    "Fila11111",
+    "Fila22222",
+    "Fila33333",
+    "Fila44444",
+    "Fila55555"
   };
   s = space_create(23);
   space_set_gdesc(s, array);
-  PRINT_TEST_RESULT(space_get_gdesc(s, -1) == array[-1]);
+  PRINT_TEST_RESULT(space_get_gdesc(s, -1) == NULL);
 }
 
 void test4_space_get_gdesc(){
   Space *s;
   const char array[5][10] = {
-    "Fila1",
-    "Fila2",
-    "Fila3",
-    "Fila4",
-    "Fila5"
+    "Fila11111",
+    "Fila22222",
+    "Fila33333",
+    "Fila44444",
+    "Fila55555"
   };
   s = space_create(23);
   space_set_gdesc(s, array);
-  PRINT_TEST_RESULT(space_get_gdesc(s, 10) == array[10]);
+  PRINT_TEST_RESULT(space_get_gdesc(s, 10) == NULL);
 }

@@ -44,14 +44,26 @@ set.o: set.c set.h types.h
 
 character.o: character.c character.h types.h
 	$(CC) $(CFLAGS) -o character.o character.c
+
+space_test: space_test.o space.o set.o
+	$(CC) -o space_test space_test.o space.o set.o
+
+space_test.o: space_test.c space.h space_test.h test.h
+	$(CC) $(CFLAGS) -o space_test.o space_test.c
+
 	
 # Limpiar archivos generados
 clean:
-	rm -f $(EXEC) $(OBJS)
+	rm -f $(EXEC) $(OBJS) space_test space_test.o
 
+# Correr valgrind
 runv :
 	valgrind --leak-check=full ./$(EXEC) anthill.dat
 
+# Ejecutar el programa
 run: $(EXEC)
 	./$(EXEC) anthill.dat
 
+# Ejecutar el archivo de testeo
+test: space_test
+	./space_test
