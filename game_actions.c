@@ -336,7 +336,7 @@ void game_actions_attack(Game *game) {
   srand(time(NULL));
 
   turn = rand()%10;
-  if((turn<0)||turn>9) return; 
+  if((turn<0)||turn>9) return;
   if(turn<5){
     player_set_health(game_get_player(game), player_get_health(game_get_player(game))-1);
   }

@@ -313,6 +313,24 @@ int game_get_ncharacters(Game *game);
 Status game_set_ncharacters(Game *game, int n_characters);
 
 /**
+ * @brief It get the array of objects in the game
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to game
+ * @return Returns an array of objects
+ */
+Object **game_get_objects(Game *game);
+
+/**
+ * @brief It get the array of characters in the game
+ * 
+ * @author Daniel Martínez
+ * @param game A pointer to game
+ * @return Returns an array of characters
+ */
+Character **game_get_characters(Game *game);
+
+/**
  * @brief It says if the game is finished or not
  * 
  * @author Jaime Romero

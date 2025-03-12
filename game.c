@@ -395,6 +395,15 @@ void game_print(Game *game) {
 
   printf("=> Player location: %d\n", (int)game_get_player_location(game));
 }
+Object **game_get_objects(Game *game){
+  if(!game) return NULL;
+  return game->objects;
+}
+
+Character **game_get_characters(Game *game){
+  if(!game) return NULL;
+  return game->characters;
+}
 
 /*Declaration of the function*/
 Id game_get_space_id_at(Game *game, int position) {
