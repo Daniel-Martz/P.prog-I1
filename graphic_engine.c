@@ -135,7 +135,7 @@ Status graphic_engine_print_space(Id space_id, Game *game, Graphic_engine *ge){
       sprintf(str, "|%s",object_get_name(game_get_object(game,objects_id[0])));
     }
     for(i = 1; i<space_get_nobjects(space); i++){
-      sprintf(str, "%s, %s",str, object_get_name(game_get_object(game,objects_id[i])));
+      sprintf(str,"  %s, %s", str, object_get_name(game_get_object(game,objects_id[i])));
     }
     names_lenght = strlen(str);
     if(names_lenght > MAX_SIZE){
@@ -157,7 +157,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_left = NO_ID, id_right = NO_ID, *objects_id = NULL, *characters_id = NULL, object_port = NO_ID;
   Space *space_act = NULL;
   char str[MAX_STR];
-  const char* gdesc[N_ROWS]; 
   int i=0;
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
@@ -170,10 +169,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     space_act = game_get_space(game, id_act);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
-    for (i = 0; i < N_ROWS; i++)
-    {
-      gdesc[i]=space_get_gdesc(space_act, i); /*Obtener la descripcion grafica del espacio*/
-    }
     object_port = player_get_object(game_get_player(game));
   
     graphic_engine_print_space(id_back, game, ge);
