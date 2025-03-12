@@ -240,7 +240,7 @@ void test2_space_get_name() {
 void test1_space_get_nobjects() {
   Space *s;
   s = space_create(1);
-  PRINT_TEST_RESULT(space_get_nobjects(s) == POINT_ERROR);
+  PRINT_TEST_RESULT(space_get_nobjects(s) == 0);
   space_destroy(s);
 }
 
@@ -346,7 +346,7 @@ void test1_space_get_gdesc(){
   
   for (i = 0; i < 5; i++)
   {
-    if (space_get_gdesc(s, i) != array[i])
+    if ((strcmp(space_get_gdesc(s, i), array[i])))
     {
       PRINT_TEST_RESULT(FALSE);
       space_destroy(s);

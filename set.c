@@ -19,7 +19,7 @@ struct _Set {
 /*Public functions*/
 
 Set* set_create(void){
-
+    int i;
     Set *set = NULL;
     
     set=(Set*)malloc(sizeof(Set));
@@ -29,6 +29,10 @@ Set* set_create(void){
     if (!set->ids){ 
         free(set); /*If ids fails, set is also freed to avoid memory leaks*/
         return NULL;
+    }
+    
+    for(i = 0; i<MAX_SET; i++){
+        set->ids[i] = NO_ID;
     }
     
     set->n_ids=0;
@@ -63,7 +67,7 @@ Status set_add (Set* set, Id id){
         }   
     }
     
-    set->ids[set->n_ids+1] = id; /*The new id is added to the last position of the array of ids*/
+    set->ids[set->n_ids] = id; /*The new id is added to the last position of the array of ids*/
     set->n_ids++;
 
     return OK;    

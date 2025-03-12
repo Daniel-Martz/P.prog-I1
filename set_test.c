@@ -14,6 +14,7 @@
 #include "set_test.h"
 
 #define MAX_TESTS 30
+#define TEST 10
 
 /** 
  * @brief Main function for set unit tests. 
@@ -46,17 +47,15 @@ int main(int argc, char** argv) {
   if (all || test == 2) test2_set_create();
   if (all || test == 3) test1_set_add();
   if (all || test == 4) test2_set_add();
-  if (all || test == 5) test3_set_add();
-  if (all || test == 6) test1_set_del();
-  if (all || test == 7) test2_set_del();
-  if (all || test == 8) test3_set_del();
-  if (all || test == 9) test1_set_get_nids();
-  if (all || test == 10) test2_set_get_nids();
-  if (all || test == 11) test1_set_id_is_there();
-  if (all || test == 12) test2_set_id_is_there();
-  if (all || test == 13) test3_set_id_is_there();
-  if (all || test == 14) test1_set_get_ids();
-  if (all || test == 15) test2_set_get_ids();
+  if (all || test == 5) test1_set_del();
+  if (all || test == 6) test2_set_del();
+  if (all || test == 7) test1_set_get_nids();
+  if (all || test == 8) test2_set_get_nids();
+  if (all || test == 9) test3_set_get_nids();
+  if (all || test == 10) test1_set_id_is_there();
+  if (all || test == 11) test2_set_id_is_there();
+  if (all || test == 12) test1_set_get_ids();
+  if (all || test == 13) test2_set_get_ids();
   
   PRINT_PASSED_PERCENTAGE;
 
@@ -65,7 +64,7 @@ int main(int argc, char** argv) {
 
 void test1_set_create (){
     int result;
-    Set *s;
+    Set *s = NULL;
     s = set_create();
     result=(s!=NULL);
     PRINT_TEST_RESULT(result);
@@ -76,103 +75,115 @@ void test2_set_create (){
     int result;
     Set *s=NULL;
     s = set_create();
-    result=(s == NULL);
+    result = (set_get_nids(s) == 0);
     PRINT_TEST_RESULT(result);
+    set_destroy(s);
 }
 
 void test1_set_add (){
     Set *s;
     s = set_create();
-    PRINT_TEST_RESULT(set_add(s, 10) == OK);
+    PRINT_TEST_RESULT(set_add(s, TEST) == OK);
     set_destroy(s);
 }
 
 void test2_set_add (){
-    Set *s=NULL;
+    Set *s = NULL;
     s = set_create();
-    PRINT_TEST_RESULT(set_add(s, 10) == ERROR);
-}
-
-void test3_set_add (){
-    Set *s;
-    s = set_create();
-    set_add(s, 10);
-    PRINT_TEST_RESULT(set_add(s, 10) == ERROR);
+    set_add(s, TEST);
+    PRINT_TEST_RESULT(set_add(s, TEST) == ERROR);
     set_destroy(s);
 }
 
 void test1_set_del (){
     Set *s;
     s = set_create();
-    set_add(s, 10);
-    PRINT_TEST_RESULT(set_del(s, 10) == OK);
+    set_add(s, TEST);
+    PRINT_TEST_RESULT(set_del(s, TEST) == OK);
     set_destroy(s);
 }
 
 void test2_set_del (){
-    Set *s=NULL;
-    s = set_create();
-    set_add(s, 10);
-    PRINT_TEST_RESULT(set_del(s, 10) == ERROR);
-}
-
-void test3_set_del (){
     Set *s;
     s = set_create();
-    PRINT_TEST_RESULT(set_del(s, 10) == ERROR);
+    PRINT_TEST_RESULT(set_del(s, TEST) == ERROR);
     set_destroy(s);
 }
 
-long test1_set_get_nids(){
+void test1_set_get_nids(){
     Set *s;
     s = set_create();
-    PRINT_TEST_RESULT(set_get_nids(s) <= MAX_SET && set_get_nids(s) >= 0);
+    PRINT_TEST_RESULT(set_get_nids(s) == 0);
     set_destroy(s);
 }
 
-long test2_set_get_nids(){
+void test2_set_get_nids(){
     Set *s=NULL;
     s = set_create();
-    PRINT_TEST_RESULT(set_get_nids(s) == POINT_ERROR);
+    set_add(s, TEST);
+    PRINT_TEST_RESULT(set_get_nids(s) == 1);
+    set_destroy(s);
+}
+
+void test3_set_get_nids(){
+    Set *s=NULL;
+    s = set_create();
+    set_add(s, TEST);
+    set_del(s, TEST);
+    PRINT_TEST_RESULT(set_get_nids(s) == 0);
+    set_destroy(s);
 }
 
 void test1_set_id_is_there(){
     Set *s;
     s = set_create();
-    set_add(s, 10);
-    PRINT_TEST_RESULT(set_id_is_there(s, 10) == OK);
+    set_add(s, TEST);
+    PRINT_TEST_RESULT(set_id_is_there(s, TEST) == OK);
     set_destroy(s);
 }
 
 void test2_set_id_is_there(){
     Set *s;
     s = set_create();
-    PRINT_TEST_RESULT(set_id_is_there(s, 10) == ERROR);
+    PRINT_TEST_RESULT(set_id_is_there(s, TEST) == ERROR);
     set_destroy(s);
-}
-
-void test3_set_id_is_there(){
-    Set *s=NULL;
-    s = set_create();
-    PRINT_TEST_RESULT(set_id_is_there(s, 10) == ERROR);
 }
 
 void test1_set_get_ids(){
     Set *s=NULL;
-    int array[5]={1,2,3,4,5};
+    int i, result = 1;
+    Id array[5]={1,2,3,4,5}, *arrayaux=NULL;
+
     s = set_create();
     set_add(s, 1);
     set_add(s, 2);
     set_add(s, 3);
     set_add(s, 4);
     set_add(s, 5);
-    PRINT_TEST_RESULT(set_get_ids(s) == *array);
+    arrayaux = set_get_ids(s);
+    for(i=0; i< set_get_nids(s); i++){
+        if(arrayaux[i] != array[i]){
+            result = 0;
+            break;
+        }
+    }
+    PRINT_TEST_RESULT(result);
     set_destroy(s);
 }
 
 void test2_set_get_ids(){
     Set *s=NULL;
     s = set_create();
-    PRINT_TEST_RESULT(set_get_ids(s) == OK);
+    Id *arrayaux = NULL;
+    int i, result = 1;
+
+    arrayaux = set_get_ids(s);
+    for(i=0; i< MAX_SET; i++){
+        if(arrayaux[i] != NO_ID){
+            result = 0;
+            break;
+        }
+    }
+    PRINT_TEST_RESULT(result);
     set_destroy(s);
 }

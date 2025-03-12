@@ -51,12 +51,12 @@ Space* space_create(Id id) {
   newSpace->south = NO_ID;
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
-  newSpace->objects = NULL;
   newSpace->character = NO_ID;
   for (i = 0; i < 5; i++)
   {
     newSpace->gdesc[i][0] = '\0';
   }
+  newSpace->objects = set_create();
 
   return newSpace;
 }
