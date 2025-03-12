@@ -61,17 +61,17 @@ int main(int argc, char** argv) {
   if (all || test == 17)test1_character_set_name();
   if (all || test == 18)test2_character_set_name();
   if (all || test == 19)test3_character_set_name();
-  if (all || test == 19)test1_character_set_gdesc();
-  if (all || test == 20)test2_character_set_gdesc();
-  if (all || test == 20)test3_character_set_gdesc();
-  if (all || test == 21)test1_character_set_health();
-  if (all || test == 22)test2_character_set_health();
-  if (all || test == 22)test3_character_set_health();
-  if (all || test == 23)test1_character_set_friendly();
-  if (all || test == 24)test2_character_set_friendly();
-  if (all || test == 25)test1_character_set_message();
-  if (all || test == 26)test2_character_set_message();
-  if (all || test == 26)test3_character_set_message();
+  if (all || test == 20)test1_character_set_gdesc();
+  if (all || test == 21)test2_character_set_gdesc();
+  if (all || test == 22)test3_character_set_gdesc();
+  if (all || test == 23)test1_character_set_health();
+  if (all || test == 24)test2_character_set_health();
+  if (all || test == 25)test3_character_set_health();
+  if (all || test == 26)test1_character_set_friendly();
+  if (all || test == 27)test2_character_set_friendly();
+  if (all || test == 28)test1_character_set_message();
+  if (all || test == 29)test2_character_set_message();
+  if (all || test == 30)test3_character_set_message();
   
   PRINT_PASSED_PERCENTAGE;
 

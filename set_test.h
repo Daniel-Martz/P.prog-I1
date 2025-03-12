@@ -19,9 +19,11 @@ void test2_set_create ();
 
 void test1_set_add ();
 void test2_set_add ();
+void test3_set_add ();
 
 void test1_set_del ();
 void test2_set_del ();
+void test3_set_del ();
 
 void test1_set_get_nids();
 void test2_set_get_nids();

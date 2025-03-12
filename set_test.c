@@ -47,15 +47,17 @@ int main(int argc, char** argv) {
   if (all || test == 2) test2_set_create();
   if (all || test == 3) test1_set_add();
   if (all || test == 4) test2_set_add();
-  if (all || test == 5) test1_set_del();
-  if (all || test == 6) test2_set_del();
-  if (all || test == 7) test1_set_get_nids();
-  if (all || test == 8) test2_set_get_nids();
-  if (all || test == 9) test3_set_get_nids();
-  if (all || test == 10) test1_set_id_is_there();
-  if (all || test == 11) test2_set_id_is_there();
-  if (all || test == 12) test1_set_get_ids();
-  if (all || test == 13) test2_set_get_ids();
+  if (all || test == 5) test3_set_add ();
+  if (all || test == 6) test1_set_del();
+  if (all || test == 7) test2_set_del();
+  if (all || test == 8) test3_set_del ();
+  if (all || test == 9) test1_set_get_nids();
+  if (all || test == 10) test2_set_get_nids();
+  if (all || test == 11) test3_set_get_nids();
+  if (all || test == 12) test1_set_id_is_there();
+  if (all || test == 13) test2_set_id_is_there();
+  if (all || test == 14) test1_set_get_ids();
+  if (all || test == 15) test2_set_get_ids();
   
   PRINT_PASSED_PERCENTAGE;
 
@@ -95,6 +97,11 @@ void test2_set_add (){
     set_destroy(s);
 }
 
+void test3_set_add (){
+    Set* s=NULL;
+    PRINT_TEST_RESULT(set_add(s, 34) == ERROR);   
+}
+
 void test1_set_del (){
     Set *s;
     s = set_create();
@@ -108,6 +115,11 @@ void test2_set_del (){
     s = set_create();
     PRINT_TEST_RESULT(set_del(s, TEST) == ERROR);
     set_destroy(s);
+}
+
+void test3_set_del (){
+    Set* s=NULL;
+    PRINT_TEST_RESULT(set_del(s, 34) == ERROR);   
 }
 
 void test1_set_get_nids(){
