@@ -1,7 +1,7 @@
 /** 
  * @brief It declares the tests for the set module
  * 
- * @file space_test.h
+ * @file set_test.h
  * @author Jaime Romero
  * @version 0.0 
  * @date 17-02-2025
