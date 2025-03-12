@@ -40,18 +40,21 @@ void test2_character_set_id ();
 
 void test1_character_set_name();
 void test2_character_set_name();
+void test3_character_set_name();
 
 void test1_character_set_gdesc();
 void test2_character_set_gdesc();
+void test3_character_set_gdesc();
 
 void test1_character_set_health();
 void test2_character_set_health();
+void test3_character_set_health();
 
 void test1_character_set_friendly();
 void test2_character_set_friendly();
 
 void test1_character_set_message();
 void test2_character_set_message();
-
+void test3_character_set_message();
 
 #endif
