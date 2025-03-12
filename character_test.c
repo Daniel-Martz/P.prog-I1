@@ -151,7 +151,7 @@ void test1_character_get_health(){
 }
 void test2_character_get_health(){
     Character *c=NULL;
-    PRINT_TEST_RESULT(character_get_health(c) != POINT_ERROR);
+    PRINT_TEST_RESULT(character_get_health(c) == POINT_ERROR);
 }
 
 void test1_character_get_friendly(){
