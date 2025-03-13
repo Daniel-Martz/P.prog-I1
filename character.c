@@ -78,7 +78,7 @@ const char* character_get_message(Character* character){
 }
 
 int character_get_health(Character* character){
-    if(!character) return POINT_ERROR;
+    if(!character) return -1;
     return character->health;
 }
 

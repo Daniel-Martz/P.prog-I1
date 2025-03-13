@@ -45,31 +45,23 @@ set.o: set.c set.h types.h
 character.o: character.c character.h types.h
 	$(CC) $(CFLAGS) -o character.o character.c
 
-#Test de space
 space_test: space_test.o space.o set.o
 	$(CC) -o space_test space_test.o space.o set.o
 
 space_test.o: space_test.c space.h space_test.h test.h
 	$(CC) $(CFLAGS) -o space_test.o space_test.c
 
-#Test de set
 set_test: set_test.o set.o
 	$(CC) -o set_test set_test.o set.o
 
 set_test.o: set_test.c set_test.h set.h test.h
 	$(CC) $(CFLAGS) -o set_test.o set_test.c
 
-# Test de character
-character_test: character_test.o character.o
-	$(CC) -o character_test character_test.o character.o
-
-character_test.o: character_test.c character.h character_test.h test.h
-	$(CC) $(CFLAGS) -o character_test.o character_test.c
 
 	
 # Limpiar archivos generados
 clean:
-	rm -f $(EXEC) $(OBJS) space_test space_test.o set_test set_test.o character_test character_test.o
+	rm -f $(EXEC) $(OBJS) space_test space_test.o set_test set_test.o
 
 # Correr valgrind
 runv :
@@ -86,8 +78,4 @@ testspace: space_test
 # Ejecutar el archivo de testeo set
 testset: set_test 
 	./set_test 
-
-# Ejecutar el archivo de testeo character
-testcharacter: character_test
-	./character_test 
 

@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  if (!game_loop_init(&game, &gengine, argv[1])) {
+  if (game_loop_init(&game, &gengine, argv[1]) == 0) {
     game_loop_run(game, gengine);
     game_loop_cleanup(game, gengine);
   }
