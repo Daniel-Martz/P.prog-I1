@@ -57,11 +57,17 @@ set_test: set_test.o set.o
 set_test.o: set_test.c set_test.h set.h test.h
 	$(CC) $(CFLAGS) -o set_test.o set_test.c
 
+character_test: character_test.o character.o
+	$(CC) -o character_test character_test.o character.o
+
+character_test.o: character_test.c character_test.h character.h test.h
+	$(CC) $(CFLAGS) -o character_test.o character_test.c
+
 
 	
 # Limpiar archivos generados
 clean:
-	rm -f $(EXEC) $(OBJS) space_test space_test.o set_test set_test.o
+	rm -f $(EXEC) $(OBJS) space_test space_test.o set_test set_test.o character_test character_test.o
 
 # Correr valgrind
 runv :
@@ -78,4 +84,7 @@ testspace: space_test
 # Ejecutar el archivo de testeo set
 testset: set_test 
 	./set_test 
+
+testcharacter: character_test
+	./character_test
 
