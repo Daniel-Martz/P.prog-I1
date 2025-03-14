@@ -19,7 +19,7 @@
 #include "types.h"
 
 #define MAX_STR 255 /*Comnstant assigned fpr the maximum length of a string*/
-#define WIDTH_MAP 57 /*Constant asignated for the width of the map*/
+#define WIDTH_MAP 60 /*Constant asignated for the width of the map*/
 #define WIDTH_DES 31 /*Constant asignated for the width of the description*/
 #define WIDTH_BAN 88 /*Constant asignated for the width of the banner*/
 #define HEIGHT_MAP 29 /*Constant asignated for the height of the map*/
@@ -53,6 +53,10 @@ Graphic_engine *graphic_engine_create(void) {
 
   /* Initializates the map window area */
   ge->map = screen_area_init(1, 1, WIDTH_MAP, HEIGHT_MAP);
+  if (!ge->map) {
+      free(ge);
+      return NULL;
+  }
 
   /* Initializates the descript window area */
   ge->descript = screen_area_init(WIDTH_MAP + 2, 1, WIDTH_DES, HEIGHT_MAP);
@@ -94,9 +98,9 @@ char **graphic_engine_print_space(Id space_id, Game *game){
 
   space = game_get_space(game, space_id);
 
-  for (i = 0; i < N_ROWS; i++)
-  {
-    gdesc[i]=space_get_gdesc(space, i); /*Obtener la descripcion grafica del espacio*/
+  for (i = 0; i < N_ROWS; i++) {
+      gdesc[i] = space_get_gdesc(space, i);
+      if (!gdesc[i]) gdesc[i] = "               ";  
   }
   /*ALLOC OF THE MATRIX OF THE SPACE*/
   strspace = (char **)malloc(HEIGHT_SPACE * sizeof(char *));
@@ -118,29 +122,29 @@ char **graphic_engine_print_space(Id space_id, Game *game){
   
   if(space_id == game_get_player_location(game)){
     if(character_id != NO_ID){
-      sprintf(strspace[0], "| m0^  %s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)space_id);
+      sprintf(strspace[1], "| m0^  %s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)space_id);
     }
     else{
-      sprintf(strspace[0], "| m0^       %3d|", (int)space_id);
+      sprintf(strspace[1], "| m0^       %3d|", (int)space_id);
       }
   }
   else{
     if(character_id != NO_ID){
-      sprintf(strspace[0], "|      %s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)space_id);
+      sprintf(strspace[1], "|      %s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)space_id);
     }
     else{
-      sprintf(strspace[0], "|             %3d|", (int)space_id);
+      sprintf(strspace[1], "|           %3d|", (int)space_id);
     }
   }
   /*DESCRIPCION DEL MAPA*/
   if(gdesc[0] != NULL){
     for (i = 0; i < N_ROWS; i++) {
-      sprintf(strspace[i+1], "|%s     |", gdesc[i]);
+      sprintf(strspace[i+2], "|%s     |", gdesc[i]);
     }
   }
   else{
     for (i = 0; i < N_ROWS; i++) {
-      sprintf(strspace[i+1],"|               |");
+      sprintf(strspace[i+2],"|               |");
     }
   }
     /*OBJETOS*/
@@ -148,7 +152,6 @@ char **graphic_engine_print_space(Id space_id, Game *game){
     if(objects_id[0] != NO_ID){
       sprintf(strspace[7], "|%s",object_get_name(game_get_object(game,objects_id[0])));
       strspace[7][16] = '|';
-      strspace[7][17] = '\0';
     }
     for(i = 1; i<space_get_nobjects(space); i++){
       sprintf(str,"%s, %s", str, object_get_name(game_get_object(game,objects_id[i])));
@@ -159,7 +162,9 @@ char **graphic_engine_print_space(Id space_id, Game *game){
       strspace[7][14]='.';
       strspace[7][15]='.';
       strspace[7][16]='|';
-      strspace[7][17]='\0';
+    }
+    else{
+      sprintf(strspace[7],"|              |");
     }
     /*CIERRE*/
     sprintf(strspace[8], "+---------------+");
@@ -190,19 +195,21 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     id_right = space_get_east(space_act);
     object_port = player_get_object(game_get_player(game));
 
-    space_empty = (char **)malloc(HEIGHT_SPACE * sizeof(char *));
-    if (!space_empty) return;
+    if(!(space_empty = (char**)calloc(HEIGHT_MAP, sizeof(char*)))){
+      return;
+    }
 
     for (i = 0; i < HEIGHT_SPACE; i++) {
-        space_empty[i] = (char *)malloc((WIDTH_SPACE + 1) * sizeof(char));
-        if (!space_empty[i]) {
-            for (j = 0; j < i; j++) free(space_empty[j]);
+        if (!(space_empty[i] = (char*)calloc((WIDTH_SPACE + 1),sizeof(char)))) {
+            for (j = 0; j < i; j++){ 
+              free(space_empty[j]);
+            }
             free(space_empty);
             return;
         }
     }
-    for(i=0; i<WIDTH_SPACE; i++){
-      for(j= 0; j<HEIGHT_SPACE; j++){
+    for(i=0; i<HEIGHT_SPACE; i++){
+      for(j= 0; j<WIDTH_SPACE; j++){
         space_empty[i][j] = ' ';
       }
     }
@@ -234,7 +241,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->map,str);
     }
 
-    screen_area_puts(ge->map,"                                                                                                     ");
+    screen_area_puts(ge->map,"                                                                             ");
     
     space1 = space_left;
     space2 = space_actual;
@@ -245,7 +252,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->map,str);
     }
 
-    screen_area_puts(ge->map,"                                                                                                     ");
+    screen_area_puts(ge->map,"                                                                    ");
     
     space1 = space_empty;
     space2 = space_next;
@@ -256,22 +263,26 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->map,str);
     }
 
-    screen_area_puts(ge->map,"                                                                                                     ");
+    screen_area_puts(ge->map,"                                                                          ");
 
 
     /* Paint in the description area */
     screen_area_clear(ge->descript);
     /*PASAMOS ARRAY DE OBJETOS A IDS*/
     objects = game_get_objects(game);
-    for(i=0; i < game_get_nobjects(game); i++){
-      objects_id[i] = object_get_id(objects[i]);
+    if(!(objects_id =(Id*)calloc(game_get_nobjects(game),sizeof(Id)))){
+      return;
     }
+      for(i=0; i < game_get_nobjects(game); i++){
+        objects_id[i] = object_get_id(objects[i]);
+      }
+    
     /*IMPRESION*/
     if (objects_id != NULL) {
       sprintf(str, "  Objects: ");
       screen_area_puts(ge->descript, str);
       for(i=0; i< game_get_nobjects(game); i++){
-        sprintf(str, "%s:\t%i",object_get_name(game_get_object(game,objects_id[i])), (int)objects_id[i]);
+        sprintf(str, " %s: %i",object_get_name(game_get_object(game,objects_id[i])), (int)objects_id[i]);
         screen_area_puts(ge->descript, str);
       }
     }
@@ -279,8 +290,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       sprintf(str, "  No objects");
       screen_area_puts(ge->descript, str);
     }
-    
-    screen_area_puts(ge->descript, "\n");
+    screen_area_puts(ge->descript, "          ");
 
     /*PASAMOS ARRAY DE CHARACTERS A IDS*/
     characters = game_get_characters(game);
@@ -306,9 +316,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->descript, str);
     }
 
-    screen_area_puts(ge->descript, "\n");
+    screen_area_puts(ge->descript, "       ");
 
-    sprintf(str,"  Player\t: %i (%i)",(int)id_act,player_get_health(game_get_player(game)));
+    sprintf(str,"  Player: %i (%i)",(int)id_act,player_get_health(game_get_player(game)));
     screen_area_puts(ge->descript, str);
     if(object_port != NO_ID){
       sprintf(str, "  Player object: %i",(int)object_port);
@@ -318,7 +328,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->descript, "  PLayer has no object");
     }
 
-    screen_area_puts(ge->descript, "\n");
+    screen_area_puts(ge->descript, "        ");
 
     if(game_get_message(game) != NULL){
       sprintf(str," Message: %s",game_get_message(game));
@@ -346,6 +356,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     printf("prompt:> ");
 
     /* PONER FREES DE LOS ESPACIOS */
+
+    for (i = 0; i < HEIGHT_SPACE; i++) {
+      free(space_empty[i]);
+    }
+    free(space_empty);
 
   }
 }
