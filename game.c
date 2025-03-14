@@ -134,6 +134,10 @@ Game *game_create_from_file(char *filename) {
     return NULL;
   }
 
+  if (game_reader_load_characters(game, filename) == ERROR) {
+    return NULL;
+  }
+
   /* The player and the object are located in the first space */
   game_set_player_location(game, game_get_space_id_at(game, 0));
 

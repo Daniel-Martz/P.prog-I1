@@ -15,7 +15,7 @@
 
 #include "types.h"
 
-#define G_DESC 6
+#define G_DESC 7
 #define MAX_MESSAGE 100
 
 typedef struct _Character Character;

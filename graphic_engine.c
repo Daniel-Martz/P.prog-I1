@@ -122,29 +122,29 @@ char **graphic_engine_print_space(Id space_id, Game *game){
   
   if(space_id == game_get_player_location(game)){
     if(character_id != NO_ID){
-      sprintf(strspace[1], "| m0^  %s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)space_id);
+      sprintf(strspace[1], "| m0^ %6.6s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)space_id);
     }
     else{
-      sprintf(strspace[1], "| m0^       %3d|", (int)space_id);
+      sprintf(strspace[1], "| m0^        %3d|", (int)space_id);
       }
   }
   else{
     if(character_id != NO_ID){
-      sprintf(strspace[1], "|      %s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)space_id);
+      sprintf(strspace[1], "|     %6.6s %3d|", character_get_gdesc(game_get_character(game, character_id)), (int)space_id);
     }
     else{
-      sprintf(strspace[1], "|           %3d|", (int)space_id);
+      sprintf(strspace[1], "|            %3d|", (int)space_id);
     }
   }
   /*DESCRIPCION DEL MAPA*/
   if(gdesc[0] != NULL){
     for (i = 0; i < N_ROWS; i++) {
-      sprintf(strspace[i+2], "|%s     |", gdesc[i]);
+      sprintf(strspace[i+2], "|%s      |", gdesc[i]);
     }
   }
   else{
     for (i = 0; i < N_ROWS; i++) {
-      sprintf(strspace[i+2],"|               |");
+      sprintf(strspace[i+2],"|                |");
     }
   }
     /*OBJETOS*/
@@ -164,7 +164,7 @@ char **graphic_engine_print_space(Id space_id, Game *game){
       strspace[7][16]='|';
     }
     else{
-      sprintf(strspace[7],"|              |");
+      sprintf(strspace[7],"|               |");
     }
     /*CIERRE*/
     sprintf(strspace[8], "+---------------+");
@@ -174,7 +174,7 @@ char **graphic_engine_print_space(Id space_id, Game *game){
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   /* Declare de needed local variables of the function */
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_left = NO_ID, id_right = NO_ID, *objects_id = NULL, *characters_id = NULL, object_port = NO_ID;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_left = NO_ID, id_right = NO_ID, *objects_location = NULL, *characters_id = NULL, object_port = NO_ID;
   Space *space_act = NULL;
   char str[MAX_STR];
   char **space_empty = NULL;
@@ -270,19 +270,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     screen_area_clear(ge->descript);
     /*PASAMOS ARRAY DE OBJETOS A IDS*/
     objects = game_get_objects(game);
-    if(!(objects_id =(Id*)calloc(game_get_nobjects(game),sizeof(Id)))){
+    if(!(objects_location =(Id*)calloc(game_get_nobjects(game),sizeof(Id)))){
       return;
     }
       for(i=0; i < game_get_nobjects(game); i++){
-        objects_id[i] = object_get_id(objects[i]);
+        objects_location[i] = game_get_object_location(game, object_get_id(objects[i]));
       }
     
     /*IMPRESION*/
-    if (objects_id != NULL) {
+    if (objects_location != NULL) {
       sprintf(str, "  Objects: ");
       screen_area_puts(ge->descript, str);
       for(i=0; i< game_get_nobjects(game); i++){
-        sprintf(str, " %s: %i",object_get_name(game_get_object(game,objects_id[i])), (int)objects_id[i]);
+        sprintf(str, " %s: %i",object_get_name(game_get_object(game,objects_location[i])), (int)objects_location[i]);
         screen_area_puts(ge->descript, str);
       }
     }
@@ -307,7 +307,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       sprintf(str, "  Characters: ");
       screen_area_puts(ge->descript, str);
       for(i=0; i< game_get_ncharacters(game); i++){
-        sprintf(str, "%s:\t%i\t(%i)",character_get_name(game_get_character(game,characters_id[i])), (int)characters_id[i],character_get_health(characters[i]));
+        sprintf(str, "%s : %i (%i)",character_get_gdesc(game_get_character(game,characters_id[i])), (int)characters_id[i],character_get_health(characters[i]));
         screen_area_puts(ge->descript, str);
       }
     }
