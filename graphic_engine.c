@@ -152,16 +152,17 @@ char **graphic_engine_print_space(Id space_id, Game *game){
     if(objects_id[0] != NO_ID){
       sprintf(strspace[7], "|%s",object_get_name(game_get_object(game,objects_id[0])));
       strspace[7][16] = '|';
-    }
-    for(i = 1; i<space_get_nobjects(space); i++){
-      sprintf(str,"%s, %s", str, object_get_name(game_get_object(game,objects_id[i])));
-    }
-    names_lenght = strlen(str);
-    if(names_lenght > WIDTH_SPACE){
-      strspace[7][13]='.';
-      strspace[7][14]='.';
-      strspace[7][15]='.';
-      strspace[7][16]='|';
+    
+      for(i = 1; i<space_get_nobjects(space); i++){
+        sprintf(str,"%s, %s", str, object_get_name(game_get_object(game,objects_id[i])));
+        }
+      names_lenght = strlen(str);
+      if(names_lenght > WIDTH_SPACE){
+        strspace[7][13]='.';
+        strspace[7][14]='.';
+        strspace[7][15]='.';
+        strspace[7][16]='|';
+      }
     }
     else{
       sprintf(strspace[7],"|               |");
@@ -282,7 +283,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       sprintf(str, "  Objects: ");
       screen_area_puts(ge->descript, str);
       for(i=0; i< game_get_nobjects(game); i++){
-        sprintf(str, " %s: %i",object_get_name(game_get_object(game,objects_location[i])), (int)objects_location[i]);
+        sprintf(str, " %s: %i",object_get_name(game_get_object(game,object_get_id(objects[i]))), (int)objects_location[i]);
         screen_area_puts(ge->descript, str);
       }
     }
@@ -307,7 +308,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       sprintf(str, "  Characters: ");
       screen_area_puts(ge->descript, str);
       for(i=0; i< game_get_ncharacters(game); i++){
-        sprintf(str, "%s : %i (%i)",character_get_gdesc(game_get_character(game,characters_id[i])), (int)characters_id[i],character_get_health(characters[i]));
+        sprintf(str, " %6.6s : %i (%i)",character_get_gdesc(game_get_character(game,characters_id[i])), (int)characters_id[i],character_get_health(characters[i]));
         screen_area_puts(ge->descript, str);
       }
     }
@@ -325,7 +326,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->descript, str);
     }
     else{
-      screen_area_puts(ge->descript, "  PLayer has no object");
+      screen_area_puts(ge->descript, "  Player has no object");
     }
 
     screen_area_puts(ge->descript, "        ");

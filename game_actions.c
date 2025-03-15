@@ -181,7 +181,7 @@ void game_actions_next(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  game_set_message(game,NULL);
+  if(!game) return;
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
@@ -200,7 +200,6 @@ void game_actions_back(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  game_set_message(game,NULL);
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
@@ -218,7 +217,6 @@ void game_actions_left(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  game_set_message(game, NULL);
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
@@ -236,7 +234,7 @@ void game_actions_right(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  game_set_message(game,NULL);
+
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
@@ -256,7 +254,7 @@ void game_actions_take(Game *game){
   Player *player = NULL;
   char *objname = NULL;
 
-  game_set_message(game, NULL);
+
 
   if(!game) return;
 
@@ -293,7 +291,7 @@ void game_actions_drop(Game *game){
   Space *current_space = NULL;
   Player *player = NULL;
 
-  game_set_message(game,NULL);
+
   
   if(!(player = game_get_player(game))) return;
 
@@ -321,7 +319,6 @@ void game_actions_attack(Game *game) {
   Id character = NO_ID;
   Id player_location = NO_ID;
 
-  game_set_message(game,NULL);
   if(!game) return;
 
   if((player_location = game_get_player_location(game)) == NO_ID) return;
@@ -353,6 +350,8 @@ void game_actions_chat(Game *game) {
   Id character = NO_ID;
   Id player_location = NO_ID;
   if(!game) return;
+  
+
 
   if((player_location = game_get_player_location(game)) == NO_ID) return;
 

@@ -43,11 +43,11 @@ Status game_reader_load_spaces(Game *game, char *filename) {
       toks = strtok(NULL, "|");
       north = atol(toks);
       toks = strtok(NULL, "|");
-      east = atol(toks);
+      west = atol(toks);
       toks = strtok(NULL, "|");
       south = atol(toks);
       toks = strtok(NULL, "|");
-      west = atol(toks);
+      east = atol(toks);
 
       for (row = 0; row < N_ROWS; row++)
       {
@@ -63,9 +63,9 @@ Status game_reader_load_spaces(Game *game, char *filename) {
       if (space != NULL) {
         space_set_name(space, name);
         space_set_north(space, north);
-        space_set_east(space, east);
-        space_set_south(space, south);
         space_set_west(space, west);
+        space_set_south(space, south);
+        space_set_east(space, east);
         space_set_gdesc(space, (const char(*)[N_COLUMNS])gdesc); /*Hacemos casting al llamar a la fucnión set_gdesc para que concuerde con el tipo de dato que requiere la fucnión*/
         game_add_space(game, space);
       }
