@@ -1,7 +1,7 @@
 /**
  * @brief It creates and adds the spaces 
  * @file game_reader.c
- * @author Jaime Romero
+ * @author Jaime Romero, Daniel Martínez
  * 
  * @version 0.1
  * @date 2025-02-08
