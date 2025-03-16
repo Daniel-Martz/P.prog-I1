@@ -81,7 +81,9 @@ Status command_set_objname(Command *command, const char *objname){
     return ERROR;
   }
 
-  strcpy(command->objname,objname);
+  if(!strcpy(command->objname,objname)){
+    return ERROR;
+  }
   return OK;
 }
 

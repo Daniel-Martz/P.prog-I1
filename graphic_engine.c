@@ -150,8 +150,8 @@ char **graphic_engine_print_space(Id space_id, Game *game){
     /*OBJETOS*/
     objects_id = space_get_objects_ids(space);
     if(objects_id[0] != NO_ID){
-      sprintf(strspace[7], "|%s",object_get_name(game_get_object(game,objects_id[0])));
-      strspace[7][16] = '|';
+      sprintf(strspace[7], "|%15.15s|",object_get_name(game_get_object(game,objects_id[0])));
+
     
       for(i = 1; i<space_get_nobjects(space); i++){
         sprintf(str,"%s, %s", str, object_get_name(game_get_object(game,objects_id[i])));
@@ -362,8 +362,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       free(space_empty[i]);
     }
     free(space_empty);
-    free(characters_id);
-    free(objects_location);
 
   }
 }

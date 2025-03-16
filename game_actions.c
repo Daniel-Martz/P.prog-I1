@@ -182,6 +182,8 @@ void game_actions_next(Game *game) {
   Id space_id = NO_ID;
 
   if(!game) return;
+  command_set_objname(game_get_last_command(game), "");
+  game_set_message(game, "");
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
@@ -200,6 +202,9 @@ void game_actions_back(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
+  if(!game) return;
+  command_set_objname(game_get_last_command(game), "");
+  game_set_message(game, "");
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
@@ -216,6 +221,10 @@ void game_actions_back(Game *game) {
 void game_actions_left(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
+
+  if(!game) return;
+  command_set_objname(game_get_last_command(game), "");
+  game_set_message(game, "");
 
 
   space_id = game_get_player_location(game);
@@ -234,7 +243,9 @@ void game_actions_right(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-
+  if(!game) return;
+  command_set_objname(game_get_last_command(game), "");
+  game_set_message(game, "");
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
@@ -254,9 +265,8 @@ void game_actions_take(Game *game){
   Player *player = NULL;
   char *objname = NULL;
 
-
-
   if(!game) return;
+  game_set_message(game, "");
 
   if(!(objname = command_get_objname(game_get_last_command(game)))){
     return;
@@ -293,9 +303,11 @@ void game_actions_drop(Game *game){
 
 
   
+  if(!game) return;
   if(!(player = game_get_player(game))) return;
 
-  if(!game) return;
+  command_set_objname(game_get_last_command(game), "");
+  game_set_message(game, "");
 
   object_id = player_get_object(player);
   if(object_id == NO_ID) return;
@@ -320,6 +332,8 @@ void game_actions_attack(Game *game) {
   Id player_location = NO_ID;
 
   if(!game) return;
+  command_set_objname(game_get_last_command(game), "");
+  game_set_message(game, "");
 
   if((player_location = game_get_player_location(game)) == NO_ID) return;
 
@@ -350,8 +364,7 @@ void game_actions_chat(Game *game) {
   Id character = NO_ID;
   Id player_location = NO_ID;
   if(!game) return;
-  
-
+  command_set_objname(game_get_last_command(game), "");
 
   if((player_location = game_get_player_location(game)) == NO_ID) return;
 

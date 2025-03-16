@@ -33,7 +33,7 @@ struct _Game {
   Command *last_cmd; /*!< It stores the last command called */
   Bool finished; /*!< It defines if the game finished or not */
   Character *characters[MAX_CHARACTERS]; /*!< It contains all the characters of the game*/
-  char *message; /*!< It contains the message of the chat*/
+  char message[MAX_MESSAGE]; /*!< It contains the message of the chat*/
 };
 
 
@@ -70,6 +70,8 @@ Game *game_create(void){
   for (i = 0; i < MAX_CHARACTERS; i++) {
     game->characters[i] = NULL;
   }
+  
+  game->message[0] = '\0';
 
   game->n_spaces = 0;
   game->n_objects = 0;
@@ -77,7 +79,7 @@ Game *game_create(void){
   game->player = player_create(INIT_ID); 
   game->last_cmd = command_create();
   game->finished = FALSE;
-  game->message = NULL;
+ 
 
   if (!game->player || !game->last_cmd) {
     return NULL;
@@ -165,6 +167,9 @@ Status game_destroy(Game *game) {
   command_destroy(game->last_cmd);
   player_destroy(game->player);
 
+  free(game);
+  
+ 
   return OK;
 }
 
@@ -236,7 +241,9 @@ Status game_set_message(Game *game, const char *message){
     return ERROR;
   }
 
-  game->message[0] = message[0];
+  if(!strcpy(game->message, message)){
+    return ERROR;
+  }
   return OK;
 }
 
