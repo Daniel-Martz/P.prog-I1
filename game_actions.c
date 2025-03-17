@@ -203,7 +203,9 @@ Status game_actions_next(Game *game) {
   if (current_id != NO_ID) {
     game_set_player_location(game, current_id);
   }
-
+  else{
+    return ERROR;
+  }
   return OK;
 }
 
@@ -223,6 +225,9 @@ Status game_actions_back(Game *game) {
   current_id = space_get_north(game_get_space(game, space_id));
   if (current_id != NO_ID) {
     game_set_player_location(game, current_id);
+  }
+  else{
+    return ERROR;
   }
   return OK;
 }
@@ -245,6 +250,9 @@ Status game_actions_left(Game *game) {
   if (current_id != NO_ID) {
     game_set_player_location(game, current_id);
   }
+  else{
+    return ERROR;
+  }
   return OK;
 }
 
@@ -264,6 +272,9 @@ Status game_actions_right(Game *game) {
   current_id = space_get_east(game_get_space(game, space_id));
   if (current_id != NO_ID) {
     game_set_player_location(game, current_id);
+  }
+  else{
+    return ERROR;
   }
   return OK;
 }

@@ -209,9 +209,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   char **space_left = NULL ,**space_right = NULL, **space_back = NULL, **space_next = NULL, **space_actual = NULL, **space1 = NULL, **space2 = NULL, **space3 = NULL;
   int i=0, j=0;
   CommandCode last_cmd = UNKNOWN;
+  char cmd_result[MAX_STR];
   extern char *cmd_to_str[N_CMD][N_CMDT];
   Object **objects;
   Character **characters;
+  char right = '>', left = '<', back = '^', next = 'v';
 
   /*INITIALIZES SOME VARIABLES*/
   screen_area_clear(ge->map);
@@ -248,15 +250,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
     if(!(space_left = graphic_engine_print_space(id_left, game))){
       space_left = space_empty;
+      left = ' ';
     }
     if(!(space_right = graphic_engine_print_space(id_right, game))){
       space_right = space_empty;
+      right = ' ';
     }
     if(!(space_next = graphic_engine_print_space(id_next, game))){
       space_next = space_empty;
+      next = ' ';
     }
     if(!(space_back = graphic_engine_print_space(id_back, game))){
       space_back = space_empty;
+      back = ' ';
     }
 
     /*PRINT THE FIRST BLOCK*/
@@ -266,33 +272,43 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     space3 = space_empty;
 
     for(i=0; i<HEIGHT_SPACE; i++){
-      sprintf(str,"%s %s %s", space1[i],space2[i],space3[i]);
+      sprintf(str,"%s   %s   %s", space1[i],space2[i],space3[i]);
       screen_area_puts(ge->map,str);
     }
-
-    screen_area_puts(ge->map,"                                                                             ");
+    
+    sprintf(str, "                            %c          ",back);
+    screen_area_puts(ge->map,str);
     
     space1 = space_left;
     space2 = space_actual;
     space3 = space_right;
 
-    for(i=0; i<HEIGHT_SPACE; i++){
-      sprintf(str,"%s %s %s", space1[i],space2[i],space3[i]);
+    for(i=0; i<4; i++){
+      sprintf(str,"%s   %s   %s", space1[i],space2[i],space3[i]);
       screen_area_puts(ge->map,str);
     }
 
-    screen_area_puts(ge->map,"                                                                    ");
+    sprintf(str,"%s %c %s %c %s", space1[4],left, space2[4], right, space3[4]);
+    screen_area_puts(ge->map,str);
+
+    for(i=5; i<HEIGHT_SPACE; i++){
+      sprintf(str,"%s   %s   %s", space1[i],space2[i],space3[i]);
+      screen_area_puts(ge->map,str);
+    }
+
+    sprintf(str, "                            %c          ",next);
+    screen_area_puts(ge->map,str);
     
     space1 = space_empty;
     space2 = space_next;
     space3 = space_empty;
 
     for(i=0; i<HEIGHT_SPACE; i++){
-      sprintf(str,"%s %s %s", space1[i],space2[i],space3[i]);
+      sprintf(str,"%s   %s   %s", space1[i],space2[i],space3[i]);
       screen_area_puts(ge->map,str);
     }
 
-    screen_area_puts(ge->map,"                                                                          ");
+    screen_area_puts(ge->map,"                                                 ");
 
 
     /* Paint in the description area */
@@ -378,7 +394,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
     /* Paint in the feedback area */
     last_cmd = command_get_code(game_get_last_command(game));
-    sprintf(str, " %s (%s)", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
+    if(game_get_last_cmd_status(game) == ERROR){
+      strcpy(cmd_result, "ERROR");
+    }
+    else{
+      strcpy(cmd_result, "OK");
+    }
+    sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], cmd_result);
     screen_area_puts(ge->feedback, str);
 
     /* Dump to the terminal */
