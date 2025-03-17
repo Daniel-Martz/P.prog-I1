@@ -86,14 +86,19 @@ Graphic_engine *graphic_engine_create(void) {
   return ge;
 }
 
-void free_gengine_paint_game(char**space){
-  int i=0;
+void free_gengine_paint_game(char **space) {
+  int i = 0;
   if (space != NULL) {
-    for (i = 0; i < HEIGHT_SPACE; i++) free(space[i]);
+    for (i = 0; i < HEIGHT_SPACE; i++) {
+      if (space[i] != NULL) { 
+        free(space[i]);
+        space[i] = NULL;
+      }
+    }
     free(space);
+    space = NULL;
   }
 }
-
 void graphic_engine_destroy(Graphic_engine *ge) {
   if (!ge) return;
 
@@ -175,6 +180,7 @@ char **graphic_engine_print_space(Id space_id, Game *game){
         sprintf(strspace[7], "|%15.15s|",object_get_name(game_get_object(game,objects_id[0])));
       }
 
+      str[0] = '\0';
       sprintf(strspace[7], "|%15.15s|",object_get_name(game_get_object(game,objects_id[0])));
       for(i = 1; i<space_get_nobjects(space); i++){
         sprintf(str,"%s, %s", str, object_get_name(game_get_object(game,objects_id[i])));
@@ -219,22 +225,23 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     id_right = space_get_east(space_act);
     object_port = player_get_object(game_get_player(game));
 
-    if(!(space_empty = (char**)calloc(HEIGHT_MAP, sizeof(char*)))){
-      return;
-    }
-
-    for (i = 0; i < HEIGHT_SPACE; i++) {
-        if (!(space_empty[i] = (char*)calloc((WIDTH_SPACE + 1),sizeof(char)))) {
-            for (j = 0; j < i; j++){ 
-              free(space_empty[j]);
-            }
-            free(space_empty);
-            return;
+    if (space_empty == NULL) { 
+      if (!(space_empty = (char **)calloc(HEIGHT_MAP, sizeof(char *)))) {
+        return;
+      }
+      for (i = 0; i < HEIGHT_SPACE; i++) {
+        if (!(space_empty[i] = (char *)calloc((WIDTH_SPACE + 1), sizeof(char)))) {
+          for (j = 0; j < i; j++) {
+            free(space_empty[j]);
+          }
+          free(space_empty);
+          return;
         }
-    }
-    for(i=0; i<HEIGHT_SPACE; i++){
-      for(j= 0; j<WIDTH_SPACE; j++){
-        space_empty[i][j] = ' ';
+      }
+      for (i = 0; i < HEIGHT_SPACE; i++) {
+        for (j = 0; j < WIDTH_SPACE; j++) {
+          space_empty[i][j] = ' ';
+        }
       }
     }
 
@@ -380,12 +387,33 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     printf("prompt:> ");
 
     /* PONER FREES DE LOS ESPACIOS */
-    free_gengine_paint_game(space_back);
-    free_gengine_paint_game(space_next);
-    free_gengine_paint_game(space_right);
-    free_gengine_paint_game(space_left);
-    free_gengine_paint_game(space_actual);
-    free_gengine_paint_game(space_empty);
+    if (space_back != space_empty) {
+      free_gengine_paint_game(space_back);
+      space_back = NULL;
+    }
+    if (space_next != space_empty) {
+      free_gengine_paint_game(space_next);
+      space_next = NULL;
+    }
+    if (space_right != space_empty) {
+      free_gengine_paint_game(space_right);
+      space_right = NULL;
+    }
+    if (space_left != space_empty) {
+      free_gengine_paint_game(space_left);
+      space_left = NULL;
+    }
+    if (space_actual != space_empty) {
+      free_gengine_paint_game(space_actual);
+      space_actual = NULL;
+    }
+    if (space_empty != NULL) {
+      free_gengine_paint_game(space_empty);
+      space_empty = NULL;
+    }
 
+    free(objects_location);
+    free(characters_id);
   }
+  
 }
