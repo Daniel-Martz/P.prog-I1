@@ -62,12 +62,7 @@ Status game_reader_load_spaces(Game *game, char *filename) {
             memset(gdesc[row], ' ', N_COLUMNS - 1); 
             gdesc[row][N_COLUMNS - 1] = '\0';
           }
-          }
-          else
-          {
-            memset(gdesc[row], ' ', N_COLUMNS - 1);
-            gdesc[row][N_COLUMNS - 1] = '\0';
-          }
+        }  
       }
 
 #ifdef DEBUG

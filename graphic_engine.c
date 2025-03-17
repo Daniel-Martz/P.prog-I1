@@ -165,7 +165,7 @@ char **graphic_engine_print_space(Id space_id, Game *game){
   /*DESCRIPCION DEL MAPA*/
   if(gdesc[0] != NULL){
     for (i = 0; i < N_ROWS; i++) {
-      sprintf(strspace[i+2], "|%s      |", gdesc[i]);
+      sprintf(strspace[i+2], "|%9.9s      |", gdesc[i]);
     }
   }
   else{
