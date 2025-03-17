@@ -116,8 +116,11 @@ Status character_set_gdesc(Character* character, const char* gdesc){
 
 Status character_set_health(Character* character, int health){
     if (!character || health < 0) return ERROR;
-
+    
     character->health = health;
+    if(health == 0){
+        strcpy(character->gdesc, "x_x");
+    }
 
     return OK;
 }

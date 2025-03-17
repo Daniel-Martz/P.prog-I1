@@ -96,7 +96,7 @@ Status set_del (Set* set, Id id){
     {
         set->ids[i]=set->ids[i+1];
     }
-
+    set->ids[set->n_ids] = NO_ID;
     set->n_ids--;
 
     return OK;

@@ -295,6 +295,7 @@ void game_actions_take(Game *game){
 
   return;
 }
+
 void game_actions_drop(Game *game){
   Id player_location = NO_ID;
   Id object_id = NO_ID;
@@ -350,6 +351,9 @@ void game_actions_attack(Game *game) {
   if((turn<0)||turn>9) return;
   if(turn<5){
     player_set_health(game_get_player(game), player_get_health(game_get_player(game))-1);
+    if(player_get_health(game_get_player(game)) == 0){
+      printf("GAMER OVER");
+    }
   }
   else
     character_set_health(game_get_character(game, character),character_get_health(game_get_character(game, character))-1);
