@@ -51,9 +51,23 @@ Status game_reader_load_spaces(Game *game, char *filename) {
 
       for (row = 0; row < N_ROWS; row++)
       {
-        toks=strtok(NULL, "|");
-        strncpy(gdesc[row], toks, N_COLUMNS-1);
-        gdesc[row][N_COLUMNS-1]= '\0';
+        if (toks != NULL)
+        {
+          toks = strtok(NULL, "|");
+          if (toks != NULL) {
+            strncpy(gdesc[row], toks, N_COLUMNS - 1);
+            gdesc[row][N_COLUMNS - 1] = '\0'; 
+          } else 
+          {
+            memset(gdesc[row], ' ', N_COLUMNS - 1); 
+            gdesc[row][N_COLUMNS - 1] = '\0';
+          }
+          }
+          else
+          {
+            memset(gdesc[row], ' ', N_COLUMNS - 1);
+            gdesc[row][N_COLUMNS - 1] = '\0';
+          }
       }
 
 #ifdef DEBUG

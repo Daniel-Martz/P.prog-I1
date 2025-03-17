@@ -88,3 +88,12 @@ testset: set_test
 testcharacter: character_test
 	./character_test
 
+
+# Ejecutar el valgrind con castle
+crunv :
+	valgrind --leak-check=full ./$(EXEC) castle.dat
+
+# Ejecutar el programa con castle
+crun: $(EXEC)
+	./$(EXEC) castle.dat
+
