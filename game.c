@@ -34,6 +34,7 @@ struct _Game {
   Bool finished; /*!< It defines if the game finished or not */
   Character *characters[MAX_CHARACTERS]; /*!< It contains all the characters of the game*/
   char message[MAX_MESSAGE]; /*!< It contains the message of the chat*/
+  Status last_cmd_status; /*!< It contains the status of the last command*/
 };
 
 
@@ -79,6 +80,7 @@ Game *game_create(void){
   game->player = player_create(INIT_ID); 
   game->last_cmd = command_create();
   game->finished = FALSE;
+  game ->last_cmd_status = ERROR;
  
 
   if (!game->player || !game->last_cmd) {
@@ -189,6 +191,11 @@ Space *game_get_space(Game *game, Id id) {
   return NULL;
 }
 
+Status game_get_last_cmd_status(Game *game){
+  if(!game) return ERROR;
+  return game->last_cmd_status;
+}
+
 Object *game_get_object(Game *game, Id id) {
   int i = 0;
 
@@ -244,6 +251,14 @@ Status game_set_message(Game *game, const char *message){
   if(!strcpy(game->message, message)){
     return ERROR;
   }
+  return OK;
+}
+
+Status game_set_last_cmd_status(Game *game, Status cmd_status){
+  if(!game) return ERROR;
+
+  game->last_cmd_status = cmd_status;
+
   return OK;
 }
 
