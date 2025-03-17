@@ -37,6 +37,19 @@ struct _Graphic_engine {
   Area *map, *descript, *banner, *help, *feedback;/*!< It has all the variables needed*/
 };
 
+/*--------------------------------------PRIVATE FUNCTIONS--------------------------------------*/
+
+/**
+ * @brief It frees all the allocated memory for paint_game
+ * @author Jaime Romero
+ * 
+ * @param space A double poinyter to the space which is going to be freed
+ */
+void free_gengine_paint_game(char**space);
+
+/*--------------------------------------PUBLIC FUNCTIONS--------------------------------------*/
+
+
 Graphic_engine *graphic_engine_create(void) {
   static Graphic_engine *ge = NULL; /* Assign NULL to *ge only the first time*/
 
@@ -71,6 +84,14 @@ Graphic_engine *graphic_engine_create(void) {
   ge->feedback = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + 3, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_FDB);
 
   return ge;
+}
+
+void free_gengine_paint_game(char**space){
+  int i=0;
+  if (space != NULL) {
+    for (i = 0; i < HEIGHT_SPACE; i++) free(space[i]);
+    free(space);
+  }
 }
 
 void graphic_engine_destroy(Graphic_engine *ge) {
@@ -359,11 +380,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     printf("prompt:> ");
 
     /* PONER FREES DE LOS ESPACIOS */
-
-    for (i = 0; i < HEIGHT_SPACE; i++) {
-      free(space_empty[i]);
-    }
-    free(space_empty);
+    free_gengine_paint_game(space_back);
+    free_gengine_paint_game(space_next);
+    free_gengine_paint_game(space_right);
+    free_gengine_paint_game(space_left);
+    free_gengine_paint_game(space_actual);
+    free_gengine_paint_game(space_empty);
 
   }
 }
