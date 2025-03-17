@@ -21,9 +21,9 @@
 #define MAX_STR 255 /*Comnstant assigned fpr the maximum length of a string*/
 #define WIDTH_MAP 60 /*Constant asignated for the width of the map*/
 #define WIDTH_DES 31 /*Constant asignated for the width of the description*/
-#define WIDTH_BAN 88 /*Constant asignated for the width of the banner*/
+#define WIDTH_BAN 89 /*Constant asignated for the width of the banner*/
 #define HEIGHT_MAP 29 /*Constant asignated for the height of the map*/
-#define HEIGHT_BAN 1 /*Constant asignated for the height of the banner*/
+#define HEIGHT_BAN 2 /*Constant asignated for the height of the banner*/
 #define HEIGHT_HLP 3 /*Constant asignated for the height of help interface*/
 #define HEIGHT_FDB 3 /*Constant asignated for the height of feedback interface*/
 #define WIDTH_SPACE 17 /*Constante asignated for the maximum size of the lines inside the space*/
@@ -75,7 +75,7 @@ Graphic_engine *graphic_engine_create(void) {
   ge->descript = screen_area_init(WIDTH_MAP + 2, 1, WIDTH_DES, HEIGHT_MAP);
 
   /* Initializates the banner window  area */
-  ge->banner = screen_area_init((int)((WIDTH_MAP + WIDTH_DES + 1 - WIDTH_BAN) / 2), HEIGHT_MAP + 2, WIDTH_BAN, HEIGHT_BAN);
+  ge->banner = screen_area_init((int)((WIDTH_MAP + WIDTH_DES + 1 - WIDTH_BAN) / 2), HEIGHT_MAP + 1, WIDTH_BAN + 3, HEIGHT_BAN);
 
   /* Initializates the help window area */
   ge->help = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + 2, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_HLP);
@@ -175,26 +175,24 @@ char **graphic_engine_print_space(Id space_id, Game *game){
   }
     /*OBJETOS*/
     objects_id = space_get_objects_ids(space);
-    if(objects_id[0] != NO_ID){
-      if(space_get_nobjects(space) == 1){
-        sprintf(strspace[7], "|%15.15s|",object_get_name(game_get_object(game,objects_id[0])));
-      }
-
-      str[0] = '\0';
-      sprintf(strspace[7], "|%15.15s|",object_get_name(game_get_object(game,objects_id[0])));
-      for(i = 1; i<space_get_nobjects(space); i++){
-        sprintf(str,"%s, %s", str, object_get_name(game_get_object(game,objects_id[i])));
+    if (objects_id[0] != NO_ID) {
+        str[0] = '\0'; 
+        for (i = 0; i < space_get_nobjects(space); i++) {
+            if (i > 0) {
+                strncat(str, ", ", MAX_STR - strlen(str) - 1); 
+            }
+            strncat(str, object_get_name(game_get_object(game, objects_id[i])), MAX_STR - strlen(str) - 1);
         }
-      names_lenght = strlen(str);
-      if(names_lenght > WIDTH_SPACE){
-        strspace[7][13]='.';
-        strspace[7][14]='.';
-        strspace[7][15]='.';
-        strspace[7][16]='|';
-      }
-    }
-    else{
-      sprintf(strspace[7],"|               |");
+        names_lenght = strlen(str);
+        if (names_lenght > WIDTH_SPACE - 2) { 
+            strncpy(strspace[7], "|", 1);
+            strncat(strspace[7], str, WIDTH_SPACE - 5);
+            strncat(strspace[7], "...|", 5);
+        } else {
+            sprintf(strspace[7], "|%15.15s|", str);
+        }
+    } else {
+        sprintf(strspace[7], "|               |");
     }
     /*CIERRE*/
     sprintf(strspace[8], "+---------------+");
@@ -204,7 +202,7 @@ char **graphic_engine_print_space(Id space_id, Game *game){
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   /* Declare de needed local variables of the function */
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_left = NO_ID, id_right = NO_ID, *objects_location = NULL, *characters_id = NULL, object_port = NO_ID;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_left = NO_ID, id_right = NO_ID, *objects_location = NULL, *characters_location = NULL, object_port = NO_ID;
   Space *space_act = NULL;
   char str[MAX_STR];
   char **space_empty = NULL;
@@ -326,19 +324,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     /*PASAMOS ARRAY DE CHARACTERS A IDS*/
     characters = game_get_characters(game);
 
-    if(!(characters_id = (Id*)calloc(game_get_ncharacters(game),sizeof(Id)))){
+    if(!(characters_location = (Id*)calloc(game_get_ncharacters(game),sizeof(Id)))){
       return;
     }
     
     for(i=0; i< game_get_ncharacters(game) ; i++){
-      characters_id[i] = character_get_id(characters[i]);
+      characters_location[i] = game_get_character_location(game, character_get_id(characters[i]));
     }
     /*IMPRESION*/
     if (game_get_ncharacters(game) != 0) {
       sprintf(str, "  Characters: ");
       screen_area_puts(ge->descript, str);
       for(i=0; i< game_get_ncharacters(game); i++){
-        sprintf(str, " %6.6s : %i (%i)",character_get_gdesc(game_get_character(game,characters_id[i])), (int)characters_id[i],character_get_health(characters[i]));
+        sprintf(str, " %6.6s : %i (%i)",character_get_gdesc(characters[i]), (int)characters_location[i],character_get_health(characters[i]));
         screen_area_puts(ge->descript, str);
       }
     }
@@ -368,7 +366,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     
 
     /* Paint in the banner area */
-    screen_area_puts(ge->banner, "    The anthill game   ");
+    screen_area_puts(ge->banner,"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    screen_area_puts(ge->banner, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ The anthill game ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
     /* Paint in the help area */
     screen_area_clear(ge->help);
@@ -413,7 +412,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     }
 
     free(objects_location);
-    free(characters_id);
+    free(characters_location);
   }
   
 }
