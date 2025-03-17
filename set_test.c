@@ -2,7 +2,7 @@
  * @brief It tests set module
  * 
  * @file set_test.c
- * @author Profesores Pprog
+ * @author Jaime Romero
  * @version 0.0 
  * @date 17-02-2025
  * @copyright GNU Public License
