@@ -24,7 +24,7 @@ graphic_engine.o: graphic_engine.c graphic_engine.h game.h command.h types.h spa
 game_loop.o: game_loop.c command.h types.h game.h space.h set.h player.h object.h character.h game_actions.h graphic_engine.h game_reader.h
 	$(CC) $(CFLAGS) -o game_loop.o game_loop.c
 
-game_actions.o: game_actions.c game_actions.h command.h types.h game.h space.h set.h player.h object.h character.h
+game_actions.o: game_actions.c game_actions.h command.h types.h character.h game.h space.h set.h player.h object.h
 	$(CC) $(CFLAGS) -o game_actions.o game_actions.c
 
 game.o: game.c game.h command.h types.h space.h set.h player.h object.h character.h game_reader.h
@@ -48,19 +48,19 @@ character.o: character.c character.h types.h
 space_test: space_test.o space.o set.o
 	$(CC) -o space_test space_test.o space.o set.o
 
-space_test.o: space_test.c space.h space_test.h test.h
+space_test.o: space_test.c space_test.h space.h types.h set.h test.h
 	$(CC) $(CFLAGS) -o space_test.o space_test.c
 
 set_test: set_test.o set.o
 	$(CC) -o set_test set_test.o set.o
 
-set_test.o: set_test.c set_test.h set.h test.h
+set_test.o: set_test.c set_test.h test.h set.h types.h
 	$(CC) $(CFLAGS) -o set_test.o set_test.c
 
 character_test: character_test.o character.o
 	$(CC) -o character_test character_test.o character.o
 
-character_test.o: character_test.c character_test.h character.h test.h
+character_test.o: character_test.c character_test.h character.h test.h types.h
 	$(CC) $(CFLAGS) -o character_test.o character_test.c
 
 
