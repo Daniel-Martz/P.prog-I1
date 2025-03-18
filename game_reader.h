@@ -1,7 +1,7 @@
 /**
  * @brief It defines the functions in charge of creating the spaces  
  * @file game_reader.h
- * @author Jaime Romero
+ * @author Jaime Romero, Daniel Martínez
  * 
  * @version 0.1
  * @date 2025-02-08
@@ -17,7 +17,7 @@
 /**
  * @brief It assigns to the space tevery id, loaded from a file
  * 
- * @author Jaime Rpomero
+ * @author Jaime Romero
  * @param game A pointer to Game
  * @param filename A string with the name of the file
  * 

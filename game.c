@@ -2,7 +2,7 @@
  * @brief It implements the game structure
  *
  * @file game.c
- * @author Jaime Romero
+ * @author Jaime Romero, Daniel Martínez
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
